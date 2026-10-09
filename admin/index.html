@@ -3,12 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masal Dünyası Yönetim Paneli</title>
-  <!-- Config dosyasını tarayıcıya zorla gösteriyoruz -->
-  <link href="config.yml" type="text/yaml" rel="cms-config-url">
+  <title>Yönetim Paneli</title>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.1.2/dist/decap-cms.js"></script>
 </head>
 <body>
-  <!-- Decap CMS Scripti -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'ahmet2c1k/masaloku',
+          branch: 'main'
+        },
+        load_config_file: false,
+        media_folder: 'images',
+        public_folder: 'images',
+        collections: [
+          {
+            name: 'masallar',
+            label: '📖 Masallar',
+            files: [
+              {
+                file: 'masallar.json',
+                label: 'Tüm Masallar',
+                name: 'masallar_listesi',
+                fields: [
+                  {
+                    label: 'Masallar Listesi',
+                    name: 'masallar',
+                    widget: 'list',
+                    fields: [
+                      { label: 'ID', name: 'id', widget: 'number', value_type: 'int' },
+                      { label: 'Başlık', name: 'baslik', widget: 'string' },
+                      { label: 'Kategori', name: 'kategori', widget: 'select', options: ['Hayvanlar', 'Sihirli', 'Uyku'] },
+                      { label: 'Kapak Resmi URL', name: 'resim', widget: 'string' },
+                      { label: 'Masal Metni', name: 'metin', widget: 'text' }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
