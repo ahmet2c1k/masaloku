@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Başarılarım | Masal &amp; Zeka</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .badge-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      border: 3px solid #ffffff;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+    }
+    .badge-card.locked {
+      opacity: 0.55;
+      filter: grayscale(0.8);
+      background: #f8fafc;
+    }
+    .badge-icon {
+      font-size: 42px;
+      width: 65px;
+      height: 65px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fef08a;
+      flex-shrink: 0;
+    }
+    .badge-info h3 { font-size: 18px; font-weight: 900; color: #0f172a; margin-bottom: 4px; }
+    .badge-info p { font-size: 13px; font-weight: 700; color: #64748b; }
+    .badge-status { margin-left: auto; font-size: 20px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header class="app-top-bar">
+      <a href="index.html" class="app-brand">
+        <span style="font-size:24px;">🏆</span>
+        <span class="app-logo-text">Kupa Odası</span>
+      </a>
+      <div class="star-counter-badge">
+        <span>⭐</span>
+        <span id="user-stars-count">0</span>
+      </div>
+    </header>
+
+    <div class="welcome-card">
+      <h1>Harika İlerliyorsun! 🌟</h1>
+      <p>Masal okudukça ve oyunları tamamladıkça kupaların kilidi açılır.</p>
+    </div>
+
+    <div id="rozetler-listesi"></div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">📖</span>
+      <span>Masallar</span>
+    </a>
+    <a href="tekerlemeler.html" class="nav-item">
+      <span class="nav-icon">⚡</span>
+      <span>Tekerleme</span>
+    </a>
+    <a href="oyunlar.html" class="nav-item">
+      <span class="nav-icon">🧩</span>
+      <span>Oyunlar</span>
+    </a>
+    <a href="rozetler.html" class="nav-item active">
+      <span class="nav-icon">🏆</span>
+      <span>Başarılarım</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
+  <script>
+    const tumRozetler = [
+      { id: "ilk_adim", ad: "İlk Adım Rozeti", desc: "İlk masalını tamamladın!", icon: "🌱", minOkunan: 1, minYildiz: 0 },
+      { id: "kitap_kurdu", ad: "Küçük Kitap Kurdu", desc: "En az 3 masal okudun!", icon: "🐛", minOkunan: 3, minYildiz: 0 },
+      { id: "yildiz_avcisi", ad: "Yıldız Avcısı", desc: "Toplam 10 yıldız topladın!", icon: "⭐", minOkunan: 0, minYildiz: 10 },
+      { id: "zeka_sampiyonu", ad: "Zeka Ustası", desc: "Toplam 25 yıldız topladın!", icon: "👑", minOkunan: 0, minYildiz: 25 }
+    ];
+
+    function renderRozetler() {
+      const container = document.getElementById('rozetler-listesi');
+      container.innerHTML = '';
+      const okunanSayisi = getOkunanMasallar().length;
+      const yildizSayisi = getYildizSayisi();
+
+      tumRozetler.forEach(r => {
+        const kazanildi = (okunanSayisi >= r.minOkunan) && (yildizSayisi >= r.minYildiz);
+        const card = document.createElement('div');
+        card.className = 'badge-card ' + (kazanildi ? '' : 'locked');
+        card.innerHTML = `
+          <div class="badge-icon">${r.icon}</div>
+          <div class="badge-info">
+            <h3>${r.ad}</h3>
+            <p>${r.desc}</p>
+          </div>
+          <div class="badge-status">${kazanildi ? '✅' : '🔒'}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    renderRozetler();
+  </script>
+</body>
+</html>

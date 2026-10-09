@@ -3,59 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Masal Dünyası | Masal &amp; Zeka</title>
+  <title>Masal &amp; Zeka Dünyası</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0284c7">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="container">
     
-    <header class="top-header">
-      <a href="index.html" class="top-btn">🏠 Ana Sayfa</a>
-      <a href="index.html" class="site-logo">Masal &amp; Zeka</a>
-      <button class="top-btn" onclick="alert('Sevimli masallardan birini seç ve keyifle oku!')">✨ Bilgi</button>
+    <!-- Üst Mobil Bar (Status / Gamification) -->
+    <header class="app-top-bar">
+      <a href="index.html" class="app-brand">
+        <span style="font-size:24px;">📖</span>
+        <span class="app-logo-text">Masal Dünyası</span>
+      </a>
+      <div class="star-counter-badge">
+        <span>⭐</span>
+        <span id="user-stars-count">0</span>
+      </div>
     </header>
 
-    <!-- Navigasyon Sekmeleri -->
-    <nav class="nav-tabs">
-      <a href="index.html" class="nav-tab-btn tab-masallar active">📖 Masallar</a>
-      <a href="tekerlemeler.html" class="nav-tab-btn tab-tekerlemeler">⚡ Tekerlemeler</a>
-      <a href="oyunlar.html" class="nav-tab-btn tab-oyunlar">🧩 Zeka Oyunları</a>
-    </nav>
+    <!-- Karşılama Kartı -->
+    <section class="welcome-card" id="greeting-box">
+      <h1>Merhaba Küçük Kaşif! 👋</h1>
+      <p>Bugün kalbini ısıtacak harika bir masal seçelim mi?</p>
+    </section>
 
-    <!-- Ana Sayfa İçerik -->
-    <main id="ana-sayfa">
-      <div class="hero-box">
-        <h1>Merhaba Küçük Kitap Kurdu!<br>Bugün Hangi Masalı Okumak İstersin?</h1>
-        <div class="category-row">
-          <button class="cat-btn cat-all" onclick="kategoriFiltrele('Tümü')">
-            <span class="cat-icon">⭐</span><span>Tümü</span>
-          </button>
-          <button class="cat-btn cat-1" onclick="kategoriFiltrele('Hayvanlar')">
-            <span class="cat-icon">🦁</span><span>Hayvanlar</span>
-          </button>
-          <button class="cat-btn cat-2" onclick="kategoriFiltrele('Sihirli')">
-            <span class="cat-icon">🧙‍♂️</span><span>Sihirli</span>
-          </button>
-          <button class="cat-btn cat-3" onclick="kategoriFiltrele('Uyku')">
-            <span class="cat-icon">🌙</span><span>Uyku</span>
-          </button>
-        </div>
+    <!-- Ana Masal Ekranı -->
+    <main id="ana-ekran">
+      <div class="category-row">
+        <button class="cat-btn cat-all" onclick="kategoriFiltrele('Tümü')">⭐ Tümü</button>
+        <button class="cat-btn cat-1" onclick="kategoriFiltrele('Hayvanlar')">🦁 Hayvanlar</button>
+        <button class="cat-btn cat-2" onclick="kategoriFiltrele('Sihirli')">🧙‍♂️ Sihirli</button>
+        <button class="cat-btn cat-3" onclick="kategoriFiltrele('Uyku')">🌙 Uyku</button>
       </div>
 
       <div id="masal-grid" class="grid-container"></div>
     </main>
 
-    <!-- Masal Okuma Detay Modu -->
-    <article id="okuma-alani" class="detail-box" style="display: none;">
-      <button class="back-btn" onclick="kapatMasal()">⬅ Masallara Dön</button>
+    <!-- Masal Okuma Odası (Reader) -->
+    <article id="okuma-odasi" class="detail-box" style="display: none;">
+      <div class="reader-toolbar">
+        <button class="back-btn" onclick="kapatOkuma()">⬅ Masallara Dön</button>
+        <div class="font-controls">
+          <button class="font-btn" onclick="fontDegistir(-2)">A-</button>
+          <button class="font-btn" onclick="fontDegistir(2)">A+</button>
+        </div>
+      </div>
+
+      <button id="tts-audio-btn" class="tts-btn">🔊 Masalı Sesli Dinle</button>
       <img id="detay-resim" class="detail-img" src="" alt="Kapak">
       <h1 id="detay-baslik" class="detail-title"></h1>
       <div id="detay-metin" class="detail-text"></div>
+
+      <button id="finish-btn" class="finish-story-btn" onclick="masaliBitir()">🎉 Masalı Bitirdim (+2 ⭐)</button>
     </article>
 
   </div>
 
+  <!-- Sabit Alt Mobil Menü (Bottom Navigation) -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+      <span class="nav-icon">📖</span>
+      <span>Masallar</span>
+    </a>
+    <a href="tekerlemeler.html" class="nav-item">
+      <span class="nav-icon">⚡</span>
+      <span>Tekerleme</span>
+    </a>
+    <a href="oyunlar.html" class="nav-item">
+      <span class="nav-icon">🧩</span>
+      <span>Oyunlar</span>
+    </a>
+    <a href="rozetler.html" class="nav-item">
+      <span class="nav-icon">🏆</span>
+      <span>Başarılarım</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
   <script>
     const masallar = [
       {
@@ -99,54 +126,32 @@
         kategori: "Hayvanlar",
         resim: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600&auto=format&fit=crop&q=80",
         metin: `Sevimli ayıcık Boni karnı guruldayınca tatlı mı tatlı bal aramaya çıkmış. Ormanın en yaşlı meşesinde arıların kovanını bulmuş.\n\nBoni arılara nazikçe seslenmiş:\n— "Sevimli arılar, bana birazcık bal ikram eder misiniz? Ben de sizin için nehir kenarından taze kır çiçekleri getireyim."\n\nArılar bu kibar teklife çok sevinmiş. Boni'ye koca bir petek bal vermişler. Nezaket ve tatlı dil her kapıyı açarmış!`
-      },
-      {
-        id: 7,
-        baslik: "Sihirli Boya Kalemi",
-        kategori: "Sihirli",
-        resim: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80",
-        metin: `Melis resim yapmayı çok severmiş. Bir gün masasında altın rengi bir boya kalemi bulmuş. Bu kalemle kağıda ne çizse birden canlanıyormuş!\n\nMelis önce kanatları parıldayan mavi bir kelebek çizmiş. Kelebek pırpır edip odada uçmuş! Sonra bahçedeki üşüyen kedi için sıcacık bir kulübe çizmiş. Melis sihrini sadece canlıları mutlu etmek için kullanmaya söz vermiş.`
-      },
-      {
-        id: 8,
-        baslik: "Uykucu Minik Koala",
-        kategori: "Uyku",
-        resim: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&auto=format&fit=crop&q=80",
-        metin: `Okaliptüs ağacının yaprakları arasında yaşayan minik koala Koko esnemeye bayılırmış. Bir kere esnedi mi, yanındaki sincap da esner, kuştan kuşa uyku yayılırmış.\n\nKoko dalına sımsıkı sarılmış, taze yaprak kokusu eşliğinde gözlerini kapatmış. Ormanın tatlı rüzgarı onu bir beşik gibi sallamış ve mışıl mışıl uyumuş.`
-      },
-      {
-        id: 9,
-        baslik: "Mavi Yunus Doli",
-        kategori: "Hayvanlar",
-        resim: "https://images.unsplash.com/photo-1570481662006-a3a1374699e8?w=600&auto=format&fit=crop&q=80",
-        metin: `Doli pırıl pırıl turkuaz sularda taklalar atan meraklı bir yunustu. Deniz dibindeki mercan resifleri arasında saklambaç oynamayı çok severdi.\n\nBir gün yolunu kaybeden yavru bir deniz kaplumbağası gördü. Doli hemen ona rehberlik etti ve annesini bulana kadar yanından hiç ayrılmadı. Denizlerin en büyük zenginliği dostluktu!`
-      },
-      {
-        id: 10,
-        baslik: "Bulutların Üstündeki Şato",
-        kategori: "Sihirli",
-        resim: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-        metin: `Gökkuşağının bittiği yerde pembe bulutlardan yapılmış bir şato varmış. Bu şatonun pencereleri şekerden, kapıları ise ışıklardanmış.\n\nŞatonun içinde yaşayan iyi kalpli rüya perileri, her gece dünya üzerindeki bütün çocuklara en neşeli rüyaları dağıtmak için masallar fısıldarmış.`
-      },
-      {
-        id: 11,
-        baslik: "Ninni Söyleyen Ay Dede",
-        kategori: "Uyku",
-        resim: "https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=600&auto=format&fit=crop&q=80",
-        metin: `Ay Dede gökyüzüne çıktığında bütün şehir yavaş yavaş uykuya hazırlanırmış. Sokak lambaları yumuşak sarı ışıklarını yakar, evlerin pencereleri tek tek kapanırmış.\n\nAy Dede gümüş ışıklarıyla pencerelere dokunur ve fısıldarmış: "Korkma güzel çocuk, yarın yeni oyunlar ve güneşli bir gün seni bekliyor. Şimdi güzelce dinlen..."`
       }
     ];
+
+    let seciliMasalId = null;
+    let aktifFontSize = 20;
 
     function listele(liste) {
       const grid = document.getElementById('masal-grid');
       grid.innerHTML = '';
-      liste.forEach(item => {
+      const okunanlar = getOkunanMasallar();
+      const favoriler = getFavoriler();
+
+      liste.forEach(m => {
+        const okunduMu = okunanlar.includes(m.id);
+        const favMi = favoriler.includes(m.id);
+
         const div = document.createElement('div');
         div.className = 'custom-card';
         div.innerHTML = `
-          <img src="${item.resim}" class="card-img" alt="${item.baslik}">
-          <div class="card-title">${item.baslik}</div>
-          <button class="action-btn btn-read" onclick="masalAc(${item.id})">OKU 📖</button>
+          <div class="card-badges">
+            <span class="read-badge" style="display:${okunduMu ? 'inline-block' : 'none'};">✓ Okundu</span>
+            <button class="fav-btn" onclick="favoriTikla(${m.id}, this)">${favMi ? '❤️' : '🤍'}</button>
+          </div>
+          <img src="${m.resim}" class="card-img" alt="${m.baslik}">
+          <div class="card-title">${m.baslik}</div>
+          <button class="action-btn btn-read" onclick="masalAc(${m.id})">OKU 📖</button>
         `;
         grid.appendChild(div);
       });
@@ -157,21 +162,54 @@
       else listele(masallar.filter(m => m.kategori === kat));
     }
 
+    function favoriTikla(id, btn) {
+      favoriDegistir(id, btn);
+    }
+
     function masalAc(id) {
       const m = masallar.find(x => x.id === id);
       if (!m) return;
+      seciliMasalId = id;
+
       document.getElementById('detay-resim').src = m.resim;
       document.getElementById('detay-baslik').innerText = m.baslik;
       document.getElementById('detay-metin').innerText = m.metin;
-      document.getElementById('ana-sayfa').style.display = 'none';
-      document.getElementById('okuma-alani').style.display = 'block';
+
+      const ttsBtn = document.getElementById('tts-audio-btn');
+      ttsBtn.onclick = () => sesliOkuDurdur(m.metin, ttsBtn);
+
+      document.getElementById('ana-ekran').style.display = 'none';
+      document.getElementById('greeting-box').style.display = 'none';
+      document.getElementById('okuma-odasi').style.display = 'block';
       window.scrollTo(0, 0);
     }
 
-    function kapatMasal() {
-      document.getElementById('okuma-alani').style.display = 'none';
-      document.getElementById('ana-sayfa').style.display = 'block';
+    function kapatOkuma() {
+      if (okumaDevamEdiyor) {
+        window.speechSynthesis.cancel();
+        okumaDevamEdiyor = false;
+      }
+      document.getElementById('okuma-odasi').style.display = 'none';
+      document.getElementById('greeting-box').style.display = 'block';
+      document.getElementById('ana-ekran').style.display = 'block';
+      listele(masallar); // Okundu rozetlerini güncellemek için
       window.scrollTo(0, 0);
+    }
+
+    function fontDegistir(fark) {
+      aktifFontSize = Math.min(28, Math.max(16, aktifFontSize + fark));
+      document.getElementById('detay-metin').style.fontSize = aktifFontSize + 'px';
+    }
+
+    function masaliBitir() {
+      if (!seciliMasalId) return;
+      const ilkDefa = masalOkunduIsaretle(seciliMasalId);
+      if (ilkDefa) {
+        alert('🎉 Tebrikler! Masalı bitirdin ve 2 Yıldız kazandın! ⭐⭐');
+      } else {
+        alert('Bu masalı daha önce tamamlamıştın, harika bir okuyucusun! 🌟');
+      }
+      kapatOkuma();
     }
 
     listele(masallar);

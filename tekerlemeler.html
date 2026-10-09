@@ -4,36 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Tekerlemeler | Masal &amp; Zeka</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="container">
     
-    <header class="top-header">
-      <a href="index.html" class="top-btn">🏠 Ana Sayfa</a>
-      <a href="index.html" class="site-logo">Masal &amp; Zeka</a>
-      <button class="top-btn" onclick="alert('Tekerlemeleri 3 defa hızlı ve takılmadan oku bakalım!')">⚡ Kural</button>
+    <header class="app-top-bar">
+      <a href="index.html" class="app-brand">
+        <span style="font-size:24px;">⚡</span>
+        <span class="app-logo-text">Tekerlemeler</span>
+      </a>
+      <div class="star-counter-badge">
+        <span>⭐</span>
+        <span id="user-stars-count">0</span>
+      </div>
     </header>
 
-    <!-- Navigasyon Sekmeleri -->
-    <nav class="nav-tabs">
-      <a href="index.html" class="nav-tab-btn tab-masallar">📖 Masallar</a>
-      <a href="tekerlemeler.html" class="nav-tab-btn tab-tekerlemeler active">⚡ Tekerlemeler</a>
-      <a href="oyunlar.html" class="nav-tab-btn tab-oyunlar">🧩 Zeka Oyunları</a>
-    </nav>
-
     <main id="tekerleme-ana">
-      <div class="hero-box">
-        <h1>Dil Çevikliği ve Hızlı Okuma<br>Eğlenceli Tekerlemelerle Pratik Yap!</h1>
+      <div class="welcome-card">
+        <h1>Dil Çevikliği ve Hızlı Okuma 🏃‍♂️💨</h1>
+        <p>Tekerlemeyi 3 defa takılmadan oku, dilini konuştur!</p>
       </div>
 
-      <div id="tekerleme-grid" class="grid-container"></div>
+      <div id="tek-grid" class="grid-container"></div>
     </main>
 
-    <!-- Tekerleme Detay -->
-    <article id="tekerleme-detay" class="detail-box" style="display: none;">
-      <button class="back-btn" onclick="kapatTekerleme()">⬅ Tekerlemelere Dön</button>
+    <article id="tek-detay" class="detail-box" style="display: none;">
+      <button class="back-btn" onclick="kapatTek()">⬅ Tekerlemelere Dön</button>
+      <button id="tek-tts-btn" class="tts-btn" style="background:#059669; box-shadow:0 4px 0 #047857;">🔊 Tekerlemeyi Dinle</button>
       <img id="tek-resim" class="detail-img" src="" alt="Kapak">
       <h1 id="tek-baslik" class="detail-title"></h1>
       <div id="tek-metin" class="detail-text"></div>
@@ -41,46 +41,60 @@
 
   </div>
 
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">📖</span>
+      <span>Masallar</span>
+    </a>
+    <a href="tekerlemeler.html" class="nav-item active">
+      <span class="nav-icon">⚡</span>
+      <span>Tekerleme</span>
+    </a>
+    <a href="oyunlar.html" class="nav-item">
+      <span class="nav-icon">🧩</span>
+      <span>Oyunlar</span>
+    </a>
+    <a href="rozetler.html" class="nav-item">
+      <span class="nav-icon">🏆</span>
+      <span>Başarılarım</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
   <script>
     const tekerlemeler = [
       {
         id: 1,
         baslik: "Şemsi Paşa Pasajı",
         resim: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80",
-        metin: `Hızlı okuma ve diksiyon için bu tekerlemeyi 3 defa takılmadan söyle! 🏃‍♂️💨\n\nŞu köşe yaz köşesi,\nŞu köşe kış köşesi,\nOrtadaki su şişesi!\n\nŞemsi Paşa Pasajı'nda sesi boğuk bir paşa,\nÜç tencere has hoşafı taşırmış taşa!`
+        metin: `Şu köşe yaz köşesi,\nŞu köşe kış köşesi,\nOrtadaki su şişesi!\n\nŞemsi Paşa Pasajı'nda sesi boğuk bir paşa,\nÜç tencere has hoşafı taşırmış taşa!`
       },
       {
         id: 2,
         baslik: "Berber Hasan",
         resim: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80",
-        metin: `Diline düğüm atmadan hızlıca söyleyebilir misin? ✂️\n\nBir berber bir berbere,\nBre berber, gel beraber bir berber dükkanı açalım demiş!\n\nDal sarkar kartal kalkar,\nKartal kalkar dal sarkar!`
+        metin: `Bir berber bir berbere,\nBre berber, gel beraber bir berber dükkanı açalım demiş!\n\nDal sarkar kartal kalkar,\nKartal kalkar dal sarkar!`
       },
       {
         id: 3,
         baslik: "Yoğurtçu Çırağı",
         resim: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=80",
-        metin: `Bu tekerlemeyi şaşırmadan oku bakalım! 🥣\n\nŞu yoğurdu sarımsaklasak da mı saklasak,\nYoksa sarımsaklamasak da mı saklasak?\n\nGül dibi bülbül dili gibi,\nGül dibi bülbül dili!`
-      },
-      {
-        id: 4,
-        baslik: "Kırk Küp Kırk Kulp",
-        resim: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&auto=format&fit=crop&q=80",
-        metin: `Zorlu bir tekerleme sınavı! 🏺\n\nKırk küp, kırkının da kulpu kırık küp!\n\nÇatalca'da topal çoban çatal yapıp çatal satar,\nNesi için Çatalca'da topal çoban çatal yapıp çatal satar?`
+        metin: `Şu yoğurdu sarımsaklasak da mı saklasak,\nYoksa sarımsaklamasak da mı saklasak?\n\nGül dibi bülbül dili gibi,\nGül dibi bülbül dili!`
       }
     ];
 
-    function listeleTekerleme() {
-      const grid = document.getElementById('tekerleme-grid');
-      grid.innerHTML = '';
+    function listele() {
+      const g = document.getElementById('tek-grid');
+      g.innerHTML = '';
       tekerlemeler.forEach(t => {
-        const div = document.createElement('div');
-        div.className = 'custom-card';
-        div.innerHTML = `
+        const d = document.createElement('div');
+        d.className = 'custom-card';
+        d.innerHTML = `
           <img src="${t.resim}" class="card-img" alt="${t.baslik}">
           <div class="card-title">${t.baslik}</div>
-          <button class="action-btn btn-read" style="background:#059669; box-shadow:0 4px 0 #047857;" onclick="tekAc(${t.id})">OKU ⚡</button>
+          <button class="action-btn btn-read" style="background:#059669;box-shadow:0 4px 0 #047857;" onclick="tekAc(${t.id})">OKU ⚡</button>
         `;
-        grid.appendChild(div);
+        g.appendChild(d);
       });
     }
 
@@ -90,18 +104,23 @@
       document.getElementById('tek-resim').src = t.resim;
       document.getElementById('tek-baslik').innerText = t.baslik;
       document.getElementById('tek-metin').innerText = t.metin;
+
+      const btn = document.getElementById('tek-tts-btn');
+      btn.onclick = () => sesliOkuDurdur(t.metin, btn);
+
       document.getElementById('tekerleme-ana').style.display = 'none';
-      document.getElementById('tekerleme-detay').style.display = 'block';
+      document.getElementById('tek-detay').style.display = 'block';
       window.scrollTo(0, 0);
     }
 
-    function kapatTekerleme() {
-      document.getElementById('tekerleme-detay').style.display = 'none';
+    function kapatTek() {
+      if (okumaDevamEdiyor) window.speechSynthesis.cancel();
+      document.getElementById('tek-detay').style.display = 'none';
       document.getElementById('tekerleme-ana').style.display = 'block';
       window.scrollTo(0, 0);
     }
 
-    listeleTekerleme();
+    listele();
   </script>
 </body>
 </html>

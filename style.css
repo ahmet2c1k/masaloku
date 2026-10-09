@@ -1,4 +1,3 @@
-/* Ortak Çocuk Teması Stilleri */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 * {
@@ -15,104 +14,77 @@ body {
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1e293b;
   min-height: 100vh;
-  padding: 16px 12px 60px 12px;
+  padding: 12px 12px 90px 12px; /* Alttaki menü payı */
 }
 
 .container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
-/* Üst Bar */
-.top-header {
+/* Üst Mobil Uygulama Barı */
+.app-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 10px 16px;
+  border-radius: 24px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  margin-bottom: 16px;
+  border: 3px solid #ffffff;
 }
 
-.top-btn {
-  background: #ffffff;
-  border: 3px solid #fde047;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-size: 15px;
-  font-weight: 800;
-  color: #ea580c;
-  box-shadow: 0 4px 0 #facc15;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
+.app-brand {
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  text-decoration: none;
 }
 
-.top-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #facc15;
-}
-
-.site-logo {
-  font-size: 30px;
+.app-logo-text {
+  font-size: 22px;
   font-weight: 900;
   color: #f97316;
-  text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #fed7aa;
-  text-align: center;
-  text-decoration: none;
 }
 
-/* Navigasyon / Sayfa Geçiş Sekmeleri */
-.nav-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.nav-tab-btn {
-  flex: 1;
-  min-width: 130px;
-  max-width: 220px;
-  padding: 12px 10px;
-  border-radius: 22px;
-  border: 4px solid #ffffff;
-  font-size: 15px;
+.star-counter-badge {
+  background: #fef08a;
+  border: 2px solid #facc15;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-weight: 900;
-  text-align: center;
-  text-decoration: none;
-  color: #ffffff;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  color: #854d0e;
+  font-size: 15px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s;
+  gap: 5px;
+  box-shadow: 0 3px 0 #eab308;
 }
 
-.tab-masallar { background: #0284c7; }
-.tab-tekerlemeler { background: #059669; }
-.tab-oyunlar { background: #9333ea; }
-
-.nav-tab-btn.active {
-  transform: translateY(-2px);
-  border-color: #fde047;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.18);
-  filter: brightness(1.08);
-}
-
-/* Karşılama Başlığı */
-.hero-box {
+/* Karşılama ve Motivasyon Kartı */
+.welcome-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 16px;
   text-align: center;
   margin-bottom: 20px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  border: 3px solid #ffffff;
 }
 
-.hero-box h1 {
-  font-size: 24px;
-  font-weight: 800;
+.welcome-card h1 {
+  font-size: 22px;
+  font-weight: 900;
   color: #0f172a;
-  line-height: 1.3;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+}
+
+.welcome-card p {
+  font-size: 15px;
+  font-weight: 700;
+  color: #64748b;
 }
 
 /* Kategori Hapları */
@@ -120,40 +92,37 @@ body {
   display: flex;
   justify-content: center;
   gap: 8px;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .cat-btn {
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-width: 78px;
-  padding: 8px 6px;
+  gap: 6px;
+  padding: 8px 14px;
   border-radius: 18px;
   border: none;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   color: #ffffff;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
   cursor: pointer;
 }
 
-.cat-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
-.cat-icon { font-size: 26px; margin-bottom: 2px; }
 .cat-all { background: #f97316; }
 .cat-1   { background: #f59e0b; }
 .cat-2   { background: #a855f7; }
 .cat-3   { background: #38bdf8; }
-.cat-4   { background: #10b981; }
 
-/* Grid Düzeni */
+/* Grid Kartlar */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
 }
 
 .custom-card {
@@ -164,37 +133,62 @@ body {
   flex-direction: column;
   padding: 12px;
   border: 4px solid #ffffff;
+  position: relative;
+}
+
+/* Rozetler ve Favori Butonu */
+.card-badges {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.read-badge {
+  background: #22c55e;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 900;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  display: none; /* Dinamik JS ile açılır */
+}
+
+.fav-btn {
+  pointer-events: auto;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
 }
 
 .card-img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   border-radius: 18px;
   object-fit: cover;
   background: #fed7aa;
-  display: block;
-}
-
-.game-icon-card {
-  width: 100%;
-  height: 200px;
-  border-radius: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 64px;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   color: #1e293b;
-  margin: 12px 0;
+  margin: 10px 0;
   text-align: center;
   line-height: 1.25;
-  min-height: 44px;
+  min-height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,12 +197,12 @@ body {
 .action-btn {
   color: #ffffff;
   border-radius: 18px;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
   border: none;
   font-family: inherit;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 900;
   cursor: pointer;
   display: block;
   width: 100%;
@@ -216,32 +210,92 @@ body {
   margin-top: auto;
 }
 
-.action-btn:active { transform: translateY(2px); }
-.btn-read { background: #06b6d4; box-shadow: 0 4px 0 #0891b2; }
+.btn-read { background: #0284c7; box-shadow: 0 4px 0 #0369a1; }
 .btn-play { background: #9333ea; box-shadow: 0 4px 0 #7e22ce; }
 
-/* Okuma ve Detay Sayfası */
+/* Okuma Odası (Reader) */
 .detail-box {
   background: #ffffff;
   border-radius: 28px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.reader-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.back-btn {
+  background: #facc15;
+  color: #78350f;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  box-shadow: 0 3px 0 #eab308;
+  cursor: pointer;
+}
+
+.font-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.font-btn {
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Sesli Dinleme Butonu */
+.tts-btn {
+  background: #9333ea;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 18px;
+  font-weight: 900;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 0 #6b21a8;
+  cursor: pointer;
+  margin-bottom: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+.tts-btn.playing {
+  background: #ef4444;
+  box-shadow: 0 4px 0 #b91c1c;
 }
 
 .detail-img {
   width: 100%;
-  max-height: 360px;
+  max-height: 320px;
   object-fit: cover;
   border-radius: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .detail-title {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
   color: #ea580c;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .detail-text {
@@ -252,20 +306,58 @@ body {
   user-select: text;
 }
 
-.back-btn {
-  background: #facc15;
-  color: #78350f;
-  font-weight: 800;
-  padding: 10px 20px;
-  border-radius: 16px;
+/* Masalı Bitirdim Butonu */
+.finish-story-btn {
+  background: #22c55e;
+  color: #ffffff;
   border: none;
-  font-family: inherit;
-  font-size: 15px;
-  box-shadow: 0 4px 0 #eab308;
+  border-radius: 20px;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 900;
+  box-shadow: 0 5px 0 #15803d;
+  display: block;
+  width: 100%;
+  margin-top: 24px;
   cursor: pointer;
-  margin-bottom: 20px;
-  display: inline-flex;
+}
+
+/* SABİT ALT MENÜ (Bottom App Navigation) */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top: 3px solid #fde047;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 4px 12px 4px;
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
+  z-index: 999;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
   text-decoration: none;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 800;
+  flex: 1;
+}
+
+.nav-item.active {
+  color: #0284c7;
+}
+
+.nav-icon {
+  font-size: 22px;
+  margin-bottom: 2px;
+  transition: transform 0.2s;
+}
+
+.nav-item.active .nav-icon {
+  transform: translateY(-2px) scale(1.1);
 }
