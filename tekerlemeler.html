@@ -64,13 +64,26 @@
   <script>
     let tekerlemeler = [];
 
-fetch('tekerlemeler.json')
-  .then(res => res.json())
-  .then(data => {
-    tekerlemeler = data;
-    listele();
-  })
-  .catch(err => console.error("Tekerlemeler yüklenemedi:", err));
+    // Google Sheets Bağlantısı (Tekerlemeler Sekmesi)
+    const SHEET_ID = '18Kyr4JCnu4goQzZiZnyXj90xhq_mdeoeWRwDwSLwn34';
+    const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Tekerlemeler`;
+
+    function tekerlemeleriGetir() {
+      fetch(URL)
+        .then(res => res.text())
+        .then(data => {
+          // Google Sheets JSON çıktısını temizleme
+          const json = JSON.parse(data.substring(47).slice(0, -2));
+          tekerlemeler = json.table.rows.map(row => ({
+            id: Number(row.c[0]?.v || 0),
+            baslik: String(row.c[1]?.v || ''),
+            resim: String(row.c[2]?.v || ''),
+            metin: String(row.c[3]?.v || '')
+          }));
+          listele();
+        })
+        .catch(err => console.error("Tekerlemeler tablodan çekilemedi:", err));
+    }
 
     function listele() {
       const g = document.getElementById('tek-grid');
@@ -109,7 +122,8 @@ fetch('tekerlemeler.json')
       window.scrollTo(0, 0);
     }
 
-    listele();
+    // Sayfa açıldığında doğrudan Google E-Tablo'dan yükle
+    tekerlemeleriGetir();
   </script>
 </body>
 </html>
