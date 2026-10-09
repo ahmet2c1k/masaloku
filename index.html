@@ -84,17 +84,34 @@
 
   <script src="app.js"></script>
   <script>
-    let masallar = [];
+  let masallar = [];
 
-fetch('masallar.json')
-  .then(res => res.json())
-  .then(data => {
-    masallar = data;
-    listele(masallar);
-  })
-  .catch(err => console.error("Masallar yüklenemedi:", err));
-    let seciliMasalId = null;
-    let aktifFontSize = 20;
+    // Google Sheets Bağlantısı
+    const SHEET_ID = '18Kyr4JCnu4goQzZiZnyXj90xhq_mdeoeWRwDwSLwn34';
+    const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Masallar`;
+
+    function masallariGetir() {
+      fetch(URL)
+        .then(res => res.text())
+        .then(data => {
+          // Google Sheets yanıtını temiz JSON'a çevir
+          const json = JSON.parse(data.substring(47).slice(0, -2));
+          masallar = json.table.rows.map(row => ({
+            id: Number(row.c[0]?.v || 0),
+            baslik: String(row.c[1]?.v || ''),
+            kategori: String(row.c[2]?.v || 'Hayvanlar'),
+            resim: String(row.c[3]?.v || ''),
+            metin: String(row.c[4]?.v || '')
+          }));
+          listele(masallar);
+        })
+        .catch(err => {
+          console.error("Tablodan veri çekilemedi:", err);
+        });
+    }
+
+    // Sayfa açıldığında tablodan çek
+    masallariGetir();
 
     function listele(liste) {
       const grid = document.getElementById('masal-grid');
