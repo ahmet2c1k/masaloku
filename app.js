@@ -52,7 +52,7 @@ function favoriDegistir(id, btnEl) {
   localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify(liste));
 }
 
-// SESLİ OKUMA MOTORU (TTS - SpeechSynthesis)
+// SESLİ OKUMA MOTORU (Gelişmiş & Sevimli TTS)
 let aktifSes = null;
 let okumaDevamEdiyor = false;
 
@@ -62,6 +62,7 @@ function sesliOkuDurdur(metin, btnEl) {
     return;
   }
 
+  // Zaten çalıyorsa durdur
   if (okumaDevamEdiyor) {
     window.speechSynthesis.cancel();
     okumaDevamEdiyor = false;
@@ -70,10 +71,32 @@ function sesliOkuDurdur(metin, btnEl) {
     return;
   }
 
-  window.speechSynthesis.cancel(); // Varsa öncekini sustur
+  window.speechSynthesis.cancel();
   aktifSes = new SpeechSynthesisUtterance(metin);
   aktifSes.lang = 'tr-TR';
-  aktifSes.rate = 0.9; // Çocuklar için sakin ve net hız
+
+  // --- SEVİMLİ VE MASALCI AYARLARI ---
+  // 1. Ses Tonu (Pitch): 1.0 normaldir. 1.18 - 1.25 arası sesi daha tatlı, genç ve masalcı yapar.
+  aktifSes.pitch = 1.2;
+
+  // 2. Okuma Hızı (Rate): 1.0 standarttır. 0.88 çocukların kelimeleri net yakalaması için idealdir.
+  aktifSes.rate = 0.88;
+
+  // 3. Cihazdaki En Kaliteli Doğal Türkçe Sesi Bulma
+  const tumSesler = window.speechSynthesis.getVoices();
+  const enIyiTurkceSes = tumSesler.find(v => 
+    v.lang.includes('tr') && (
+      v.name.includes('Natural') || 
+      v.name.includes('Google') || 
+      v.name.includes('Yelda') || 
+      v.name.includes('Emel') ||
+      v.name.includes('Seda')
+    )
+  ) || tumSesler.find(v => v.lang.includes('tr'));
+
+  if (enIyiTurkceSes) {
+    aktifSes.voice = enIyiTurkceSes;
+  }
 
   aktifSes.onstart = () => {
     okumaDevamEdiyor = true;
@@ -96,13 +119,12 @@ function sesliOkuDurdur(metin, btnEl) {
   window.speechSynthesis.speak(aktifSes);
 }
 
-// PWA Service Worker Kaydı
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW hatası:', err));
-  });
+// Mobil cihazlarda seslerin arka planda gecikmeli yüklenmesini önleme
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
 }
-
 // Sayfa Açılışında Yıldızları Bas
 document.addEventListener('DOMContentLoaded', () => {
   guncelleYildizBari();
