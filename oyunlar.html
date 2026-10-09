@@ -7,20 +7,194 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <style>
-    .room-title { font-size: 24px; font-weight: 900; color: #7e22ce; text-align: center; margin-bottom: 8px; }
-    .room-desc { text-align: center; font-size: 15px; color: #64748b; margin-bottom: 20px; font-weight: 600; }
-    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 360px; margin: 0 auto 16px auto; }
-    .memory-card { aspect-ratio: 1; background: #e0e7ff; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; box-shadow: 0 4px 0 #c7d2fe; }
-    .memory-card.flipped { background: #ffffff; box-shadow: 0 4px 0 #e2e8f0; }
-    .memory-card.matched { background: #bbf7d0; box-shadow: 0 4px 0 #86efac; cursor: default; }
-    .reset-btn { background: #3b82f6; color: #ffffff; font-family: inherit; font-weight: 800; border: none; padding: 10px 20px; border-radius: 16px; box-shadow: 0 4px 0 #1d4ed8; display: block; margin: 16px auto 0 auto; cursor: pointer; }
-    .word-box { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #ea580c; text-align: center; margin: 20px 0; background: #fff7ed; padding: 16px; border-radius: 20px; }
-    .option-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .big-btn { min-width: 60px; height: 60px; background: #facc15; border: none; border-radius: 18px; font-size: 24px; font-weight: 900; color: #78350f; box-shadow: 0 4px 0 #eab308; cursor: pointer; font-family: inherit; padding: 0 16px; }
-    .shadow-display { font-size: 80px; text-align: center; margin: 15px 0; }
-    .shadow-option { font-size: 40px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border: 3px solid #cbd5e1; border-radius: 20px; cursor: pointer; }
-    .odd-option { background: #eff6ff; border: 3px solid #93c5fd; border-radius: 20px; padding: 14px 20px; font-size: 20px; font-weight: 800; color: #1e3a8a; cursor: pointer; box-shadow: 0 4px 0 #60a5fa; font-family: inherit; }
-    .feedback-box { text-align: center; font-weight: 800; font-size: 19px; min-height: 32px; margin-top: 10px; }
+    /* Oyun Seçim Sekmeleri */
+    .game-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .game-tab-btn {
+      flex: 1;
+      padding: 12px 10px;
+      border-radius: 18px;
+      border: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #f1f5f9;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+    .game-tab-btn.active {
+      background: #f97316;
+      color: #ffffff;
+      box-shadow: 0 4px 0 #c2410c;
+    }
+
+    /* KELİME ÇARKI OYUN ALANI */
+    .word-game-card {
+      background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
+      border: 4px solid #fed7aa;
+      border-radius: 28px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.1);
+    }
+    .word-level-info {
+      font-size: 14px;
+      font-weight: 900;
+      color: #ea580c;
+      background: #ffedd5;
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+    }
+    .word-hint {
+      font-size: 16px;
+      font-weight: 800;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+
+    /* Bulunacak Kelime Yuvaları */
+    .word-slots-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .word-row {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .word-box {
+      width: 42px;
+      height: 46px;
+      background: #f8fafc;
+      border: 3px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .word-box.solved {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #15803d;
+      transform: scale(1.05);
+    }
+
+    /* Aktif Yazılan Harf Giriş Şeridi */
+    .current-word-display {
+      min-height: 48px;
+      background: #ffffff;
+      border: 3px dashed #fdba74;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: #c2410c;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    /* Harf Çarkı / Butonları */
+    .letters-wheel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .letter-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 4px 0 #9a3412;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    .letter-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #9a3412;
+    }
+
+    /* Aksiyon Butonları */
+    .word-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-word-action {
+      padding: 10px 18px;
+      border-radius: 16px;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .btn-clear {
+      background: #f1f5f9;
+      color: #64748b;
+      box-shadow: 0 3px 0 #cbd5e1;
+    }
+    .btn-submit {
+      background: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 0 #047857;
+    }
+    .btn-submit:active { transform: translateY(2px); box-shadow: 0 2px 0 #047857; }
+
+    /* Hafıza Oyunu (Eski Oyun) Alanı */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .memory-card {
+      aspect-ratio: 1;
+      background: #3b82f6;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #1d4ed8;
+      user-select: none;
+    }
+    .memory-card.flipped {
+      background: #ffffff;
+      border: 3px solid #60a5fa;
+      box-shadow: 0 4px 0 #93c5fd;
+    }
   </style>
 </head>
 <body>
@@ -30,7 +204,7 @@
     <header class="app-top-bar">
       <a href="index.html" class="app-brand">
         <span style="font-size:24px;">🧩</span>
-        <span class="app-logo-text">Zeka Oyunları</span>
+        <span class="app-logo-text">Zeka Parkı</span>
       </a>
       <div class="star-counter-badge">
         <span>⭐</span>
@@ -38,25 +212,43 @@
       </div>
     </header>
 
-    <main id="oyun-liste">
-      <div class="welcome-card">
-        <h1>Zihnini Güçlendir 🧠✨</h1>
-        <p>Oyunları başarıyla bitir ve ekstra yıldızları topla!</p>
-      </div>
-      <div id="oyun-grid" class="grid-container"></div>
-    </main>
+    <!-- OYUN DEĞİŞTİRME SEKMELERİ -->
+    <div class="game-tabs">
+      <button class="game-tab-btn active" id="tab-btn-word" onclick="oyunDegistir('word')">🎡 Kelime Çarkı</button>
+      <button class="game-tab-btn" id="tab-btn-memory" onclick="oyunDegistir('memory')">🃏 Hafıza Kartları</button>
+    </div>
 
-    <section id="oyun-odasi" class="detail-box" style="display: none;">
-      <button class="back-btn" onclick="kapatOyun()">⬅ Oyunlara Dön</button>
-      <h2 id="room-game-title" class="room-title"></h2>
-      <p id="room-game-desc" class="room-desc"></p>
-      
-      <div id="game-playground"></div>
-      <div id="game-feedback" class="feedback-box"></div>
+    <!-- 1. OYUN: TRT / WOW TARZI KELİME BULMACA -->
+    <section id="game-word-section" class="word-game-card">
+      <div class="word-level-info" id="word-level-text">Bölüm 1</div>
+      <div class="word-hint" id="word-hint-text">İpucu: Sevimli dostlarımız</div>
+
+      <!-- Boş Kelime Kutuları -->
+      <div class="word-slots-container" id="word-slots"></div>
+
+      <!-- Harflerin Yazıldığı Ekran -->
+      <div class="current-word-display" id="word-input-display">...</div>
+
+      <!-- Yuvarlak Harf Butonları -->
+      <div class="letters-wheel" id="letters-wheel"></div>
+
+      <!-- Butonlar -->
+      <div class="word-controls">
+        <button class="btn-word-action btn-clear" onclick="harfTemizle()">❌ Temizle</button>
+        <button class="btn-word-action btn-submit" onclick="kelimeKontrolEt()">✨ Bul!</button>
+      </div>
+    </section>
+
+    <!-- 2. OYUN: HAFIZA KARTLARI -->
+    <section id="game-memory-section" style="display:none; text-align:center;">
+      <h3 style="margin-bottom:12px; font-weight:900; color:#1e293b;">Eşini Bul! 🃏</h3>
+      <div class="memory-grid" id="memory-grid"></div>
+      <button class="btn-word-action btn-clear" style="margin-top:16px;" onclick="hafizaBaslat()">Yeniden Başlat 🔄</button>
     </section>
 
   </div>
 
+  <!-- Alt Mobil Menü -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <span class="nav-icon">📖</span>
@@ -78,186 +270,185 @@
 
   <script src="app.js"></script>
   <script>
-    const oyunlar = [
-      { id: "hafiza", baslik: "🦁 Hayvan Eşleştirmece", icon: "🦁", bg: "#fef08a", aciklama: "Aynı iki hayvanı bularak tüm kartları aç!" },
-      { id: "kelime", baslik: "🔤 Eksik Harfi Tamamla", icon: "🔤", bg: "#fed7aa", aciklama: "Kelimede eksik bırakılan harfi doğru seçenekten bul!" },
-      { id: "golge", baslik: "👤 Doğru Eşi/Gölgeyi Bul", icon: "👤", bg: "#e0e7ff", aciklama: "Gördüğün sevimli hayvanın eşini bul!" },
-      { id: "farkli", baslik: "❓ Farklı Olanı Bul", icon: "❓", bg: "#bbf7d0", aciklama: "Gruba uymayan farklı nesneyi yakala!" }
+    /* KELİME ÇARKI BÖLÜMLERİ */
+    const bolumler = [
+      {
+        bolum: 1,
+        ipucu: "🐾 Sevimli Hayvan Dostlarımız",
+        harfler: ["K", "E", "D", "İ"],
+        hedefler: ["KEDİ", "DİK"]
+      },
+      {
+        bolum: 2,
+        ipucu: "🍉 Jojupof'un Dünyası",
+        harfler: ["P", "A", "N", "D", "A"],
+        hedefler: ["PANDA", "DANA", "ADA"]
+      },
+      {
+        bolum: 3,
+        ipucu: "🌳 Doğanın Güzellikleri",
+        harfler: ["A", "Ğ", "A", "Ç"],
+        hedefler: ["AĞAÇ", "ÇAĞ"]
+      },
+      {
+        bolum: 4,
+        ipucu: "📚 Okul ve Masal Dünyası",
+        harfler: ["K", "İ", "T", "A", "P"],
+        hedefler: ["KİTAP", "PATİK", "TAKİP"]
+      }
     ];
 
-    function listele() {
-      const g = document.getElementById('oyun-grid');
-      g.innerHTML = '';
-      oyunlar.forEach(o => {
-        const d = document.createElement('div');
-        d.className = 'custom-card';
-        d.innerHTML = `
-          <div style="height:170px;background:${o.bg};border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:64px;">${o.icon}</div>
-          <div class="card-title">${o.baslik}</div>
-          <button class="action-btn btn-play" onclick="oyunAc('${o.id}')">OYNA 🎮</button>
-        `;
-        g.appendChild(d);
+    let aktifBolumIndex = 0;
+    let yazilanKelime = "";
+    let bulunanKelimeler = [];
+
+    function bolumYukle(idx) {
+      aktifBolumIndex = idx % bolumler.length;
+      const b = bolumler[aktifBolumIndex];
+      yazilanKelime = "";
+      bulunanKelimeler = [];
+      document.getElementById('word-input-display').innerText = "";
+
+      document.getElementById('word-level-text').innerText = `Bölüm ${b.bolum}`;
+      document.getElementById('word-hint-text').innerText = `İpucu: ${b.ipucu}`;
+
+      // Slotları Çiz
+      const slotContainer = document.getElementById('word-slots');
+      slotContainer.innerHTML = '';
+      b.hedefler.forEach(kelime => {
+        const row = document.createElement('div');
+        row.className = 'word-row';
+        row.id = `row-${kelime}`;
+        for (let i = 0; i < kelime.length; i++) {
+          const box = document.createElement('div');
+          box.className = 'word-box';
+          box.id = `box-${kelime}-${i}`;
+          box.innerText = "?";
+          row.appendChild(box);
+        }
+        slotContainer.appendChild(row);
+      });
+
+      // Harf Çarkını Çiz
+      const wheel = document.getElementById('letters-wheel');
+      wheel.innerHTML = '';
+      b.harfler.forEach(harf => {
+        const btn = document.createElement('button');
+        btn.className = 'letter-btn';
+        btn.innerText = harf;
+        btn.onclick = () => harfEkle(harf);
+        wheel.appendChild(btn);
       });
     }
 
-    function oyunAc(id) {
-      const o = oyunlar.find(x => x.id === id);
-      if (!o) return;
-      document.getElementById('oyun-liste').style.display = 'none';
-      document.getElementById('oyun-odasi').style.display = 'block';
-      document.getElementById('room-game-title').innerText = o.baslik;
-      document.getElementById('room-game-desc').innerText = o.aciklama;
-      document.getElementById('game-feedback').innerText = '';
-      window.scrollTo(0, 0);
-
-      const p = document.getElementById('game-playground');
-      p.innerHTML = '';
-      if (id === 'hafiza') baslatHafiza(p);
-      if (id === 'kelime') baslatKelime(p);
-      if (id === 'golge') baslatGolge(p);
-      if (id === 'farkli') baslatFarkli(p);
+    function harfEkle(h) {
+      if (yazilanKelime.length < 8) {
+        yazilanKelime += h;
+        document.getElementById('word-input-display').innerText = yazilanKelime;
+      }
     }
 
-    function kapatOyun() {
-      document.getElementById('oyun-odasi').style.display = 'none';
-      document.getElementById('oyun-liste').style.display = 'block';
-      window.scrollTo(0, 0);
+    function harfTemizle() {
+      yazilanKelime = "";
+      document.getElementById('word-input-display').innerText = "";
     }
 
-    function baslatHafiza(alan) {
-      const emojiler = ['🐼', '🦁', '🦉', '🎈', '⭐', '🌙'];
-      let acikKartlar = [];
-      let eslesen = 0;
-      alan.innerHTML = '<div class="memory-grid" id="m-grid"></div><button class="reset-btn" onclick="baslatHafiza(document.getElementById(\'game-playground\'))">Yeniden Karıştır 🔄</button>';
-      const grid = document.getElementById('m-grid');
-      const kartDizisi = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
+    function kelimeKontrolEt() {
+      const b = bolumler[aktifBolumIndex];
+      if (b.hedefler.includes(yazilanKelime)) {
+        if (!bulunanKelimeler.includes(yazilanKelime)) {
+          bulunanKelimeler.push(yazilanKelime);
+          
+          // Kutucukları aç
+          for (let i = 0; i < yazilanKelime.length; i++) {
+            const box = document.getElementById(`box-${yazilanKelime}-${i}`);
+            box.innerText = yazilanKelime[i];
+            box.classList.add('solved');
+          }
 
-      kartDizisi.forEach(emoji => {
+          harfTemizle();
+
+          // Bölüm Bitti mi?
+          if (bulunanKelimeler.length === b.hedefler.length) {
+            yildizEkle(2);
+            setTimeout(() => {
+              alert('🎉 Muhteşemsin! Tüm kelimeleri buldun ve +2 Yıldız kazandın! ⭐⭐ Jojupof seni alkışlıyor!');
+              bolumYukle(aktifBolumIndex + 1);
+            }, 400);
+          }
+        } else {
+          alert('Bu kelimeyi zaten buldun! 🌟');
+          harfTemizle();
+        }
+      } else {
+        // Hatalı titreşim hissi
+        const d = document.getElementById('word-input-display');
+        d.style.color = '#ef4444';
+        setTimeout(() => {
+          d.style.color = '#c2410c';
+          harfTemizle();
+        }, 500);
+      }
+    }
+
+    /* SEKME DEĞİŞTİRME */
+    function oyunDegistir(tur) {
+      document.getElementById('tab-btn-word').classList.toggle('active', tur === 'word');
+      document.getElementById('tab-btn-memory').classList.toggle('active', tur === 'memory');
+      document.getElementById('game-word-section').style.display = (tur === 'word') ? 'block' : 'none';
+      document.getElementById('game-memory-section').style.display = (tur === 'memory') ? 'block' : 'none';
+    }
+
+    /* HAFIZA KARTLARI */
+    const emojiler = ['🐼', '🦁', '🐸', '🐨', '🦊', '🐰'];
+    let acikKartlar = [];
+    let kilit = false;
+
+    function hafizaBaslat() {
+      const grid = document.getElementById('memory-grid');
+      grid.innerHTML = '';
+      const deste = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
+
+      deste.forEach(emo => {
         const c = document.createElement('div');
         c.className = 'memory-card';
-        c.dataset.emoji = emoji;
+        c.dataset.icon = emo;
         c.innerText = '❓';
-        c.onclick = () => {
-          if (c.classList.contains('flipped') || c.classList.contains('matched') || acikKartlar.length === 2) return;
-          c.innerText = emoji;
-          c.classList.add('flipped');
-          acikKartlar.push(c);
-
-          if (acikKartlar.length === 2) {
-            const [k1, k2] = acikKartlar;
-            if (k1.dataset.emoji === k2.dataset.emoji) {
-              k1.classList.add('matched');
-              k2.classList.add('matched');
-              acikKartlar = [];
-              eslesen += 2;
-              if (eslesen === kartDizisi.length) {
-                document.getElementById('game-feedback').innerText = '🎉 Harikasın! +1 Yıldız kazandın! ⭐';
-                document.getElementById('game-feedback').style.color = '#15803d';
-                yildizEkle(1);
-              }
-            } else {
-              setTimeout(() => {
-                k1.innerText = '❓';
-                k2.innerText = '❓';
-                k1.classList.remove('flipped');
-                k2.classList.remove('flipped');
-                acikKartlar = [];
-              }, 700);
-            }
-          }
-        };
+        c.onclick = () => kartSec(c);
         grid.appendChild(c);
       });
+      acikKartlar = [];
+      kilit = false;
     }
 
-    const kelimeler = [
-      { soru: "P _ N D A", dogru: "A", sec: ["A", "E", "O"] },
-      { soru: "B A L _ N", dogru: "O", sec: ["U", "O", "I"] }
-    ];
-    let kIndex = 0;
-    function baslatKelime(alan) {
-      const q = kelimeler[kIndex % kelimeler.length];
-      alan.innerHTML = `<div class="word-box">${q.soru}</div><div class="option-row" id="k-opt"></div>`;
-      const opt = document.getElementById('k-opt');
-      const fb = document.getElementById('game-feedback');
-      q.sec.forEach(h => {
-        const b = document.createElement('button');
-        b.className = 'big-btn';
-        b.innerText = h;
-        b.onclick = () => {
-          if (h === q.dogru) {
-            fb.innerText = '🎉 Doğru! +1 Yıldız ⭐';
-            fb.style.color = '#15803d';
-            yildizEkle(1);
-            setTimeout(() => { kIndex++; baslatKelime(alan); fb.innerText = ''; }, 1200);
-          } else {
-            fb.innerText = '❌ Tekrar dene küçük kaşif!';
-            fb.style.color = '#dc2626';
-          }
-        };
-        opt.appendChild(b);
-      });
+    function kartSec(card) {
+      if (kilit || card.classList.contains('flipped')) return;
+      card.classList.add('flipped');
+      card.innerText = card.dataset.icon;
+      acikKartlar.push(card);
+
+      if (acikKartlar.length === 2) {
+        kilit = true;
+        if (acikKartlar[0].dataset.icon === acikKartlar[1].dataset.icon) {
+          acikKartlar = [];
+          kilit = false;
+        } else {
+          setTimeout(() => {
+            acikKartlar.forEach(c => {
+              c.classList.remove('flipped');
+              c.innerText = '❓';
+            });
+            acikKartlar = [];
+            kilit = false;
+          }, 800);
+        }
+      }
     }
 
-    const golgeler = [
-      { asil: "🦁", secenekler: ["🦁", "🐘", "🦒"], dogru: "🦁" },
-      { asil: "🐼", secenekler: ["🐵", "🐼", "🐰"], dogru: "🐼" }
-    ];
-    let gIndex = 0;
-    function baslatGolge(alan) {
-      const q = golgeler[gIndex % golgeler.length];
-      alan.innerHTML = `<div class="shadow-display">${q.asil}</div><p style="text-align:center;font-weight:700;margin-bottom:12px;color:#475569;">Eşini bul!</p><div class="option-row" id="g-opt"></div>`;
-      const opt = document.getElementById('g-opt');
-      const fb = document.getElementById('game-feedback');
-      q.secenekler.forEach(item => {
-        const o = document.createElement('div');
-        o.className = 'shadow-option';
-        o.innerText = item;
-        o.onclick = () => {
-          if (item === q.dogru) {
-            fb.innerText = '🎉 Doğru eşleşti! +1 Yıldız ⭐';
-            fb.style.color = '#15803d';
-            yildizEkle(1);
-            setTimeout(() => { gIndex++; baslatGolge(alan); fb.innerText = ''; }, 1200);
-          } else {
-            fb.innerText = '❌ Yanlış hayvan!';
-            fb.style.color = '#dc2626';
-          }
-        };
-        opt.appendChild(o);
-      });
-    }
-
-    const farklilar = [
-      { soru: "Hangisi meyve değildir?", sec: ["🍎 Elma", "🍌 Muz", "🐱 Kedi"], dogru: "🐱 Kedi" },
-      { soru: "Hangisi uçamaz?", sec: ["🦅 Kartal", "🎈 Balon", "🐢 Kaplumbağa"], dogru: "🐢 Kaplumbağa" }
-    ];
-    let fIndex = 0;
-    function baslatFarkli(alan) {
-      const q = farklilar[fIndex % farklilar.length];
-      alan.innerHTML = `<h3 style="text-align:center;margin:15px 0;font-size:20px;color:#1e3a8a;">${q.soru}</h3><div class="option-row" id="f-opt"></div>`;
-      const opt = document.getElementById('f-opt');
-      const fb = document.getElementById('game-feedback');
-      q.sec.forEach(sec => {
-        const b = document.createElement('button');
-        b.className = 'odd-option';
-        b.innerText = sec;
-        b.onclick = () => {
-          if (sec === q.dogru) {
-            fb.innerText = '🎉 Harika mantık! +1 Yıldız ⭐';
-            fb.style.color = '#15803d';
-            yildizEkle(1);
-            setTimeout(() => { fIndex++; baslatFarkli(alan); fb.innerText = ''; }, 1200);
-          } else {
-            fb.innerText = '❌ Bir daha düşün!';
-            fb.style.color = '#dc2626';
-          }
-        };
-        opt.appendChild(b);
-      });
-    }
-
-    listele();
+    document.addEventListener('DOMContentLoaded', () => {
+      bolumYukle(0);
+      hafizaBaslat();
+    });
   </script>
 </body>
 </html>
