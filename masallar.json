@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "baslik": "Kayıp Yavru Panda Pomi",
+    "kategori": "Hayvanlar",
+    "resim": "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&auto=format&fit=crop&q=80",
+    "metin": "Bir zamanlar yemyeşil bambu ağaçlarıyla çevrili Sihirli Orman'da sevimli bir yavru panda yaşarmış. Adı Pomi imiş...\n\nPomi o gece lezzetli bambularını yiyip tatlı bir uykuya dalmış. İyi uykular tatlı rüyalar! 🌙✨"
+  },
+  {
+    "id": 2,
+    "baslik": "Uçan Renkli Balon",
+    "kategori": "Uyku",
+    "resim": "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&auto=format&fit=crop&q=80",
+    "metin": "Gökyüzünde rengarenk süzülen neşeli bir sıcak hava balonu varmış...\n\nBalon yumuşacık bir buluta yaslanıp derin bir uykuya dalmış."
+  }
+]
