@@ -3,416 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Masal & Zeka Dünyası</title>
-  
-  <!-- Türkçe Karakterleri Kusursuz Destekleyen Çocuk Dostu Font (Nunito) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
-    body {
-      background: linear-gradient(180deg, #bbf7d0 0%, #bae6fd 50%, #fef08a 100%);
-      background-attachment: fixed;
-      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #1e293b;
-      min-height: 100vh;
-      padding: 16px 12px 60px 12px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* Üst Bar & Logo */
-    .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .top-btn {
-      background: #ffffff;
-      border: 3px solid #fde047;
-      border-radius: 20px;
-      padding: 8px 16px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #ea580c;
-      box-shadow: 0 4px 0 #facc15;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .site-logo {
-      font-size: 30px;
-      font-weight: 900;
-      color: #f97316;
-      text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #fed7aa;
-      text-align: center;
-    }
-
-    /* Ana Mod Değiştirme Butonları (Okuma vs Zeka Oyunları) */
-    .mode-switch-box {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .mode-btn {
-      flex: 1;
-      max-width: 220px;
-      padding: 14px 10px;
-      border-radius: 24px;
-      border: 4px solid #ffffff;
-      font-size: 16px;
-      font-weight: 900;
-      font-family: inherit;
-      cursor: pointer;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .mode-btn.active {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-
-    .mode-btn-okuma {
-      background: #0284c7;
-      color: #ffffff;
-    }
-    .mode-btn-okuma.active {
-      background: #0369a1;
-      border-color: #fde047;
-    }
-
-    .mode-btn-oyun {
-      background: #9333ea;
-      color: #ffffff;
-    }
-    .mode-btn-oyun.active {
-      background: #7e22ce;
-      border-color: #fde047;
-    }
-
-    /* Karşılama Başlığı */
-    .hero-box {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .hero-box h1 {
-      font-size: 24px;
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.3;
-      margin-bottom: 16px;
-    }
-
-    /* Kategori Hap Butonları */
-    .category-row {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .cat-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-width: 78px;
-      padding: 8px 6px;
-      border-radius: 18px;
-      border: none;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 800;
-      color: #ffffff;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.15);
-      cursor: pointer;
-    }
-
-    .cat-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
-    .cat-icon { font-size: 26px; margin-bottom: 2px; }
-    .cat-all { background: #f97316; }
-    .cat-1   { background: #f59e0b; }
-    .cat-2   { background: #a855f7; }
-    .cat-3   { background: #38bdf8; }
-    .cat-4   { background: #10b981; }
-
-    /* Masal Kartları Grid */
-    .masal-listesi {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .masal-karti {
-      background: #ffffff;
-      border-radius: 24px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      padding: 12px;
-      border: 4px solid #ffffff;
-    }
-
-    .masal-resim {
-      width: 100%;
-      height: 200px;
-      border-radius: 18px;
-      object-fit: cover;
-      background: #fed7aa;
-      display: block;
-    }
-
-    .masal-baslik {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e293b;
-      margin: 12px 0;
-      text-align: center;
-      line-height: 1.25;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .oku-btn {
-      background: #06b6d4;
-      color: #ffffff;
-      border-radius: 18px;
-      padding: 12px;
-      text-align: center;
-      border: none;
-      font-family: inherit;
-      font-size: 17px;
-      font-weight: 800;
-      box-shadow: 0 4px 0 #0891b2;
-      cursor: pointer;
-      display: block;
-      width: 100%;
-      margin-top: auto;
-    }
-
-    .oku-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #0891b2; }
-
-    /* Detay / Masal Okuma Sayfası */
-    #okuma-alani {
-      display: none;
-      background: #ffffff;
-      border-radius: 28px;
-      padding: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    }
-
-    .geri-btn {
-      background: #facc15;
-      color: #78350f;
-      font-weight: 800;
-      padding: 10px 20px;
-      border-radius: 16px;
-      border: none;
-      font-family: inherit;
-      font-size: 15px;
-      box-shadow: 0 4px 0 #eab308;
-      cursor: pointer;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-
-    #detay-resim {
-      width: 100%;
-      max-height: 360px;
-      object-fit: cover;
-      border-radius: 20px;
-      margin-bottom: 20px;
-    }
-
-    #detay-baslik {
-      font-size: 26px;
-      font-weight: 900;
-      color: #ea580c;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #detay-metin {
-      font-size: 20px;
-      line-height: 1.8;
-      color: #334155;
-      white-space: pre-line;
-      user-select: text;
-    }
-
-    /* ========================================================
-       ZEKA OYUNLARI DÜNYASI BÖLÜMÜ
-       ======================================================== */
-    #oyunlar-alani {
-      display: none;
-    }
-
-    .game-card-wrapper {
-      background: #ffffff;
-      border-radius: 28px;
-      padding: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      margin-bottom: 24px;
-      border: 4px solid #fef08a;
-    }
-
-    .game-title {
-      font-size: 22px;
-      font-weight: 900;
-      color: #9333ea;
-      text-align: center;
-      margin-bottom: 6px;
-    }
-
-    .game-desc {
-      text-align: center;
-      font-size: 15px;
-      color: #64748b;
-      margin-bottom: 18px;
-      font-weight: 600;
-    }
-
-    /* Oyun 1: Hafıza Kartları */
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 360px;
-      margin: 0 auto 16px auto;
-    }
-
-    .memory-card {
-      aspect-ratio: 1;
-      background: #e0e7ff;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #c7d2fe;
-      transition: transform 0.1s;
-    }
-
-    .memory-card.flipped {
-      background: #ffffff;
-      box-shadow: 0 4px 0 #e2e8f0;
-    }
-
-    .memory-card.matched {
-      background: #bbf7d0;
-      box-shadow: 0 4px 0 #86efac;
-      cursor: default;
-    }
-
-    .reset-btn {
-      background: #3b82f6;
-      color: #ffffff;
-      font-family: inherit;
-      font-weight: 800;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 0 #1d4ed8;
-      display: block;
-      margin: 0 auto;
-      cursor: pointer;
-    }
-
-    /* Oyun 2: Eksik Harfi Bul */
-    .word-box {
-      font-size: 36px;
-      font-weight: 900;
-      letter-spacing: 10px;
-      color: #ea580c;
-      text-align: center;
-      margin: 15px 0;
-      background: #fff7ed;
-      padding: 14px;
-      border-radius: 18px;
-    }
-
-    .letter-options {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .letter-btn {
-      width: 55px;
-      height: 55px;
-      background: #facc15;
-      border: none;
-      border-radius: 16px;
-      font-size: 24px;
-      font-weight: 900;
-      color: #78350f;
-      box-shadow: 0 4px 0 #eab308;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .letter-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #eab308; }
-
-    #word-feedback {
-      text-align: center;
-      font-weight: 800;
-      font-size: 18px;
-      min-height: 28px;
-    }
-  </style>
+  <title>Masal Dünyası | Masal &amp; Zeka</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="container">
     
-    <!-- Üst Bar -->
     <header class="top-header">
-      <button class="top-btn" onclick="anaSayfayaDon()">🏠 Ana Sayfa</button>
-      <div class="site-logo">Masal &amp; Zeka</div>
-      <button class="top-btn" onclick="alert('Sevimli masalları oku veya zeka oyunları ile eğlen!')">✨ Bilgi</button>
+      <a href="index.html" class="top-btn">🏠 Ana Sayfa</a>
+      <a href="index.html" class="site-logo">Masal &amp; Zeka</a>
+      <button class="top-btn" onclick="alert('Sevimli masallardan birini seç ve keyifle oku!')">✨ Bilgi</button>
     </header>
 
-    <!-- Mod Değiştirici: Okuma Dünyası vs Zeka Oyunları -->
-    <div class="mode-switch-box">
-      <button id="btn-tab-okuma" class="mode-btn mode-btn-okuma active" onclick="modDegistir('okuma')">
-        📖 Okuma Dünyası
-      </button>
-      <button id="btn-tab-oyun" class="mode-btn mode-btn-oyun" onclick="modDegistir('oyun')">
-        🧩 Zeka Oyunları
-      </button>
-    </div>
+    <!-- Navigasyon Sekmeleri -->
+    <nav class="nav-tabs">
+      <a href="index.html" class="nav-tab-btn tab-masallar active">📖 Masallar</a>
+      <a href="tekerlemeler.html" class="nav-tab-btn tab-tekerlemeler">⚡ Tekerlemeler</a>
+      <a href="oyunlar.html" class="nav-tab-btn tab-oyunlar">🧩 Zeka Oyunları</a>
+    </nav>
 
-    <!-- 1. BÖLÜM: OKUMA DÜNYASI -->
+    <!-- Ana Sayfa İçerik -->
     <main id="ana-sayfa">
       <div class="hero-box">
-        <h1>Merhaba Küçük Kitap Kurdu!<br>Bugün Neyi Keşfetmek İstersin?</h1>
+        <h1>Merhaba Küçük Kitap Kurdu!<br>Bugün Hangi Masalı Okumak İstersin?</h1>
         <div class="category-row">
           <button class="cat-btn cat-all" onclick="kategoriFiltrele('Tümü')">
             <span class="cat-icon">⭐</span><span>Tümü</span>
@@ -426,272 +40,141 @@
           <button class="cat-btn cat-3" onclick="kategoriFiltrele('Uyku')">
             <span class="cat-icon">🌙</span><span>Uyku</span>
           </button>
-          <button class="cat-btn cat-4" onclick="kategoriFiltrele('Tekerleme')">
-            <span class="cat-icon">⚡</span><span>Tekerleme</span>
-          </button>
         </div>
       </div>
 
-      <div id="masal-grid" class="masal-listesi"></div>
+      <div id="masal-grid" class="grid-container"></div>
     </main>
 
-    <!-- MASAL / TEKERLEME OKUMA EKRANI -->
-    <article id="okuma-alani">
-      <button class="geri-btn" onclick="anaSayfayaDon()">⬅ Listeye Dön</button>
-      <img id="detay-resim" src="" alt="Kapak">
-      <h1 id="detay-baslik"></h1>
-      <div id="detay-metin"></div>
+    <!-- Masal Okuma Detay Modu -->
+    <article id="okuma-alani" class="detail-box" style="display: none;">
+      <button class="back-btn" onclick="kapatMasal()">⬅ Masallara Dön</button>
+      <img id="detay-resim" class="detail-img" src="" alt="Kapak">
+      <h1 id="detay-baslik" class="detail-title"></h1>
+      <div id="detay-metin" class="detail-text"></div>
     </article>
-
-    <!-- 2. BÖLÜM: ZEKA OYUNLARI DÜNYASI -->
-    <section id="oyunlar-alani">
-      
-      <!-- Oyun 1: Sevimli Hayvan Kartı Eşleştirme -->
-      <div class="game-card-wrapper">
-        <h2 class="game-title">🦁 Hayvan Kartı Eşleştirmece</h2>
-        <p class="game-desc">Aynı iki hayvanı bularak tüm kartları açabilir misin?</p>
-        
-        <div class="memory-grid" id="memory-board"></div>
-        <button class="reset-btn" onclick="hafizaOyunuBaslat()">Yeniden Başlat 🔄</button>
-      </div>
-
-      <!-- Oyun 2: Eksik Harfi Bul / Kelime Oyunu -->
-      <div class="game-card-wrapper">
-        <h2 class="game-title">🔤 Eksik Harfi Tamamla</h2>
-        <p class="game-desc">Soru işaretinin yerine hangi harf gelmeli?</p>
-        
-        <div id="word-question" class="word-box">P _ N D A</div>
-        <div class="letter-options" id="letter-options-container"></div>
-        <div id="word-feedback"></div>
-      </div>
-
-    </section>
 
   </div>
 
   <script>
-    /* ========================================================
-       MASAL VE TEKERLEME İÇERİK HAVUZU (TÜRKÇE KARAKTERLİ)
-       ======================================================== */
-    const icerikler = [
+    const masallar = [
       {
         id: 1,
         baslik: "Kayıp Yavru Panda Pomi",
         kategori: "Hayvanlar",
         resim: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&auto=format&fit=crop&q=80",
-        metin: `Bir zamanlar yemyeşil bambu ağaçlarıyla çevrili, minik perilerin uçuştuğu Sihirli Orman'da sevimli bir yavru panda yaşarmış. Adı Pomi imiş. Pomi, tüyleri pamuk gibi yumuşacık, burnu minik bir kömür tanesi kadar siyah, çok meraklı bir yavruymuş.
-
-Bir akşamüstü gökyüzü turuncuya ve pembeye dönerken, Pomi parıldayan bir ateş böceğinin peşine takılmış. Zıplamış, koşmuş, peşinden yuvarlanmış... Ama durup etrafına baktığında anne ve babasının yanında olmadığını fark etmiş. Orman birden biraz sessiz ve karanlık gelmiş.
-
-Pomi tam burnunu çekip ağlayacakken, ayağının dibinde altın sarısı bir ışık parıldamış. Bu, dalların arasına saklanmış sihirli bir fener miş! Pomi minik patisiyle feneri eline almış. Fener sıcacık bir ışıkla etrafı aydınlatıvermiş.
-
-Fenerin neşeli ışığını gören sevimli bir baykuş dalın üzerinden seslenmiş:
-— "Korkma küçük Pomi! Kalbindeki merak ve bu fenerin ışıltısı seni doğru yola götürür. Işığı takip et!"
-
-Pomi fenerini sımsıkı tutarak ormanda ilerlemiş. Çok geçmeden, fenerin aydınlattığı patikanın sonunda onu arayan annesinin kucağına kavuşmuş. Annesi ona sımsıkı sarılmış ve fısıldamış:
-— "Cesur minik pandam, karanlık ne kadar büyük olursa olsun, minik bir umut ışığı her zaman yolunu aydınlatır."
-
-Pomi o gece karnını taze bambularla doyurmuş ve tatlı bir uykuya dalmış. 
-
-İyi uykular tatlı rüyalar, küçük kitap kurdu! 🌙✨`
+        metin: `Bir zamanlar yemyeşil bambu ağaçlarıyla çevrili Sihirli Orman'da sevimli bir yavru panda yaşarmış. Adı Pomi imiş. Pomi pamuk gibi yumuşacık tüyleri ve meraklı gözleriyle ormanın en neşeli yavrusuymuş.\n\nBir akşamüstü uçuşan sarı bir ateş böceğinin peşine takılmış. Zıplamış, koşmuş, yuvarlanmış... Durup baktığında ailesini görememiş. Orman biraz karanlık ve sessiz görünüyormuş.\n\nTam burnunu çekip ağlayacakken ayağının dibinde altın sarısı bir orman feneri parlamış. Feneri patisiyle tuttuğunda ağaçtaki sevimli Bilge Baykuş seslenmiş:\n— "Korkma küçük Pomi! İçindeki cesaret ve bu fenerin ışıltısı seni ailene götürecek. Işığı takip et!"\n\nPomi adımlarını hızlandırmış ve az sonra onu arayan annesinin yumuşak kucağına kavuşmuş. Annesi ona sarılıp fısıldamış:\n— "Ne kadar karanlık olursa olsun, kalbindeki minik bir umut her zaman yolunu aydınlatır."\n\nPomi o gece lezzetli bambularını yiyip tatlı bir uykuya dalmış. İyi uykular tatlı rüyalar! 🌙✨`
       },
       {
         id: 2,
         baslik: "Uçan Renkli Balon",
         kategori: "Uyku",
         resim: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&auto=format&fit=crop&q=80",
-        metin: `Mavi gökyüzünde süzülen rengârenk bir sıcak hava balonu varmış. Sarı, kırmızı ve masmavi desenleriyle pamuk bulutların arasından neşeyle geçer, gökyüzündeki sevimli kuşlara selam verirmiş.
-
-Güneş batarken balon yavaş yavaş en yumuşak bulutun üzerine konmuş. Yıldızlar etrafında pırıl pırıl parıldarken tatlı bir gece uykusuna dalmış.`
+        metin: `Gökyüzünde rengarenk süzülen neşeli bir sıcak hava balonu varmış. Sarı, kırmızı ve gök mavisi desenleri pamuk gibi bulutların arasında ışıldarmış.\n\nRüzgar tatlı bir ninni gibi esmiş, balonu bulutların bile üstüne çıkarmış. Balon göç eden kuşlara el sallamış, güneşe gülümsemiş. Akşam olunca gökyüzü laciverte bürünmüş, yıldızlar tek tek yanmış. Balon yumuşacık bir buluta yaslanıp derin bir uykuya dalmış.`
       },
       {
         id: 3,
-        baslik: "Hızlı Tekerleme: Şemsi Paşa Pasajı",
-        kategori: "Tekerleme",
-        resim: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80",
-        metin: `Hızlı okuma ve dil çevikliği için bu tekerlemeyi 3 kere takılmadan oku bakalım! 🏃‍♂️💨
-
-Şu köşe yaz köşesi,
-Şu köşe kış köşesi,
-Ortadaki su şişesi!
-
-Şemsi Paşa Pasajı'nda sesi boğuk bir paşa,
-Üç tencere has hoşafı taşırmış taşa!`
+        baslik: "Cesur Karınca Çıtı",
+        kategori: "Hayvanlar",
+        resim: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+        metin: `Minik karınca Çıtı yuvasına kocaman bir buğday tanesi taşımak istiyormuş. Buğday tanesi kendi boyundan tam üç kat büyükmüş!\n\nArkadaşları "Bunu tek başına taşıyamazsın, çok ağır" demişler. Ama Çıtı pes etmemiş. Önce taneyi biraz itmiş, sonra biraz çekmiş. Yavaş yavaş ama kararlılıkla buğdayı yuvasına kadar ulaştırmış. Ormandaki herkes anlamış ki: Azim ve sabır, boydan çok daha güçlüdür!`
+      },
+      {
+        id: 4,
+        baslik: "Yıldız Toplayan Çocuk",
+        kategori: "Sihirli",
+        resim: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?w=600&auto=format&fit=crop&q=80",
+        metin: `Küçük Arda her gece penceresinden gökyüzünü izlermiş. Bir gece parlak bir yıldız odasının pervazına konmuş. Yıldız konuşabiliyormuş!\n\n— "Merhaba Arda! Bu gece gökyüzünde ışığı azalan yıldızlara yardım etmek ister misin?"\n\nArda sihirli bir rüyaya dalar gibi yıldızın peşinden uçmuş. Elindeki sevgi dolu sözcüklerle parıltısı azalan yıldızları tek tek parlatmış. O günden sonra ne zaman göğe baksa, parlayan yıldızların ona göz kırptığını bilirmiş.`
+      },
+      {
+        id: 5,
+        baslik: "Gözlüklü Bilge Baykuş",
+        kategori: "Hayvanlar",
+        resim: "https://images.unsplash.com/photo-1543549790-8b5f4a028cfb?w=600&auto=format&fit=crop&q=80",
+        metin: `Ormandaki ulu çınarın en üst dalında yaşayan Bilge Baykuş kitap okumayı çok severmiş. Ağaç kovuğunda yapraklardan yapılmış yüzlerce kitabı varmış.\n\nOrmanın minik hayvanları ne zaman bir şey öğrenmek istese onun yanına koşarmış:\n— "Ağaçlar kışın neden yaprak döker?"\n— "Gökkuşağı nasıl oluşur?"\n\nBilge Baykuş gülümseyerek kitaplarını açar, onlara doğanın harika sırlarını anlatırmış.`
+      },
+      {
+        id: 6,
+        baslik: "Pofuduk Ayıcığın Balı",
+        kategori: "Hayvanlar",
+        resim: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600&auto=format&fit=crop&q=80",
+        metin: `Sevimli ayıcık Boni karnı guruldayınca tatlı mı tatlı bal aramaya çıkmış. Ormanın en yaşlı meşesinde arıların kovanını bulmuş.\n\nBoni arılara nazikçe seslenmiş:\n— "Sevimli arılar, bana birazcık bal ikram eder misiniz? Ben de sizin için nehir kenarından taze kır çiçekleri getireyim."\n\nArılar bu kibar teklife çok sevinmiş. Boni'ye koca bir petek bal vermişler. Nezaket ve tatlı dil her kapıyı açarmış!`
+      },
+      {
+        id: 7,
+        baslik: "Sihirli Boya Kalemi",
+        kategori: "Sihirli",
+        resim: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80",
+        metin: `Melis resim yapmayı çok severmiş. Bir gün masasında altın rengi bir boya kalemi bulmuş. Bu kalemle kağıda ne çizse birden canlanıyormuş!\n\nMelis önce kanatları parıldayan mavi bir kelebek çizmiş. Kelebek pırpır edip odada uçmuş! Sonra bahçedeki üşüyen kedi için sıcacık bir kulübe çizmiş. Melis sihrini sadece canlıları mutlu etmek için kullanmaya söz vermiş.`
+      },
+      {
+        id: 8,
+        baslik: "Uykucu Minik Koala",
+        kategori: "Uyku",
+        resim: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&auto=format&fit=crop&q=80",
+        metin: `Okaliptüs ağacının yaprakları arasında yaşayan minik koala Koko esnemeye bayılırmış. Bir kere esnedi mi, yanındaki sincap da esner, kuştan kuşa uyku yayılırmış.\n\nKoko dalına sımsıkı sarılmış, taze yaprak kokusu eşliğinde gözlerini kapatmış. Ormanın tatlı rüzgarı onu bir beşik gibi sallamış ve mışıl mışıl uyumuş.`
+      },
+      {
+        id: 9,
+        baslik: "Mavi Yunus Doli",
+        kategori: "Hayvanlar",
+        resim: "https://images.unsplash.com/photo-1570481662006-a3a1374699e8?w=600&auto=format&fit=crop&q=80",
+        metin: `Doli pırıl pırıl turkuaz sularda taklalar atan meraklı bir yunustu. Deniz dibindeki mercan resifleri arasında saklambaç oynamayı çok severdi.\n\nBir gün yolunu kaybeden yavru bir deniz kaplumbağası gördü. Doli hemen ona rehberlik etti ve annesini bulana kadar yanından hiç ayrılmadı. Denizlerin en büyük zenginliği dostluktu!`
+      },
+      {
+        id: 10,
+        baslik: "Bulutların Üstündeki Şato",
+        kategori: "Sihirli",
+        resim: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+        metin: `Gökkuşağının bittiği yerde pembe bulutlardan yapılmış bir şato varmış. Bu şatonun pencereleri şekerden, kapıları ise ışıklardanmış.\n\nŞatonun içinde yaşayan iyi kalpli rüya perileri, her gece dünya üzerindeki bütün çocuklara en neşeli rüyaları dağıtmak için masallar fısıldarmış.`
+      },
+      {
+        id: 11,
+        baslik: "Ninni Söyleyen Ay Dede",
+        kategori: "Uyku",
+        resim: "https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=600&auto=format&fit=crop&q=80",
+        metin: `Ay Dede gökyüzüne çıktığında bütün şehir yavaş yavaş uykuya hazırlanırmış. Sokak lambaları yumuşak sarı ışıklarını yakar, evlerin pencereleri tek tek kapanırmış.\n\nAy Dede gümüş ışıklarıyla pencerelere dokunur ve fısıldarmış: "Korkma güzel çocuk, yarın yeni oyunlar ve güneşli bir gün seni bekliyor. Şimdi güzelce dinlen..."`
       }
     ];
 
-    /* ========================================================
-       SAYFA & KART FONKSİYONLARI
-       ======================================================== */
-    function kartlariGoster(liste) {
+    function listele(liste) {
       const grid = document.getElementById('masal-grid');
       grid.innerHTML = '';
-
       liste.forEach(item => {
-        const kart = document.createElement('div');
-        kart.className = 'masal-karti';
-        kart.innerHTML = `
-          <img src="${item.resim}" class="masal-resim" alt="${item.baslik}">
-          <div class="masal-baslik">${item.baslik}</div>
-          <button class="oku-btn" onclick="icerikOku(${item.id})">OKU 📖</button>
+        const div = document.createElement('div');
+        div.className = 'custom-card';
+        div.innerHTML = `
+          <img src="${item.resim}" class="card-img" alt="${item.baslik}">
+          <div class="card-title">${item.baslik}</div>
+          <button class="action-btn btn-read" onclick="masalAc(${item.id})">OKU 📖</button>
         `;
-        grid.appendChild(kart);
+        grid.appendChild(div);
       });
     }
 
-    function kategoriFiltrele(kategori) {
-      if (kategori === 'Tümü') {
-        kartlariGoster(icerikler);
-      } else {
-        const filtrelenmis = icerikler.filter(m => m.kategori === kategori);
-        kartlariGoster(filtrelenmis);
-      }
+    function kategoriFiltrele(kat) {
+      if (kat === 'Tümü') listele(masallar);
+      else listele(masallar.filter(m => m.kategori === kat));
     }
 
-    function icerikOku(id) {
-      const secilen = icerikler.find(m => m.id === id);
-      if (!secilen) return;
-
-      document.getElementById('detay-resim').src = secilen.resim;
-      document.getElementById('detay-baslik').innerText = secilen.baslik;
-      document.getElementById('detay-metin').innerText = secilen.metin;
-
+    function masalAc(id) {
+      const m = masallar.find(x => x.id === id);
+      if (!m) return;
+      document.getElementById('detay-resim').src = m.resim;
+      document.getElementById('detay-baslik').innerText = m.baslik;
+      document.getElementById('detay-metin').innerText = m.metin;
       document.getElementById('ana-sayfa').style.display = 'none';
-      document.getElementById('oyunlar-alani').style.display = 'none';
       document.getElementById('okuma-alani').style.display = 'block';
       window.scrollTo(0, 0);
     }
 
-    function anaSayfayaDon() {
+    function kapatMasal() {
       document.getElementById('okuma-alani').style.display = 'none';
-      modDegistir('okuma');
+      document.getElementById('ana-sayfa').style.display = 'block';
       window.scrollTo(0, 0);
     }
 
-    /* MOD GEÇİŞİ: OKUMA DÜNYASI VS ZEKA OYUNLARI */
-    function modDegistir(mod) {
-      const btnOkuma = document.getElementById('btn-tab-okuma');
-      const btnOyun = document.getElementById('btn-tab-oyun');
-      const anaSayfa = document.getElementById('ana-sayfa');
-      const okumaAlani = document.getElementById('okuma-alani');
-      const oyunlarAlani = document.getElementById('oyunlar-alani');
-
-      okumaAlani.style.display = 'none';
-
-      if (mod === 'okuma') {
-        btnOkuma.classList.add('active');
-        btnOyun.classList.remove('active');
-        anaSayfa.style.display = 'block';
-        oyunlarAlani.style.display = 'none';
-      } else {
-        btnOyun.classList.add('active');
-        btnOkuma.classList.remove('active');
-        anaSayfa.style.display = 'none';
-        oyunlarAlani.style.display = 'block';
-      }
-    }
-
-    /* ========================================================
-       ZEKA OYUNU 1: HAFIZA KARTLARI (EŞLEŞTİRME)
-       ======================================================== */
-    const emojiler = ['🐼', '🦁', '🦉', '🎈', '⭐', '🌙'];
-    let acikKartlar = [];
-    let eslesenSayisi = 0;
-
-    function hafizaOyunuBaslat() {
-      const board = document.getElementById('memory-board');
-      board.innerHTML = '';
-      acikKartlar = [];
-      eslesenSayisi = 0;
-
-      // 6 çift = 12 kart oluştur ve karıştır
-      const kartDizisi = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
-
-      kartDizisi.forEach((emoji, index) => {
-        const card = document.createElement('div');
-        card.className = 'memory-card';
-        card.dataset.emoji = emoji;
-        card.dataset.index = index;
-        card.innerText = '❓';
-
-        card.onclick = () => {
-          if (card.classList.contains('flipped') || card.classList.contains('matched') || acikKartlar.length === 2) {
-            return;
-          }
-
-          card.innerText = emoji;
-          card.classList.add('flipped');
-          acikKartlar.push(card);
-
-          if (acikKartlar.length === 2) {
-            const [k1, k2] = acikKartlar;
-            if (k1.dataset.emoji === k2.dataset.emoji) {
-              k1.classList.add('matched');
-              k2.classList.add('matched');
-              acikKartlar = [];
-              eslesenSayisi += 2;
-              if (eslesenSayisi === kartDizisi.length) {
-                setTimeout(() => alert('🎉 Harikasın! Bütün kartları eşleştirdin! ⭐'), 300);
-              }
-            } else {
-              setTimeout(() => {
-                k1.innerText = '❓';
-                k2.innerText = '❓';
-                k1.classList.remove('flipped');
-                k2.classList.remove('flipped');
-                acikKartlar = [];
-              }, 800);
-            }
-          }
-        };
-
-        board.appendChild(card);
-      });
-    }
-
-    /* ========================================================
-       ZEKA OYUNU 2: EKSİK HARFİ BUL
-       ======================================================== */
-    const kelimeSorulari = [
-      { kelimeGosterim: "P _ N D A", dogru: "A", secenekler: ["A", "E", "O"] },
-      { kelimeGosterim: "B A L _ N", dogru: "O", secenekler: ["U", "O", "I"] },
-      { kelimeGosterim: "M A S _ L", dogru: "A", secenekler: ["E", "A", "İ"] }
-    ];
-    let aktifSoruIndex = 0;
-
-    function soruYukle() {
-      const soru = kelimeSorulari[aktifSoruIndex];
-      document.getElementById('word-question').innerText = soru.kelimeGosterim;
-      const secenekKutusu = document.getElementById('letter-options-container');
-      const geribildirim = document.getElementById('word-feedback');
-      secenekKutusu.innerHTML = '';
-      geribildirim.innerText = '';
-
-      soru.secenekler.forEach(harf => {
-        const btn = document.createElement('button');
-        btn.className = 'letter-btn';
-        btn.innerText = harf;
-        btn.onclick = () => {
-          if (harf === soru.dogru) {
-            geribildirim.innerText = '🎉 Aferin! Doğru harfi buldun! ✨';
-            geribildirim.style.color = '#15803d';
-            setTimeout(() => {
-              aktifSoruIndex = (aktifSoruIndex + 1) % kelimeSorulari.length;
-              soruYukle();
-            }, 1200);
-          } else {
-            geribildirim.innerText = '❌ Tekrar dene küçük kaşif!';
-            geribildirim.style.color = '#dc2626';
-          }
-        };
-        secenekKutusu.appendChild(btn);
-      });
-    }
-
-    // İlk Yüklemeler
-    kartlariGoster(icerikler);
-    hafizaOyunuBaslat();
-    soruYukle();
+    listele(masallar);
   </script>
 </body>
 </html>

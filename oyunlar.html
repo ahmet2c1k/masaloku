@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zeka Oyunları | Masal &amp; Zeka</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Oyun Odası Ekstra Stiller */
+    .room-title { font-size: 24px; font-weight: 900; color: #7e22ce; text-align: center; margin-bottom: 8px; }
+    .room-desc { text-align: center; font-size: 16px; color: #64748b; margin-bottom: 20px; font-weight: 600; }
+    
+    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 360px; margin: 0 auto 16px auto; }
+    .memory-card { aspect-ratio: 1; background: #e0e7ff; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; box-shadow: 0 4px 0 #c7d2fe; }
+    .memory-card.flipped { background: #ffffff; box-shadow: 0 4px 0 #e2e8f0; }
+    .memory-card.matched { background: #bbf7d0; box-shadow: 0 4px 0 #86efac; cursor: default; }
+
+    .reset-btn { background: #3b82f6; color: #ffffff; font-family: inherit; font-weight: 800; border: none; padding: 10px 20px; border-radius: 16px; box-shadow: 0 4px 0 #1d4ed8; display: block; margin: 16px auto 0 auto; cursor: pointer; }
+
+    .word-box { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #ea580c; text-align: center; margin: 20px 0; background: #fff7ed; padding: 16px; border-radius: 20px; }
+    .option-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .big-btn { min-width: 60px; height: 60px; background: #facc15; border: none; border-radius: 18px; font-size: 24px; font-weight: 900; color: #78350f; box-shadow: 0 4px 0 #eab308; cursor: pointer; font-family: inherit; padding: 0 16px; }
+    .big-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #eab308; }
+
+    .shadow-display { font-size: 80px; text-align: center; margin: 15px 0; }
+    .shadow-option { font-size: 40px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border: 3px solid #cbd5e1; border-radius: 20px; cursor: pointer; }
+
+    .odd-option { background: #eff6ff; border: 3px solid #93c5fd; border-radius: 20px; padding: 14px 20px; font-size: 20px; font-weight: 800; color: #1e3a8a; cursor: pointer; box-shadow: 0 4px 0 #60a5fa; font-family: inherit; }
+    .feedback-box { text-align: center; font-weight: 800; font-size: 20px; min-height: 32px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header class="top-header">
+      <a href="index.html" class="top-btn">🏠 Ana Sayfa</a>
+      <a href="index.html" class="site-logo">Masal &amp; Zeka</a>
+      <button class="top-btn" onclick="alert('Zeka oyunlarından dilediğini seç ve oyna!')">🧩 Bilgi</button>
+    </header>
+
+    <!-- Navigasyon Sekmeleri -->
+    <nav class="nav-tabs">
+      <a href="index.html" class="nav-tab-btn tab-masallar">📖 Masallar</a>
+      <a href="tekerlemeler.html" class="nav-tab-btn tab-tekerlemeler">⚡ Tekerlemeler</a>
+      <a href="oyunlar.html" class="nav-tab-btn tab-oyunlar active">🧩 Zeka Oyunları</a>
+    </nav>
+
+    <!-- Oyunlar Listesi -->
+    <main id="oyun-liste">
+      <div class="hero-box">
+        <h1>Eğlenceli Zeka Oyunları<br>Bir Oyun Seç ve Hemen Oyna!</h1>
+      </div>
+      <div id="oyun-grid" class="grid-container"></div>
+    </main>
+
+    <!-- Oyun Odası -->
+    <section id="oyun-odasi" class="detail-box" style="display: none;">
+      <button class="back-btn" onclick="kapatOyun()">⬅ Oyunlara Dön</button>
+      <h2 id="room-game-title" class="room-title"></h2>
+      <p id="room-game-desc" class="room-desc"></p>
+      
+      <div id="game-playground"></div>
+      <div id="game-feedback" class="feedback-box"></div>
+    </section>
+
+  </div>
+
+  <script>
+    const oyunlar = [
+      {
+        id: "hafiza",
+        baslik: "🦁 Hayvan Eşleştirmece",
+        icon: "🦁",
+        bg: "#fef08a",
+        aciklama: "Aynı iki hayvanı bularak hafızanı test et ve tüm kartları aç!"
+      },
+      {
+        id: "kelime",
+        baslik: "🔤 Eksik Harfi Tamamla",
+        icon: "🔤",
+        bg: "#fed7aa",
+        aciklama: "Kelimede eksik bırakılan harfi doğru seçenekten bul!"
+      },
+      {
+        id: "golge",
+        baslik: "👤 Doğru Eşi/Gölgeyi Bul",
+        icon: "👤",
+        bg: "#e0e7ff",
+        aciklama: "Gördüğün sevimli hayvanın doğru eşini bulup tıkla!"
+      },
+      {
+        id: "farkli",
+        baslik: "❓ Farklı Olanı Bul",
+        icon: "❓",
+        bg: "#bbf7d0",
+        aciklama: "Dört seçenek arasından gruba uymayan farklı nesneyi yakala!"
+      }
+    ];
+
+    function listeleOyunlar() {
+      const grid = document.getElementById('oyun-grid');
+      grid.innerHTML = '';
+      oyunlar.forEach(o => {
+        const div = document.createElement('div');
+        div.className = 'custom-card';
+        div.innerHTML = `
+          <div class="game-icon-card" style="background:${o.bg};">${o.icon}</div>
+          <div class="card-title">${o.baslik}</div>
+          <button class="action-btn btn-play" onclick="oyunAc('${o.id}')">OYNA 🎮</button>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    function oyunAc(id) {
+      const o = oyunlar.find(x => x.id === id);
+      if (!o) return;
+      document.getElementById('oyun-liste').style.display = 'none';
+      document.getElementById('oyun-odasi').style.display = 'block';
+      document.getElementById('room-game-title').innerText = o.baslik;
+      document.getElementById('room-game-desc').innerText = o.aciklama;
+      document.getElementById('game-feedback').innerText = '';
+      window.scrollTo(0, 0);
+
+      const alan = document.getElementById('game-playground');
+      alan.innerHTML = '';
+      if (id === 'hafiza') baslatHafiza(alan);
+      if (id === 'kelime') baslatKelime(alan);
+      if (id === 'golge') baslatGolge(alan);
+      if (id === 'farkli') baslatFarkli(alan);
+    }
+
+    function kapatOyun() {
+      document.getElementById('oyun-odasi').style.display = 'none';
+      document.getElementById('oyun-liste').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    /* 1. Hafıza Oyunu */
+    function baslatHafiza(alan) {
+      const emojiler = ['🐼', '🦁', '🦉', '🎈', '⭐', '🌙'];
+      let acikKartlar = [];
+      let eslesenSayisi = 0;
+      alan.innerHTML = '<div class="memory-grid" id="m-grid"></div><button class="reset-btn" onclick="baslatHafiza(document.getElementById(\'game-playground\'))">Yeniden Karıştır 🔄</button>';
+      const grid = document.getElementById('m-grid');
+      const kartDizisi = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
+
+      kartDizisi.forEach(emoji => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.dataset.emoji = emoji;
+        card.innerText = '❓';
+        card.onclick = () => {
+          if (card.classList.contains('flipped') || card.classList.contains('matched') || acikKartlar.length === 2) return;
+          card.innerText = emoji;
+          card.classList.add('flipped');
+          acikKartlar.push(card);
+
+          if (acikKartlar.length === 2) {
+            const [k1, k2] = acikKartlar;
+            if (k1.dataset.emoji === k2.dataset.emoji) {
+              k1.classList.add('matched');
+              k2.classList.add('matched');
+              acikKartlar = [];
+              eslesenSayisi += 2;
+              if (eslesenSayisi === kartDizisi.length) {
+                document.getElementById('game-feedback').innerText = '🎉 Harikasın! Bütün kartları eşleştirdin! ⭐';
+              }
+            } else {
+              setTimeout(() => {
+                k1.innerText = '❓';
+                k2.innerText = '❓';
+                k1.classList.remove('flipped');
+                k2.classList.remove('flipped');
+                acikKartlar = [];
+              }, 700);
+            }
+          }
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    /* 2. Kelime Oyunu */
+    const kelimeHavuzu = [
+      { soru: "P _ N D A", dogru: "A", sec: ["A", "E", "O"] },
+      { soru: "B A L _ N", dogru: "O", sec: ["U", "O", "I"] },
+      { soru: "M A S _ L", dogru: "A", sec: ["E", "A", "İ"] },
+      { soru: "Y I L D _ Z", dogru: "I", sec: ["I", "İ", "U"] }
+    ];
+    let kIndex = 0;
+    function baslatKelime(alan) {
+      const q = kelimeHavuzu[kIndex % kelimeHavuzu.length];
+      alan.innerHTML = `<div class="word-box">${q.soru}</div><div class="option-row" id="k-options"></div>`;
+      const optDiv = document.getElementById('k-options');
+      const fb = document.getElementById('game-feedback');
+      q.sec.forEach(h => {
+        const btn = document.createElement('button');
+        btn.className = 'big-btn';
+        btn.innerText = h;
+        btn.onclick = () => {
+          if (h === q.dogru) {
+            fb.innerText = '🎉 Doğru bildin! Süpersin! ✨';
+            fb.style.color = '#15803d';
+            setTimeout(() => { kIndex++; baslatKelime(alan); fb.innerText = ''; }, 1200);
+          } else {
+            fb.innerText = '❌ Tekrar dene küçük kaşif!';
+            fb.style.color = '#dc2626';
+          }
+        };
+        optDiv.appendChild(btn);
+      });
+    }
+
+    /* 3. Gölge Oyunu */
+    const golgeHavuzu = [
+      { asil: "🦁", secenekler: ["🦁", "🐘", "🦒"], dogru: "🦁" },
+      { asil: "🐼", secenekler: ["🐵", "🐼", "🐰"], dogru: "🐼" },
+      { asil: "🦉", secenekler: ["🦉", "🦅", "🐧"], dogru: "🦉" }
+    ];
+    let gIndex = 0;
+    function baslatGolge(alan) {
+      const q = golgeHavuzu[gIndex % golgeHavuzu.length];
+      alan.innerHTML = `<div class="shadow-display">${q.asil}</div><p style="text-align:center;font-weight:700;margin-bottom:12px;color:#475569;">Bu sevimli hayvanın eşini bul!</p><div class="option-row" id="g-options"></div>`;
+      const optDiv = document.getElementById('g-options');
+      const fb = document.getElementById('game-feedback');
+      q.secenekler.forEach(item => {
+        const opt = document.createElement('div');
+        opt.className = 'shadow-option';
+        opt.innerText = item;
+        opt.onclick = () => {
+          if (item === q.dogru) {
+            fb.innerText = '🎉 Harika gözler! Doğru eşleşti! 🌟';
+            fb.style.color = '#15803d';
+            setTimeout(() => { gIndex++; baslatGolge(alan); fb.innerText = ''; }, 1200);
+          } else {
+            fb.innerText = '❌ Farklı hayvan, tekrar bak!';
+            fb.style.color = '#dc2626';
+          }
+        };
+        optDiv.appendChild(opt);
+      });
+    }
+
+    /* 4. Farklı Olanı Bul */
+    const farkliHavuzu = [
+      { soru: "Hangisi bir meyve değildir?", secenekler: ["🍎 Elma", "🍌 Muz", "🐱 Kedi", "🍓 Çilek"], dogru: "🐱 Kedi" },
+      { soru: "Hangisi gökyüzünde uçamaz?", secenekler: ["🦅 Kartal", "✈️ Uçak", "🎈 Balon", "🐢 Kaplumbağa"], dogru: "🐢 Kaplumbağa" },
+      { soru: "Hangisi denizde yaşamaz?", secenekler: ["🐬 Yunus", "🦁 Aslan", "🐙 Ahtapot", "🐠 Balık"], dogru: "🦁 Aslan" }
+    ];
+    let fIndex = 0;
+    function baslatFarkli(alan) {
+      const q = farkliHavuzu[fIndex % farkliHavuzu.length];
+      alan.innerHTML = `<h3 style="text-align:center;margin:15px 0;font-size:20px;color:#1e3a8a;">${q.soru}</h3><div class="option-row" id="f-options"></div>`;
+      const optDiv = document.getElementById('f-options');
+      const fb = document.getElementById('game-feedback');
+      q.secenekler.forEach(sec => {
+        const btn = document.createElement('button');
+        btn.className = 'odd-option';
+        btn.innerText = sec;
+        btn.onclick = () => {
+          if (sec === q.dogru) {
+            fb.innerText = '🎉 Aferin! Farklı olanı hemen buldun! 🧠';
+            fb.style.color = '#15803d';
+            setTimeout(() => { fIndex++; baslatFarkli(alan); fb.innerText = ''; }, 1300);
+          } else {
+            fb.innerText = '❌ Bir daha düşün bakalım!';
+            fb.style.color = '#dc2626';
+          }
+        };
+        optDiv.appendChild(btn);
+      });
+    }
+
+    listeleOyunlar();
+  </script>
+</body>
+</html>
