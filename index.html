@@ -84,51 +84,15 @@
 
   <script src="app.js"></script>
   <script>
-    const masallar = [
-      {
-        id: 1,
-        baslik: "Kayıp Yavru Panda Pomi",
-        kategori: "Hayvanlar",
-        resim: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&auto=format&fit=crop&q=80",
-        metin: `Bir zamanlar yemyeşil bambu ağaçlarıyla çevrili Sihirli Orman'da sevimli bir yavru panda yaşarmış. Adı Pomi imiş. Pomi pamuk gibi yumuşacık tüyleri ve meraklı gözleriyle ormanın en neşeli yavrusuymuş.\n\nBir akşamüstü uçuşan sarı bir ateş böceğinin peşine takılmış. Zıplamış, koşmuş, yuvarlanmış... Durup baktığında ailesini görememiş. Orman biraz karanlık ve sessiz görünüyormuş.\n\nTam burnunu çekip ağlayacakken ayağının dibinde altın sarısı bir orman feneri parlamış. Feneri patisiyle tuttuğunda ağaçtaki sevimli Bilge Baykuş seslenmiş:\n— "Korkma küçük Pomi! İçindeki cesaret ve bu fenerin ışıltısı seni ailene götürecek. Işığı takip et!"\n\nPomi adımlarını hızlandırmış ve az sonra onu arayan annesinin yumuşak kucağına kavuşmuş. Annesi ona sarılıp fısıldamış:\n— "Ne kadar karanlık olursa olsun, kalbindeki minik bir umut her zaman yolunu aydınlatır."\n\nPomi o gece lezzetli bambularını yiyip tatlı bir uykuya dalmış. İyi uykular tatlı rüyalar! 🌙✨`
-      },
-      {
-        id: 2,
-        baslik: "Uçan Renkli Balon",
-        kategori: "Uyku",
-        resim: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&auto=format&fit=crop&q=80",
-        metin: `Gökyüzünde rengarenk süzülen neşeli bir sıcak hava balonu varmış. Sarı, kırmızı ve gök mavisi desenleri pamuk gibi bulutların arasında ışıldarmış.\n\nRüzgar tatlı bir ninni gibi esmiş, balonu bulutların bile üstüne çıkarmış. Balon göç eden kuşlara el sallamış, güneşe gülümsemiş. Akşam olunca gökyüzü laciverte bürünmüş, yıldızlar tek tek yanmış. Balon yumuşacık bir buluta yaslanıp derin bir uykuya dalmış.`
-      },
-      {
-        id: 3,
-        baslik: "Cesur Karınca Çıtı",
-        kategori: "Hayvanlar",
-        resim: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-        metin: `Minik karınca Çıtı yuvasına kocaman bir buğday tanesi taşımak istiyormuş. Buğday tanesi kendi boyundan tam üç kat büyükmüş!\n\nArkadaşları "Bunu tek başına taşıyamazsın, çok ağır" demişler. Ama Çıtı pes etmemiş. Önce taneyi biraz itmiş, sonra biraz çekmiş. Yavaş yavaş ama kararlılıkla buğdayı yuvasına kadar ulaştırmış. Ormandaki herkes anlamış ki: Azim ve sabır, boydan çok daha güçlüdür!`
-      },
-      {
-        id: 4,
-        baslik: "Yıldız Toplayan Çocuk",
-        kategori: "Sihirli",
-        resim: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?w=600&auto=format&fit=crop&q=80",
-        metin: `Küçük Arda her gece penceresinden gökyüzünü izlermiş. Bir gece parlak bir yıldız odasının pervazına konmuş. Yıldız konuşabiliyormuş!\n\n— "Merhaba Arda! Bu gece gökyüzünde ışığı azalan yıldızlara yardım etmek ister misin?"\n\nArda sihirli bir rüyaya dalar gibi yıldızın peşinden uçmuş. Elindeki sevgi dolu sözcüklerle parıltısı azalan yıldızları tek tek parlatmış. O günden sonra ne zaman göğe baksa, parlayan yıldızların ona göz kırptığını bilirmiş.`
-      },
-      {
-        id: 5,
-        baslik: "Gözlüklü Bilge Baykuş",
-        kategori: "Hayvanlar",
-        resim: "https://images.unsplash.com/photo-1543549790-8b5f4a028cfb?w=600&auto=format&fit=crop&q=80",
-        metin: `Ormandaki ulu çınarın en üst dalında yaşayan Bilge Baykuş kitap okumayı çok severmiş. Ağaç kovuğunda yapraklardan yapılmış yüzlerce kitabı varmış.\n\nOrmanın minik hayvanları ne zaman bir şey öğrenmek istese onun yanına koşarmış:\n— "Ağaçlar kışın neden yaprak döker?"\n— "Gökkuşağı nasıl oluşur?"\n\nBilge Baykuş gülümseyerek kitaplarını açar, onlara doğanın harika sırlarını anlatırmış.`
-      },
-      {
-        id: 6,
-        baslik: "Pofuduk Ayıcığın Balı",
-        kategori: "Hayvanlar",
-        resim: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600&auto=format&fit=crop&q=80",
-        metin: `Sevimli ayıcık Boni karnı guruldayınca tatlı mı tatlı bal aramaya çıkmış. Ormanın en yaşlı meşesinde arıların kovanını bulmuş.\n\nBoni arılara nazikçe seslenmiş:\n— "Sevimli arılar, bana birazcık bal ikram eder misiniz? Ben de sizin için nehir kenarından taze kır çiçekleri getireyim."\n\nArılar bu kibar teklife çok sevinmiş. Boni'ye koca bir petek bal vermişler. Nezaket ve tatlı dil her kapıyı açarmış!`
-      }
-    ];
+    let masallar = [];
 
+fetch('masallar.json')
+  .then(res => res.json())
+  .then(data => {
+    masallar = data;
+    listele(masallar);
+  })
+  .catch(err => console.error("Masallar yüklenemedi:", err));
     let seciliMasalId = null;
     let aktifFontSize = 20;
 
