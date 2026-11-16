@@ -7,22 +7,111 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Genel Yedek Stiller (style.css yüklenmezse bile bozulmasın) */
+    body {
+      font-family: 'Nunito', 'Segoe UI', sans-serif;
+      background: #fffbeb;
+      margin: 0;
+      padding: 0 0 90px 0;
+      color: #1e293b;
+    }
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .app-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      padding: 12px 18px;
+      border-radius: 22px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+      border: 3px solid #fef3c7;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 900;
+      color: #ea580c;
+    }
+    .star-counter-badge {
+      background: #fef08a;
+      color: #854d0e;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      box-shadow: 0 3px 0 #facc15;
+    }
+
     /* Oyun Kartları Izgarası */
     .game-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
-      margin-bottom: 24px;
     }
     @media(max-width: 400px) {
       .game-grid { grid-template-columns: 1fr; }
     }
-
-    .back-game-btn {
-      background: #f1f5f9;
-      color: #334155;
+    .custom-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      border: 3px solid #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-icon-banner {
+      height: 110px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 16px;
       border: none;
-      padding: 10px 18px;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Geri Dön Butonu */
+    .back-game-btn {
+      background: #ffffff;
+      color: #334155;
+      border: 2px solid #e2e8f0;
+      padding: 10px 16px;
       border-radius: 16px;
       font-weight: 900;
       font-family: inherit;
@@ -34,16 +123,16 @@
       box-shadow: 0 3px 0 #cbd5e1;
     }
 
-    /* 1. OYUN: WOW TARZI ÇİZGİLİ KELİME ÇARKI */
-    .word-game-card {
+    /* Oyun Kart Kutusu */
+    .game-box {
       background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
       border: 4px solid #fed7aa;
       border-radius: 28px;
-      padding: 18px 14px;
+      padding: 20px 16px;
       text-align: center;
-      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.12);
+      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.1);
     }
-    .word-level-info {
+    .level-pill {
       font-size: 14px;
       font-weight: 900;
       color: #ea580c;
@@ -53,27 +142,25 @@
       border-radius: 14px;
       margin-bottom: 8px;
     }
-    .word-hint {
+    .hint-text {
       font-size: 15px;
       font-weight: 800;
       color: #475569;
       margin-bottom: 14px;
     }
+
+    /* 1. KELİME ÇARKI STİLLERİ */
     .word-slots-container {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       align-items: center;
     }
-    .word-row {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-    }
+    .word-row { display: flex; gap: 6px; justify-content: center; }
     .word-box {
-      width: 38px;
-      height: 42px;
+      width: 42px;
+      height: 46px;
       background: #f8fafc;
       border: 3px solid #cbd5e1;
       border-radius: 12px;
@@ -83,8 +170,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-transform: uppercase;
-      transition: all 0.25s;
     }
     .word-box.solved {
       background: #dcfce7;
@@ -93,143 +178,110 @@
       transform: scale(1.06);
     }
     .current-word-display {
-      min-height: 42px;
+      min-height: 44px;
       background: #ffffff;
       border: 3px dashed #fdba74;
       border-radius: 14px;
-      display: inline-flex;
-      min-width: 180px;
-      padding: 0 16px;
+      display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       font-weight: 900;
       color: #c2410c;
       letter-spacing: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-
-    /* Dairesel Çark ve Çizgi Alanı */
-    .wheel-wrapper {
-      position: relative;
-      width: 230px;
-      height: 230px;
-      margin: 0 auto 14px auto;
-      background: radial-gradient(circle, #ffedd5 55%, #fed7aa 100%);
+    .letters-wheel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      max-width: 260px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .letter-btn {
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
-      border: 4px solid #fdba74;
-      touch-action: none;
-      user-select: none;
-    }
-    .wheel-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .wheel-letter {
-      position: absolute;
-      width: 52px;
-      height: 52px;
-      margin-left: -26px;
-      margin-top: -26px;
-      border-radius: 50%;
-      background: #ffffff;
-      border: 3px solid #f97316;
-      color: #9a3412;
+      border: none;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      color: #ffffff;
       font-size: 22px;
       font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 0 #ea580c;
+      box-shadow: 0 4px 0 #9a3412;
       cursor: pointer;
-      z-index: 3;
-      transition: transform 0.15s, background 0.15s;
     }
-    .wheel-letter.selected {
-      background: #f97316;
-      color: #ffffff;
-      transform: scale(1.15);
-    }
-
-    .word-controls {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .letter-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #9a3412; }
+    .word-controls { display: flex; justify-content: center; gap: 10px; }
     .btn-word-action {
-      padding: 10px 14px;
+      padding: 10px 18px;
       border-radius: 14px;
       border: none;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 900;
       cursor: pointer;
     }
-    .btn-clear { background: #f1f5f9; color: #475569; box-shadow: 0 3px 0 #cbd5e1; }
-    .btn-hint { background: #fef08a; color: #854d0e; box-shadow: 0 3px 0 #eab308; }
+    .btn-clear { background: #f1f5f9; color: #64748b; box-shadow: 0 3px 0 #cbd5e1; }
     .btn-submit { background: #10b981; color: #ffffff; box-shadow: 0 4px 0 #047857; }
 
-    /* 2. OYUN: HARF AVCISI (5x5 KELİME TABLOSU) */
-    .search-grid {
+    /* 2. HARF AVCISI (TABLODAN KELİME BULMA) */
+    .hunter-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      max-width: 290px;
-      margin: 14px auto;
+      max-width: 260px;
+      margin: 0 auto 16px auto;
     }
-    .search-cell {
+    .hunter-cell {
       aspect-ratio: 1;
       background: #ffffff;
-      border: 3px solid #c7d2fe;
+      border: 3px solid #cbd5e1;
       border-radius: 14px;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 900;
-      color: #312e81;
+      color: #1e293b;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       user-select: none;
-      box-shadow: 0 3px 0 #a5b4fc;
     }
-    .search-cell.picked {
-      background: #818cf8;
-      color: #ffffff;
-      border-color: #4f46e5;
+    .hunter-cell.selected {
+      background: #fef08a;
+      border-color: #eab308;
+      color: #854d0e;
+      transform: scale(0.95);
     }
-    .search-cell.found {
+    .hunter-cell.found {
       background: #bbf7d0;
-      color: #166534;
       border-color: #22c55e;
+      color: #166534;
     }
-    .target-tags {
+    .target-words-list {
       display: flex;
       gap: 8px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .target-tag {
-      background: #e0e7ff;
-      color: #3730a3;
-      padding: 5px 12px;
+    .target-word-badge {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 6px 12px;
       border-radius: 12px;
-      font-size: 13px;
       font-weight: 900;
+      font-size: 14px;
     }
-    .target-tag.done {
+    .target-word-badge.done {
       background: #dcfce7;
       color: #15803d;
       text-decoration: line-through;
     }
 
-    /* 3. OYUN: HAFIZA KARTLARI */
+    /* 3. HAFIZA KARTLARI */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -244,7 +296,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 30px;
       cursor: pointer;
       box-shadow: 0 4px 0 #1d4ed8;
       user-select: none;
@@ -254,26 +306,538 @@
       border: 3px solid #60a5fa;
     }
 
-    /* 4. OYUN: SAYI & MANTIK TRENİ */
+    /* 4. SAYI TRENİ */
     .math-stage {
-      background: #f0fdf4;
-      border: 3px solid #bbf7d0;
-      border-radius: 22px;
+      font-size: 42px;
+      background: #ffffff;
+      border: 3px solid #bae6fd;
+      border-radius: 20px;
       padding: 20px;
-      margin-bottom: 16px;
-      font-size: 34px;
-      letter-spacing: 6px;
-      min-height: 90px;
+      margin-bottom: 18px;
+      min-height: 80px;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
     }
     .math-options {
       display: flex;
-      justify-content: center;
       gap: 12px;
+      justify-content: center;
     }
     .math-btn {
       width: 68px;
-      height: 6
+      height: 68px;
+      border-radius: 20px;
+      border: none;
+      background: #8b5cf6;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 5px 0 #6d28d9;
+      cursor: pointer;
+    }
+    .math-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #6d28d9; }
+
+    /* Alt Menü */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+      border-top: 3px solid #f1f5f9;
+      z-index: 100;
+    }
+    .nav-item {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-item.active { color: #f97316; }
+    .nav-icon { font-size: 22px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Üst Bar -->
+    <header class="app-top-bar">
+      <a href="index.html" class="app-brand">
+        <span style="font-size:26px;">🧩</span>
+        <span>Zeka Parkı</span>
+      </a>
+      <div class="star-counter-badge">
+        <span>⭐</span>
+        <span id="user-stars-count">0</span>
+      </div>
+    </header>
+
+    <!-- ANA OYUN LİSTESİ (KARTLAR) -->
+    <div id="oyunlar-ana-ekran">
+      <h3 style="margin: 0 0 14px 4px; font-weight: 900; color: #0f172a; font-size: 19px;">Bir Oyun Seç ve Yıldız Kazan! 🎮</h3>
+      
+      <div class="game-grid">
+        <!-- 1. Kelime Çarkı -->
+        <div class="custom-card">
+          <div>
+            <div class="card-icon-banner" style="background: #ffedd5;">🎡</div>
+            <div class="card-title">Sihirli Kelime Çarkı</div>
+            <div class="card-desc">Harflere dokun, gizli kelimeleri bul!</div>
+          </div>
+          <button class="action-btn" style="background:#f97316;box-shadow:0 4px 0 #c2410c;" onclick="oyunAc('kelime')">OYNA 🎮</button>
+        </div>
+
+        <!-- 2. Harf Avcısı -->
+        <div class="custom-card">
+          <div>
+            <div class="card-icon-banner" style="background: #dcfce7;">🔍</div>
+            <div class="card-title">Harf Avcısı</div>
+            <div class="card-desc">Tablodaki harfleri seçerek kelimeleri avla!</div>
+          </div>
+          <button class="action-btn" style="background:#10b981;box-shadow:0 4px 0 #047857;" onclick="oyunAc('avci')">OYNA 🎮</button>
+        </div>
+
+        <!-- 3. Hafıza Kartları -->
+        <div class="custom-card">
+          <div>
+            <div class="card-icon-banner" style="background: #dbeafe;">🃏</div>
+            <div class="card-title">Eşini Bul</div>
+            <div class="card-desc">Kartları çevir, sevimli hayvanları eşleştir!</div>
+          </div>
+          <button class="action-btn" style="background:#3b82f6;box-shadow:0 4px 0 #1d4ed8;" onclick="oyunAc('hafiza')">OYNA 🎮</button>
+        </div>
+
+        <!-- 4. Neşeli Sayı Treni -->
+        <div class="custom-card">
+          <div>
+            <div class="card-icon-banner" style="background: #f3e8ff;">🚂</div>
+            <div class="card-title">Neşeli Sayı Treni</div>
+            <div class="card-desc">Ekrandaki meyveleri say, doğru rakamı bul!</div>
+          </div>
+          <button class="action-btn" style="background:#8b5cf6;box-shadow:0 4px 0 #6d28d9;" onclick="oyunAc('matematik')">OYNA 🎮</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OYUN 1: KELİME ÇARKI ODASI -->
+    <section id="room-kelime" style="display:none;">
+      <button class="back-game-btn" onclick="oyunaDon()">⬅️ Oyunlara Dön</button>
+      <div class="game-box">
+        <div class="level-pill" id="word-level-text">Bölüm 1</div>
+        <div class="hint-text" id="word-hint-text">İpucu: Sevimli dostlarımız</div>
+        <div class="word-slots-container" id="word-slots"></div>
+        <div class="current-word-display" id="word-input-display"></div>
+        <div class="letters-wheel" id="letters-wheel"></div>
+        <div class="word-controls">
+          <button class="btn-word-action btn-clear" onclick="harfTemizle()">❌ Sil</button>
+          <button class="btn-word-action btn-submit" onclick="kelimeKontrolEt()">✨ Kontrol Et!</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OYUN 2: HARF AVCISI ODASI -->
+    <section id="room-avci" style="display:none;">
+      <button class="back-game-btn" onclick="oyunaDon()">⬅️ Oyunlara Dön</button>
+      <div class="game-box">
+        <div class="level-pill" id="hunter-level-text">Harf Avcısı</div>
+        <div class="hint-text">Yukarıdaki kelimelerin harflerine sırayla dokun!</div>
+        <div class="target-words-list" id="hunter-targets"></div>
+        <div class="current-word-display" id="hunter-current"></div>
+        <div class="hunter-grid" id="hunter-grid"></div>
+        <div class="word-controls">
+          <button class="btn-word-action btn-clear" onclick="avciTemizle()">❌ Seçimi Temizle</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OYUN 3: HAFIZA OYUNU ODASI -->
+    <section id="room-hafiza" style="display:none;">
+      <button class="back-game-btn" onclick="oyunaDon()">⬅️ Oyunlara Dön</button>
+      <div class="game-box">
+        <div class="level-pill">Hafıza Kartları</div>
+        <div class="hint-text">Aynı olan iki hayvan kartını bul! (+3 ⭐)</div>
+        <div class="memory-grid" id="memory-grid"></div>
+        <button class="btn-word-action btn-clear" style="margin-top:16px;" onclick="hafizaBaslat()">🔄 Yeniden Dağıt</button>
+      </div>
+    </section>
+
+    <!-- OYUN 4: SAYI TRENİ ODASI -->
+    <section id="room-matematik" style="display:none;">
+      <button class="back-game-btn" onclick="oyunaDon()">⬅️ Oyunlara Dön</button>
+      <div class="game-box">
+        <div class="level-pill" id="math-score-pill">Soru 1 / 5</div>
+        <div class="hint-text">Kutuda kaç tane var? Say ve doğru rakama dokun!</div>
+        <div class="math-stage" id="math-stage"></div>
+        <div class="math-options" id="math-options"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Alt Menü -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">📖</span>
+      <span>Masallar</span>
+    </a>
+    <a href="tekerlemeler.html" class="nav-item">
+      <span class="nav-icon">⚡</span>
+      <span>Tekerleme</span>
+    </a>
+    <a href="oyunlar.html" class="nav-item active">
+      <span class="nav-icon">🧩</span>
+      <span>Oyunlar</span>
+    </a>
+    <a href="rozetler.html" class="nav-item">
+      <span class="nav-icon">🏆</span>
+      <span>Jojupof</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
+  <script>
+    /* GÜVENLİ YILDIZ FONKSİYONLARI (app.js'de eksik olsa bile çalışır) */
+    function guvenliYildizGetir() {
+      if (typeof getYildizSayisi === 'function') return getYildizSayisi();
+      return parseInt(localStorage.getItem('toplam_yildiz') || '0', 10);
+    }
+
+    function guvenliYildizEkle(miktar) {
+      if (typeof yildizEkle === 'function') {
+        yildizEkle(miktar);
+      } else {
+        let mevcut = guvenliYildizGetir();
+        localStorage.setItem('toplam_yildiz', mevcut + miktar);
+      }
+      yildizGostergeGuncelle();
+    }
+
+    function yildizGostergeGuncelle() {
+      const el = document.getElementById('user-stars-count');
+      if (el) el.innerText = guvenliYildizGetir();
+    }
+
+    /* EKRAN GEÇİŞLERİ */
+    function oyunAc(tur) {
+      document.getElementById('oyunlar-ana-ekran').style.display = 'none';
+      document.getElementById('room-kelime').style.display = (tur === 'kelime') ? 'block' : 'none';
+      document.getElementById('room-avci').style.display = (tur === 'avci') ? 'block' : 'none';
+      document.getElementById('room-hafiza').style.display = (tur === 'hafiza') ? 'block' : 'none';
+      document.getElementById('room-matematik').style.display = (tur === 'matematik') ? 'block' : 'none';
+      window.scrollTo(0, 0);
+
+      if (tur === 'kelime') bolumYukle(aktifBolumIndex);
+      if (tur === 'avci') avciYukle(aktifAvciIndex);
+      if (tur === 'hafiza') hafizaBaslat();
+      if (tur === 'matematik') matematikBaslat();
+    }
+
+    function oyunaDon() {
+      document.getElementById('room-kelime').style.display = 'none';
+      document.getElementById('room-avci').style.display = 'none';
+      document.getElementById('room-hafiza').style.display = 'none';
+      document.getElementById('room-matematik').style.display = 'none';
+      document.getElementById('oyunlar-ana-ekran').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    /* ==========================================
+       1. OYUN: SİHİRLİ KELİME ÇARKI
+       ========================================== */
+    const bolumler = [
+      { bolum: 1, ipucu: "🐾 Sevimli Hayvanlar", harfler: ["K", "E", "D", "İ"], hedefler: ["KEDİ", "DİK"] },
+      { bolum: 2, ipucu: "🍉 Jojupof'un Dostu", harfler: ["P", "A", "N", "D", "A"], hedefler: ["PANDA", "DANA", "ADA"] },
+      { bolum: 3, ipucu: "🌳 Yeşil Doğa", harfler: ["A", "Ğ", "A", "Ç"], hedefler: ["AĞAÇ", "ÇAĞ"] },
+      { bolum: 4, ipucu: "📚 Masal Dünyası", harfler: ["M", "A", "S", "A", "L"], hedefler: ["MASAL", "MASA", "ASMA"] },
+      { bolum: 5, ipucu: "☀️ Gökyüzü", harfler: ["G", "Ü", "N", "E", "Ş"], hedefler: ["GÜNEŞ", "GÜN", "ŞEN"] }
+    ];
+    let aktifBolumIndex = 0;
+    let yazilanKelime = "";
+    let bulunanKelimeler = [];
+
+    function bolumYukle(idx) {
+      aktifBolumIndex = idx % bolumler.length;
+      const b = bolumler[aktifBolumIndex];
+      yazilanKelime = "";
+      bulunanKelimeler = [];
+      document.getElementById('word-input-display').innerText = "";
+      document.getElementById('word-level-text').innerText = `Bölüm ${b.bolum}`;
+      document.getElementById('word-hint-text').innerText = `İpucu: ${b.ipucu}`;
+
+      const slotContainer = document.getElementById('word-slots');
+      slotContainer.innerHTML = '';
+      b.hedefler.forEach(kelime => {
+        const row = document.createElement('div');
+        row.className = 'word-row';
+        for (let i = 0; i < kelime.length; i++) {
+          const box = document.createElement('div');
+          box.className = 'word-box';
+          box.id = `box-${kelime}-${i}`;
+          box.innerText = "?";
+          row.appendChild(box);
+        }
+        slotContainer.appendChild(row);
+      });
+
+      const wheel = document.getElementById('letters-wheel');
+      wheel.innerHTML = '';
+      b.harfler.forEach(harf => {
+        const btn = document.createElement('button');
+        btn.className = 'letter-btn';
+        btn.innerText = harf;
+        btn.onclick = () => {
+          if (yazilanKelime.length < 8) {
+            yazilanKelime += harf;
+            document.getElementById('word-input-display').innerText = yazilanKelime;
+          }
+        };
+        wheel.appendChild(btn);
+      });
+    }
+
+    function harfTemizle() {
+      yazilanKelime = "";
+      document.getElementById('word-input-display').innerText = "";
+    }
+
+    function kelimeKontrolEt() {
+      const b = bolumler[aktifBolumIndex];
+      if (b.hedefler.includes(yazilanKelime)) {
+        if (!bulunanKelimeler.includes(yazilanKelime)) {
+          bulunanKelimeler.push(yazilanKelime);
+          for (let i = 0; i < yazilanKelime.length; i++) {
+            const box = document.getElementById(`box-${yazilanKelime}-${i}`);
+            box.innerText = yazilanKelime[i];
+            box.classList.add('solved');
+          }
+          harfTemizle();
+          if (bulunanKelimeler.length === b.hedefler.length) {
+            guvenliYildizEkle(3);
+            setTimeout(() => {
+              alert('🎉 Harikasın! Bölümü bitirdin ve +3 Yıldız kazandın! ⭐⭐⭐');
+              bolumYukle(aktifBolumIndex + 1);
+            }, 300);
+          }
+        } else {
+          alert('Bu kelimeyi zaten buldun! 🌟');
+          harfTemizle();
+        }
+      } else {
+        const d = document.getElementById('word-input-display');
+        d.style.color = '#ef4444';
+        setTimeout(() => { d.style.color = '#c2410c'; harfTemizle(); }, 400);
+      }
+    }
+
+    /* ==========================================
+       2. OYUN: HARF AVCISI (TABLO BULMACA)
+       ========================================== */
+    const avciBolumler = [
+      {
+        kelimeler: ["ELMA", "ARMUT", "MUZ"],
+        harfler: ["E","L","M","A", "A","R","M","U", "T","M","U","Z", "K","O","L","A"]
+      },
+      {
+        kelimeler: ["ASLAN", "KAPLAN", "AYI"],
+        harfler: ["A","S","L","A", "N","K","A","P", "L","A","N","A", "Y","I","Z","O"]
+      }
+    ];
+    let aktifAvciIndex = 0;
+    let avciSecilenMetin = "";
+    let avciSecilenHucreler = [];
+    let avciBulunanlar = [];
+
+    function avciYukle(idx) {
+      aktifAvciIndex = idx % avciBolumler.length;
+      const b = avciBolumler[aktifAvciIndex];
+      avciSecilenMetin = "";
+      avciSecilenHucreler = [];
+      avciBulunanlar = [];
+      document.getElementById('hunter-current').innerText = "";
+
+      const targetsDiv = document.getElementById('hunter-targets');
+      targetsDiv.innerHTML = '';
+      b.kelimeler.forEach(k => {
+        const span = document.createElement('span');
+        span.className = 'target-word-badge';
+        span.id = `target-${k}`;
+        span.innerText = k;
+        targetsDiv.appendChild(span);
+      });
+
+      const grid = document.getElementById('hunter-grid');
+      grid.innerHTML = '';
+      b.harfler.forEach((h, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'hunter-cell';
+        cell.innerText = h;
+        cell.onclick = () => avciHucreSec(cell, h);
+        grid.appendChild(cell);
+      });
+    }
+
+    function avciHucreSec(cell, harf) {
+      if (cell.classList.contains('selected')) return;
+      cell.classList.add('selected');
+      avciSecilenHucreler.push(cell);
+      avciSecilenMetin += harf;
+      document.getElementById('hunter-current').innerText = avciSecilenMetin;
+
+      const b = avciBolumler[aktifAvciIndex];
+      if (b.kelimeler.includes(avciSecilenMetin) && !avciBulunanlar.includes(avciSecilenMetin)) {
+        avciBulunanlar.push(avciSecilenMetin);
+        document.getElementById(`target-${avciSecilenMetin}`).classList.add('done');
+        avciSecilenHucreler.forEach(c => {
+          c.classList.remove('selected');
+          c.classList.add('found');
+        });
+        avciSecilenMetin = "";
+        avciSecilenHucreler = [];
+        document.getElementById('hunter-current').innerText = "";
+
+        if (avciBulunanlar.length === b.kelimeler.length) {
+          guvenliYildizEkle(3);
+          setTimeout(() => {
+            alert('🎉 Süper Avcı! Tüm kelimeleri buldun ve +3 Yıldız kazandın! ⭐⭐⭐');
+            avciYukle(aktifAvciIndex + 1);
+          }, 300);
+        }
+      }
+    }
+
+    function avciTemizle() {
+      avciSecilenHucreler.forEach(c => c.classList.remove('selected'));
+      avciSecilenHucreler = [];
+      avciSecilenMetin = "";
+      document.getElementById('hunter-current').innerText = "";
+    }
+
+    /* ==========================================
+       3. OYUN: HAFIZA KARTLARI
+       ========================================== */
+    const emojiler = ['🐼', '🦁', '🐸', '🐨', '🦊', '🐰'];
+    let acikKartlar = [];
+    let eslesenSayisi = 0;
+    let kilit = false;
+
+    function hafizaBaslat() {
+      const grid = document.getElementById('memory-grid');
+      grid.innerHTML = '';
+      eslesenSayisi = 0;
+      const deste = [...emojiler, ...emojiler].sort(() => Math.random() - 0.5);
+
+      deste.forEach(emo => {
+        const c = document.createElement('div');
+        c.className = 'memory-card';
+        c.dataset.icon = emo;
+        c.innerText = '❓';
+        c.onclick = () => {
+          if (kilit || c.classList.contains('flipped')) return;
+          c.classList.add('flipped');
+          c.innerText = c.dataset.icon;
+          acikKartlar.push(c);
+
+          if (acikKartlar.length === 2) {
+            kilit = true;
+            if (acikKartlar[0].dataset.icon === acikKartlar[1].dataset.icon) {
+              eslesenSayisi++;
+              acikKartlar = [];
+              kilit = false;
+              if (eslesenSayisi === emojiler.length) {
+                guvenliYildizEkle(3);
+                setTimeout(() => alert('🎉 Harika hafıza! Tüm eşleri buldun ve +3 Yıldız kazandın! ⭐⭐⭐'), 300);
+              }
+            } else {
+              setTimeout(() => {
+                acikKartlar.forEach(item => {
+                  item.classList.remove('flipped');
+                  item.innerText = '❓';
+                });
+                acikKartlar = [];
+                kilit = false;
+              }, 700);
+            }
+          }
+        };
+        grid.appendChild(c);
+      });
+      acikKartlar = [];
+      kilit = false;
+    }
+
+    /* ==========================================
+       4. OYUN: NEŞELİ SAYI TRENİ
+       ========================================== */
+    const meyveler = ['🍎', '🍌', '🍓', '🍊', '🍉', '🍐'];
+    let mathSoruNo = 1;
+    let dogruCevap = 0;
+
+    function matematikBaslat() {
+      mathSoruNo = 1;
+      yeniMatematikSorusu();
+    }
+
+    function yeniMatematikSorusu() {
+      document.getElementById('math-score-pill').innerText = `Soru ${mathSoruNo} / 5`;
+      dogruCevap = Math.floor(Math.random() * 7) + 2; // 2 ile 8 arası
+      const secilenMeyve = meyveler[Math.floor(Math.random() * meyveler.length)];
+
+      const stage = document.getElementById('math-stage');
+      stage.innerHTML = '';
+      for (let i = 0; i < dogruCevap; i++) {
+        const span = document.createElement('span');
+        span.innerText = secilenMeyve;
+        stage.appendChild(span);
+      }
+
+      // Şıklar oluştur
+      let siklar = [dogruCevap];
+      while (siklar.length < 3) {
+        let rast = Math.floor(Math.random() * 9) + 1;
+        if (!siklar.includes(rast)) siklar.push(rast);
+      }
+      siklar.sort(() => Math.random() - 0.5);
+
+      const opts = document.getElementById('math-options');
+      opts.innerHTML = '';
+      siklar.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'math-btn';
+        btn.innerText = s;
+        btn.onclick = () => {
+          if (s === dogruCevap) {
+            if (mathSoruNo < 5) {
+              mathSoruNo++;
+              yeniMatematikSorusu();
+            } else {
+              guvenliYildizEkle(3);
+              alert('🚂 Çuf Çuf! 5 soruyu da bildin ve +3 Yıldız kazandın! ⭐⭐⭐');
+              matematikBaslat();
+            }
+          } else {
+            btn.style.background = '#ef4444';
+            setTimeout(() => btn.style.background = '#8b5cf6', 400);
+          }
+        };
+        opts.appendChild(btn);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      yildizGostergeGuncelle();
+    });
+  </script>
+</body>
+</html>
