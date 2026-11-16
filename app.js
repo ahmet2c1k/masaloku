@@ -1,131 +1,110 @@
-// Ortak Durum ve Yerel Hafıza (LocalStorage)
-const STORAGE_KEY_STARS = 'mz_user_stars';
-const STORAGE_KEY_READ = 'mz_read_stories';
-const STORAGE_KEY_FAVS = 'mz_favorite_stories';
+// app.js - Ortak Yıldız Cüzdanı, Okuma ve Ses Sistemi
 
-// Yıldızları Getir / Güncelle
+// Eski önbellekleri temizle
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(reg => reg.update());
+  });
+}
+
+const YILDIZ_KEY = 'masal_yildiz_cuzdan';
+
+// İlk geçişte eski yıldızları koru
+(function migrasyon() {
+  if (localStorage.getItem(YILDIZ_KEY) === null) {
+    const eski = localStorage.getItem('masal_yildiz') || localStorage.getItem('toplam_yildiz') || localStorage.getItem('yildizlar') || '10';
+    localStorage.setItem(YILDIZ_KEY, eski);
+  }
+})();
+
 function getYildizSayisi() {
-  return parseInt(localStorage.getItem(STORAGE_KEY_STARS) || '0', 10);
+  return parseInt(localStorage.getItem(YILDIZ_KEY) || '0', 10);
 }
 
-function yildizEkle(puan = 1) {
-  const yeni = getYildizSayisi() + puan;
-  localStorage.setItem(STORAGE_KEY_STARS, yeni);
-  guncelleYildizBari();
+function setYildizSayisi(yeniMiktar) {
+  const deger = Math.max(0, parseInt(yeniMiktar, 10));
+  localStorage.setItem(YILDIZ_KEY, deger);
+  localStorage.setItem('masal_yildiz', deger);
+  localStorage.setItem('toplam_yildiz', deger);
+  yildizEkraniGuncelle();
+  return deger;
 }
 
-function guncelleYildizBari() {
+function yildizEkle(miktar) {
+  const suAn = getYildizSayisi();
+  return setYildizSayisi(suAn + miktar);
+}
+
+function yildizHarca(miktar) {
+  const suAn = getYildizSayisi();
+  if (suAn < miktar) return false;
+  setYildizSayisi(suAn - miktar);
+  return true;
+}
+
+function yildizEkraniGuncelle() {
   const el = document.getElementById('user-stars-count');
   if (el) el.innerText = getYildizSayisi();
 }
 
-// Okunan Masallar
 function getOkunanMasallar() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY_READ) || '[]');
+  return JSON.parse(localStorage.getItem('okunan_masallar') || '[]');
 }
 
 function masalOkunduIsaretle(id) {
-  const liste = getOkunanMasallar();
-  if (!liste.includes(id)) {
-    liste.push(id);
-    localStorage.setItem(STORAGE_KEY_READ, JSON.stringify(liste));
-    yildizEkle(2); // Masal bitiren çocuğa +2 yıldız hediye
+  const okunanlar = getOkunanMasallar();
+  if (!okunanlar.includes(id)) {
+    okunanlar.push(id);
+    localStorage.setItem('okunan_masallar', JSON.stringify(okunanlar));
+    yildizEkle(2);
     return true;
   }
   return false;
 }
 
-// Favoriler
 function getFavoriler() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY_FAVS) || '[]');
+  return JSON.parse(localStorage.getItem('favori_masallar') || '[]');
 }
 
-function favoriDegistir(id, btnEl) {
-  let liste = getFavoriler();
-  if (liste.includes(id)) {
-    liste = liste.filter(x => x !== id);
-    if (btnEl) btnEl.innerText = '🤍';
+function favoriDegistir(id, btnElement) {
+  let favlar = getFavoriler();
+  if (favlar.includes(id)) {
+    favlar = favlar.filter(x => x !== id);
+    if (btnElement) btnElement.innerText = '🤍';
   } else {
-    liste.push(id);
-    if (btnEl) btnEl.innerText = '❤️';
+    favlar.push(id);
+    if (btnElement) btnElement.innerText = '❤️';
   }
-  localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify(liste));
+  localStorage.setItem('favori_masallar', JSON.stringify(favlar));
 }
 
-// SESLİ OKUMA MOTORU (Gelişmiş & Sevimli TTS)
-let aktifSes = null;
+// Sesli Okuma Sistemi
 let okumaDevamEdiyor = false;
-
-function sesliOkuDurdur(metin, btnEl) {
+function sesliOkuDurdur(metin, btn) {
   if (!('speechSynthesis' in window)) {
-    alert('Tarayıcınız sesli okuma özelliğini desteklemiyor.');
+    alert('Cihazınız sesli okumayı desteklemiyor.');
     return;
   }
-
-  // Zaten çalıyorsa durdur
   if (okumaDevamEdiyor) {
     window.speechSynthesis.cancel();
     okumaDevamEdiyor = false;
-    btnEl.innerHTML = '🔊 Masalı Sesli Dinle';
-    btnEl.classList.remove('playing');
+    if (btn) btn.innerHTML = '🔊 Sesli Dinle';
     return;
   }
-
   window.speechSynthesis.cancel();
-  aktifSes = new SpeechSynthesisUtterance(metin);
-  aktifSes.lang = 'tr-TR';
-
-  // --- SEVİMLİ VE MASALCI AYARLARI ---
-  // 1. Ses Tonu (Pitch): 1.0 normaldir. 1.18 - 1.25 arası sesi daha tatlı, genç ve masalcı yapar.
-  aktifSes.pitch = 1.2;
-
-  // 2. Okuma Hızı (Rate): 1.0 standarttır. 0.88 çocukların kelimeleri net yakalaması için idealdir.
-  aktifSes.rate = 0.88;
-
-  // 3. Cihazdaki En Kaliteli Doğal Türkçe Sesi Bulma
-  const tumSesler = window.speechSynthesis.getVoices();
-  const enIyiTurkceSes = tumSesler.find(v => 
-    v.lang.includes('tr') && (
-      v.name.includes('Natural') || 
-      v.name.includes('Google') || 
-      v.name.includes('Yelda') || 
-      v.name.includes('Emel') ||
-      v.name.includes('Seda')
-    )
-  ) || tumSesler.find(v => v.lang.includes('tr'));
-
-  if (enIyiTurkceSes) {
-    aktifSes.voice = enIyiTurkceSes;
-  }
-
-  aktifSes.onstart = () => {
-    okumaDevamEdiyor = true;
-    btnEl.innerHTML = '⏸ Okumayı Duraklat';
-    btnEl.classList.add('playing');
-  };
-
-  aktifSes.onend = () => {
+  const u = new SpeechSynthesisUtterance(metin);
+  u.lang = 'tr-TR';
+  u.rate = 0.92;
+  u.pitch = 1.1;
+  u.onend = () => {
     okumaDevamEdiyor = false;
-    btnEl.innerHTML = '🔊 Masalı Sesli Dinle';
-    btnEl.classList.remove('playing');
+    if (btn) btn.innerHTML = '🔊 Sesli Dinle';
   };
-
-  aktifSes.onerror = () => {
-    okumaDevamEdiyor = false;
-    btnEl.innerHTML = '🔊 Masalı Sesli Dinle';
-    btnEl.classList.remove('playing');
-  };
-
-  window.speechSynthesis.speak(aktifSes);
+  okumaDevamEdiyor = true;
+  if (btn) btn.innerHTML = '⏹️ Okumayı Durdur';
+  window.speechSynthesis.speak(u);
 }
 
-// Mobil cihazlarda seslerin arka planda gecikmeli yüklenmesini önleme
-if ('speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = () => {
-    window.speechSynthesis.getVoices();
-  };
-}
-// Sayfa Açılışında Yıldızları Bas
 document.addEventListener('DOMContentLoaded', () => {
-  guncelleYildizBari();
+  yildizEkraniGuncelle();
 });
