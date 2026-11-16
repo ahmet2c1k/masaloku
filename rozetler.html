@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jojupof &amp; Mağaza | Masal &amp; Zeka</title>
+  <title>Jojupof Gardırobu | Masal &amp; Zeka</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: 'Nunito', 'Segoe UI', sans-serif;
-      background: #fffbeb;
+      font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+      background-attachment: fixed;
       margin: 0;
-      padding: 0 0 90px 0;
+      padding: 0 0 95px 0;
       color: #1e293b;
     }
-    .container { max-width: 540px; margin: 0 auto; padding: 16px; }
-    
+    .container { max-width: 520px; margin: 0 auto; padding: 14px; }
+
+    /* Üst Bar */
     .app-top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
       padding: 12px 18px;
-      border-radius: 22px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-      margin-bottom: 18px;
-      border: 3px solid #fef3c7;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+      border: 2px solid #ffffff;
     }
     .app-brand {
       display: flex;
@@ -37,68 +41,54 @@
       color: #ea580c;
     }
     .star-counter-badge {
-      background: #fef08a;
-      color: #854d0e;
+      background: linear-gradient(135deg, #fde047, #f59e0b);
+      color: #78350f;
       font-weight: 900;
       padding: 6px 14px;
-      border-radius: 16px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
       gap: 6px;
       font-size: 16px;
-      box-shadow: 0 3px 0 #facc15;
+      box-shadow: 0 3px 0 #d97706;
     }
 
-    /* Jojupof Sahne Kartı */
-    .pet-card {
-      background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
-      border-radius: 28px;
-      padding: 20px 16px;
+    /* Jojupof Odası */
+    .pet-room-card {
+      background: linear-gradient(180deg, #e0f2fe 0%, #fef9c3 65%, #bbf7d0 100%);
+      border-radius: 30px;
+      padding: 18px 14px;
       text-align: center;
-      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.12);
-      border: 4px solid #fed7aa;
-      margin-bottom: 20px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      border: 4px solid #ffffff;
+      margin-bottom: 18px;
       position: relative;
     }
-    .pet-badge-level {
-      display: inline-block;
-      background: #f97316;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 5px 14px;
-      border-radius: 16px;
-      margin-bottom: 6px;
-    }
-    .pet-name { font-size: 26px; font-weight: 900; color: #7c2d12; margin: 0 0 4px 0; }
     .pet-speech {
+      background: #ffffff;
+      color: #7c2d12;
       font-size: 13px;
       font-weight: 800;
-      color: #9a3412;
-      background: #ffedd5;
+      padding: 8px 16px;
+      border-radius: 18px;
       display: inline-block;
-      padding: 6px 14px;
-      border-radius: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
-
-    /* Karakter Sahnesi */
     .pet-stage {
       position: relative;
-      width: 190px;
-      height: 190px;
-      margin: 0 auto 12px auto;
-      background: radial-gradient(circle, #ffedd5 45%, rgba(255,255,255,0) 72%);
-      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 10px auto;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
     }
     .pet-svg-container {
-      width: 170px;
-      height: 170px;
-      filter: drop-shadow(0 8px 12px rgba(124, 45, 18, 0.15));
+      width: 185px;
+      height: 185px;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,0.15));
       animation: floatPet 3s ease-in-out infinite;
     }
     @keyframes floatPet {
@@ -108,26 +98,24 @@
     .pet-svg-container.bounce { animation: bouncePet 0.5s ease-in-out; }
     @keyframes bouncePet {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.18) rotate(-4deg); }
+      50% { transform: scale(1.16) rotate(-3deg); }
     }
-
     .floating-effect {
       position: absolute;
-      font-size: 30px;
+      font-size: 32px;
       pointer-events: none;
       animation: flyUp 0.9s forwards ease-out;
       z-index: 10;
     }
     @keyframes flyUp {
       0% { opacity: 1; transform: translateY(0) scale(0.8); }
-      100% { opacity: 0; transform: translateY(-70px) scale(1.4); }
+      100% { opacity: 0; transform: translateY(-75px) scale(1.4); }
     }
 
-    /* Sev & Besle Butonları */
     .pet-actions { display: flex; justify-content: center; gap: 10px; }
     .pet-btn {
       flex: 1;
-      max-width: 145px;
+      max-width: 150px;
       padding: 10px 12px;
       border-radius: 16px;
       border: none;
@@ -140,29 +128,45 @@
     .btn-love { background: #ec4899; box-shadow: 0 4px 0 #be185d; }
     .btn-feed { background: #10b981; box-shadow: 0 4px 0 #047857; }
 
-    /* MAĞAZA / GARDIROP ALANI */
-    .section-title {
-      font-size: 19px;
-      font-weight: 900;
-      color: #0f172a;
-      margin: 18px 4px 12px 4px;
+    /* Kategori Sekmeleri */
+    .wardrobe-tabs {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
     }
+    .w-tab {
+      background: rgba(255,255,255,0.8);
+      border: 2px solid #fff;
+      padding: 8px 14px;
+      border-radius: 16px;
+      font-weight: 900;
+      font-size: 13px;
+      color: #475569;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .w-tab.active {
+      background: #ea580c;
+      color: #fff;
+      border-color: #ea580c;
+    }
+
+    /* Mağaza Izgarası */
     .shop-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-bottom: 24px;
     }
     .shop-item {
-      background: #ffffff;
+      background: rgba(255,255,255,0.95);
       border-radius: 22px;
-      padding: 14px 12px;
+      padding: 14px 10px;
       text-align: center;
-      border: 3px solid #f1f5f9;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      border: 3px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -171,13 +175,12 @@
       border-color: #f97316;
       background: #fff7ed;
     }
-    .shop-icon { font-size: 40px; margin-bottom: 6px; }
-    .shop-name { font-size: 15px; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
-    .shop-price { font-size: 13px; font-weight: 800; color: #b45309; margin-bottom: 10px; }
-    
+    .shop-icon { font-size: 38px; margin-bottom: 4px; }
+    .shop-name { font-size: 14px; font-weight: 900; color: #0f172a; margin-bottom: 4px; }
+    .shop-price { font-size: 12px; font-weight: 800; color: #d97706; margin-bottom: 8px; }
     .shop-btn {
       width: 100%;
-      padding: 8px;
+      padding: 9px;
       border-radius: 14px;
       border: none;
       font-family: inherit;
@@ -185,22 +188,21 @@
       font-size: 13px;
       cursor: pointer;
     }
-    .btn-buy { background: #facc15; color: #713f12; box-shadow: 0 3px 0 #eab308; }
+    .btn-buy { background: #fde047; color: #713f12; box-shadow: 0 3px 0 #ca8a04; }
     .btn-equip { background: #3b82f6; color: #ffffff; box-shadow: 0 3px 0 #1d4ed8; }
     .btn-unequip { background: #f97316; color: #ffffff; box-shadow: 0 3px 0 #c2410c; }
 
     /* Alt Menü */
     .bottom-nav {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #ffffff;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
       box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
-      border-top: 3px solid #f1f5f9;
+      border-top: 2px solid #f1f5f9;
       z-index: 100;
     }
     .nav-item {
@@ -213,19 +215,17 @@
       align-items: center;
       gap: 2px;
     }
-    .nav-item.active { color: #f97316; }
+    .nav-item.active { color: #ea580c; }
     .nav-icon { font-size: 22px; }
   </style>
 </head>
 <body>
 
   <div class="container">
-    
-    <!-- Üst Bar -->
     <header class="app-top-bar">
       <a href="index.html" class="app-brand">
         <span style="font-size:26px;">🐾</span>
-        <span>Jojupof Dünyası</span>
+        <span>Jojupof Gardırobu</span>
       </a>
       <div class="star-counter-badge">
         <span>⭐</span>
@@ -233,16 +233,12 @@
       </div>
     </header>
 
-    <!-- JOJUPOF SAHNESİ -->
-    <section class="pet-card">
-      <div class="pet-badge-level">Sevimli Dostun</div>
-      <h2 class="pet-name">Jojupof 🐾</h2>
-      <div class="pet-speech" id="jojupof-speech">"Bana yeni kıyafetler alır mısın? 🥰"</div>
+    <!-- JOJUPOF ODASI -->
+    <section class="pet-room-card">
+      <div class="pet-speech" id="jojupof-speech">"Merhaba! Bugün ne giyelim? 🥰"</div>
 
       <div class="pet-stage" id="pet-stage-area" onclick="jojupofSev()">
-        <div class="pet-svg-container" id="pet-avatar-wrapper">
-          <!-- Kapibara + Giydirilen Kıyafetler Buraya Çizilir -->
-        </div>
+        <div class="pet-svg-container" id="pet-avatar-wrapper"></div>
       </div>
 
       <div class="pet-actions">
@@ -251,10 +247,17 @@
       </div>
     </section>
 
-    <!-- JOJUPOF MAĞAZASI & GARDIROBU -->
-    <h3 class="section-title">🛍️ Jojupof Gardırobu (Yıldızla Al &amp; Giydir)</h3>
-    <div class="shop-grid" id="shop-grid"></div>
+    <!-- GARDIROP KATEGORİLERİ -->
+    <div class="wardrobe-tabs">
+      <button class="w-tab active" onclick="kategoriSec('hepsi', this)">🌟 Tümü</button>
+      <button class="w-tab" onclick="kategoriSec('sapka', this)">🎩 Şapkalar</button>
+      <button class="w-tab" onclick="kategoriSec('goz', this)">🕶️ Gözlükler</button>
+      <button class="w-tab" onclick="kategoriSec('boyun', this)">🧣 Boyunluk</button>
+      <button class="w-tab" onclick="kategoriSec('ayak', this)">👟 Ayakkabılar</button>
+      <button class="w-tab" onclick="kategoriSec('sirt', this)">🐲 Kanat &amp; Sırt</button>
+    </div>
 
+    <div class="shop-grid" id="shop-grid"></div>
   </div>
 
   <!-- Alt Menü -->
@@ -279,99 +282,99 @@
 
   <script src="app.js"></script>
   <script>
-    /* YILDIZ BAKİYESİ YÖNETİMİ */
-    function bakiyeGetir() {
-      if (typeof getYildizSayisi === 'function') return getYildizSayisi();
-      return parseInt(localStorage.getItem('toplam_yildiz') || '0', 10);
-    }
+    let aktifKategori = 'hepsi';
 
-    function bakiyeGuncelle(yeniDeger) {
-      localStorage.setItem('toplam_yildiz', yeniDeger);
-      // Eğer app.js farklı bir anahtar kullanıyorsa onu da senkronize et
-      if (localStorage.getItem('masal_yildiz') !== null) {
-        localStorage.setItem('masal_yildiz', yeniDeger);
-      }
-      document.getElementById('user-stars-count').innerText = yeniDeger;
-    }
-
-    /* MAĞAZA ÜRÜNLERİ VE SVG ÇİZİMLERİ */
+    /* 14 EŞYALI ZENGİN GARDIROP LİSTESİ */
     const aksesuarlar = [
+      // Şapkalar
       {
-        id: 'mandalina',
-        ad: 'Taze Mandalina',
-        kategori: 'sapka',
-        fiyat: 0, // Başlangıçta hediye!
-        icon: '🍊',
+        id: 'mandalina', ad: 'Taze Mandalina', kategori: 'sapka', fiyat: 0, icon: '🍊',
         svg: `<circle cx="60" cy="24" r="9" fill="#EA580C"/><path d="M60 15 Q66 11 68 15 Q64 19 60 17" fill="#15803D"/>`
       },
       {
-        id: 'papyon',
-        ad: 'Kırmızı Papyon',
-        kategori: 'boyun',
-        fiyat: 4,
-        icon: '🎀',
+        id: 'sihirbaz_sapka', ad: 'Sihirbaz Şapkası', kategori: 'sapka', fiyat: 6, icon: '🎩',
+        svg: `<ellipse cx="60" cy="30" rx="26" ry="5" fill="#1E1B4B"/><path d="M42 30 L60 3 L78 30 Z" fill="#312E81"/><path d="M45 26 L75 26" stroke="#FACC15" stroke-width="3"/>`
+      },
+      {
+        id: 'kovboy', ad: 'Kovboy Şapkası', kategori: 'sapka', fiyat: 7, icon: '🤠',
+        svg: `<path d="M28 30 Q60 37 92 30 Q84 25 60 27 Q36 25 28 30 Z" fill="#78350F"/><path d="M42 28 Q45 10 60 16 Q75 10 78 28 Z" fill="#92400E"/><line x1="43" y1="26" x2="77" y2="26" stroke="#FDE047" stroke-width="2.5"/>`
+      },
+      {
+        id: 'kep', ad: 'Mezuniyet Kepi', kategori: 'sapka', fiyat: 8, icon: '🎓',
+        svg: `<polygon points="60,12 30,22 60,32 90,22" fill="#0F172A"/><rect x="46" y="26" width="28" height="7" rx="2" fill="#1E293B"/><line x1="82" y1="24" x2="86" y2="36" stroke="#FACC15" stroke-width="2.5"/><circle cx="86" cy="37" r="2.5" fill="#FACC15"/>`
+      },
+      {
+        id: 'kulaklik', ad: 'Müzik Kulaklığı', kategori: 'sapka', fiyat: 9, icon: '🎧',
+        svg: `<path d="M32 42 Q32 16 60 16 Q88 16 88 42" stroke="#EC4899" stroke-width="5" fill="none"/><rect x="27" y="34" width="9" height="16" rx="4" fill="#DB2777"/><rect x="84" y="34" width="9" height="16" rx="4" fill="#DB2777"/>`
+      },
+      {
+        id: 'kral_taci', ad: 'Altın Kral Tacı', kategori: 'sapka', fiyat: 14, icon: '👑',
+        svg: `<path d="M40 31 L44 14 L53 23 L60 11 L67 23 L76 14 L80 31 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><circle cx="60" cy="18" r="2.5" fill="#EF4444"/><circle cx="48" cy="22" r="2" fill="#3B82F6"/><circle cx="72" cy="22" r="2" fill="#3B82F6"/>`
+      },
+
+      // Gözlükler
+      {
+        id: 'gozluk', ad: 'Havalı Gözlük', kategori: 'goz', fiyat: 5, icon: '🕶️',
+        svg: `<rect x="39" y="43" width="17" height="11" rx="3" fill="#0F172A"/><rect x="64" y="43" width="17" height="11" rx="3" fill="#0F172A"/><line x1="56" y1="47" x2="64" y2="47" stroke="#0F172A" stroke-width="3"/><line x1="42" y1="46" x2="47" y2="46" stroke="#38BDF8" stroke-width="2"/>`
+      },
+      {
+        id: 'bilge_gozluk', ad: 'Bilge Gözlüğü', kategori: 'goz', fiyat: 6, icon: '🤓',
+        svg: `<circle cx="48" cy="49" r="8" stroke="#D97706" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/><circle cx="72" cy="49" r="8" stroke="#D97706" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/><line x1="56" y1="49" x2="64" y2="49" stroke="#D97706" stroke-width="2.5"/>`
+      },
+      {
+        id: 'yildiz_gozluk', ad: 'Pembe Kalp Gözlük', kategori: 'goz', fiyat: 8, icon: '😍',
+        svg: `<circle cx="48" cy="49" r="8" fill="#EC4899" opacity="0.85"/><circle cx="72" cy="49" r="8" fill="#EC4899" opacity="0.85"/><line x1="56" y1="49" x2="64" y2="49" stroke="#BE185D" stroke-width="3"/>`
+      },
+
+      // Boyunluklar
+      {
+        id: 'papyon', ad: 'Kırmızı Papyon', kategori: 'boyun', fiyat: 4, icon: '🎀',
         svg: `<polygon points="48,74 60,80 48,86" fill="#EF4444"/><polygon points="72,74 60,80 72,86" fill="#EF4444"/><circle cx="60" cy="80" r="3.5" fill="#B91C1C"/>`
       },
       {
-        id: 'gozluk',
-        ad: 'Havalı Gözlük',
-        kategori: 'goz',
-        fiyat: 6,
-        icon: '🕶️',
-        svg: `<rect x="39" y="44" width="17" height="11" rx="3" fill="#0F172A"/><rect x="64" y="44" width="17" height="11" rx="3" fill="#0F172A"/><line x1="56" y1="48" x2="64" y2="48" stroke="#0F172A" stroke-width="3"/><line x1="42" y1="47" x2="47" y2="47" stroke="#38BDF8" stroke-width="2"/>`
+        id: 'atki', ad: 'Sıcak Kış Atkısı', kategori: 'boyun', fiyat: 6, icon: '🧣',
+        svg: `<rect x="36" y="72" width="48" height="10" rx="5" fill="#EF4444"/><rect x="64" y="76" width="10" height="20" rx="4" fill="#DC2626"/><line x1="42" y1="77" x2="76" y2="77" stroke="#FEF08A" stroke-width="2" stroke-dasharray="4 4"/>`
       },
       {
-        id: 'sihirbaz_sapka',
-        ad: 'Sihirbaz Şapkası',
-        kategori: 'sapka',
-        fiyat: 8,
-        icon: '🎩',
-        svg: `<ellipse cx="60" cy="30" rx="26" ry="5" fill="#1E1B4B"/><path d="M42 30 L60 4 L78 30 Z" fill="#312E81"/><path d="M45 26 L75 26" stroke="#FACC15" stroke-width="3"/>`
+        id: 'madalya', ad: 'Şampiyon Madalyası', kategori: 'boyun', fiyat: 10, icon: '🏅',
+        svg: `<path d="M46 72 L60 86 L74 72" stroke="#3B82F6" stroke-width="4" fill="none"/><circle cx="60" cy="89" r="7" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/>`
+      },
+
+      // Ayakkabılar
+      {
+        id: 'spor_ayakkabi', ad: 'Kırmızı Spor Patik', kategori: 'ayak', fiyat: 8, icon: '👟',
+        svg: `<rect x="31" y="96" width="21" height="12" rx="6" fill="#EF4444" stroke="#FFFFFF" stroke-width="2"/><rect x="68" y="96" width="21" height="12" rx="6" fill="#EF4444" stroke="#FFFFFF" stroke-width="2"/>`
       },
       {
-        id: 'spor_ayakkabi',
-        ad: 'Kırmızı Patik Ayakkabı',
-        kategori: 'ayak',
-        fiyat: 10,
-        icon: '👟',
-        svg: `<rect x="32" y="98" width="20" height="12" rx="6" fill="#EF4444" stroke="#FFFFFF" stroke-width="2"/><rect x="68" y="98" width="20" height="12" rx="6" fill="#EF4444" stroke="#FFFFFF" stroke-width="2"/><line x1="38" y1="102" x2="46" y2="102" stroke="#FFFFFF" stroke-width="2"/><line x1="74" y1="102" x2="82" y2="102" stroke="#FFFFFF" stroke-width="2"/>`
+        id: 'cizme', ad: 'Sarı Yağmur Çizmesi', kategori: 'ayak', fiyat: 9, icon: '🥾',
+        svg: `<rect x="33" y="90" width="18" height="18" rx="5" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><rect x="69" y="90" width="18" height="18" rx="5" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/>`
+      },
+
+      // Sırt / Kanat
+      {
+        id: 'pelerin', ad: 'Süper Kahraman Pelerini', kategori: 'sirt', fiyat: 12, icon: '🦸',
+        svg: `<path d="M32 62 L14 102 L106 102 L88 62 Z" fill="#EF4444"/>`
       },
       {
-        id: 'kral_taci',
-        ad: 'Altın Kral Tacı',
-        kategori: 'sapka',
-        fiyat: 15,
-        icon: '👑',
-        svg: `<path d="M40 31 L44 15 L53 24 L60 12 L67 24 L76 15 L80 31 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><circle cx="60" cy="18" r="2.5" fill="#EF4444"/>`
-      },
-      {
-        id: 'ejder_kanat',
-        ad: 'Ejderha Kanatları',
-        kategori: 'sirt',
-        fiyat: 20,
-        icon: '🐲',
-        svg: `<path d="M26 58 Q4 40 10 74 Q22 78 30 70 Z" fill="#10B981" stroke="#047857" stroke-width="2"/><path d="M94 58 Q116 40 110 74 Q98 78 90 70 Z" fill="#10B981" stroke="#047857" stroke-width="2"/>`
+        id: 'ejder_kanat', ad: 'Zümrüt Ejder Kanatları', kategori: 'sirt', fiyat: 18, icon: '🐲',
+        svg: `<path d="M26 58 Q4 38 10 74 Q22 78 30 70 Z" fill="#10B981" stroke="#047857" stroke-width="2"/><path d="M94 58 Q116 38 110 74 Q98 78 90 70 Z" fill="#10B981" stroke="#047857" stroke-width="2"/>`
       }
     ];
 
-    // Envanter (Satın alınanlar) ve Giydirilenler
     function getEnvanter() {
-      const kayit = localStorage.getItem('jojupof_envanter');
-      return kayit ? JSON.parse(kayit) : ['mandalina'];
+      return JSON.parse(localStorage.getItem('jojupof_envanter') || '["mandalina"]');
     }
     function setEnvanter(liste) {
       localStorage.setItem('jojupof_envanter', JSON.stringify(liste));
     }
 
     function getGiyilenler() {
-      const kayit = localStorage.getItem('jojupof_giyilenler');
-      return kayit ? JSON.parse(kayit) : { sapka: 'mandalina', goz: null, boyun: null, ayak: null, sirt: null };
+      return JSON.parse(localStorage.getItem('jojupof_giyilenler') || '{"sapka":"mandalina","goz":null,"boyun":null,"ayak":null,"sirt":null}');
     }
     function setGiyilenler(obj) {
       localStorage.setItem('jojupof_giyilenler', JSON.stringify(obj));
     }
 
-    /* JOJUPOF'U VE ÜZERİNDEKİ KIYAFETLERİ ÇİZ */
     function jojupofCiz() {
       const giyilen = getGiyilenler();
       const bulSvg = (id) => {
@@ -381,52 +384,46 @@
 
       const tamSvg = `
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Sırt Aksesuarı (Kanat vb.) -->
           ${bulSvg(giyilen.sirt)}
-          
-          <!-- Kapibara Gövde -->
           <ellipse cx="60" cy="76" rx="38" ry="28" fill="#92400E"/>
-          <!-- Normal Patiler -->
           <ellipse cx="42" cy="102" rx="8" ry="5" fill="#78350F"/>
           <ellipse cx="78" cy="102" rx="8" ry="5" fill="#78350F"/>
-
-          <!-- Kafa -->
           <rect x="35" y="32" width="50" height="46" rx="22" fill="#B45309"/>
-          <!-- Kulaklar -->
           <ellipse cx="36" cy="38" rx="6" ry="8" fill="#78350F"/>
           <ellipse cx="84" cy="38" rx="6" ry="8" fill="#78350F"/>
-          
-          <!-- Gözler -->
           <circle cx="48" cy="49" r="3.5" fill="#1E293B"/>
           <circle cx="72" cy="49" r="3.5" fill="#1E293B"/>
-          
-          <!-- Pembe Yanaklar -->
           <circle cx="41" cy="57" r="5" fill="#F472B6" opacity="0.65"/>
           <circle cx="79" cy="57" r="5" fill="#F472B6" opacity="0.65"/>
-          
-          <!-- Burun ve Ağız -->
           <rect x="52" y="53" width="16" height="11" rx="5.5" fill="#78350F"/>
           <path d="M56 68 Q60 72 64 68" stroke="#78350F" stroke-width="2.5" stroke-linecap="round"/>
-
-          <!-- Giydirilen Kıyafet Katmanları -->
           ${bulSvg(giyilen.boyun)}
           ${bulSvg(giyilen.goz)}
           ${bulSvg(giyilen.sapka)}
           ${bulSvg(giyilen.ayak)}
         </svg>
       `;
-
       document.getElementById('pet-avatar-wrapper').innerHTML = tamSvg;
     }
 
-    /* MAĞAZAYI LİSTELE */
+    function kategoriSec(kat, btn) {
+      aktifKategori = kat;
+      document.querySelectorAll('.w-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      magazaCiz();
+    }
+
     function magazaCiz() {
       const grid = document.getElementById('shop-grid');
       grid.innerHTML = '';
       const envanter = getEnvanter();
       const giyilen = getGiyilenler();
 
-      aksesuarlar.forEach(urun => {
+      const liste = aktifKategori === 'hepsi'
+        ? aksesuarlar
+        : aksesuarlar.filter(x => x.kategori === aktifKategori);
+
+      liste.forEach(urun => {
         const sahipMi = envanter.includes(urun.id);
         const giyiyorMu = giyilen[urun.kategori] === urun.id;
 
@@ -446,7 +443,7 @@
           <div>
             <div class="shop-icon">${urun.icon}</div>
             <div class="shop-name">${urun.ad}</div>
-            <div class="shop-price">${sahipMi ? 'Senin Eşyan ✨' : urun.fiyat + ' Yıldız ⭐'}</div>
+            <div class="shop-price">${sahipMi ? 'Dolabında ✨' : urun.fiyat + ' Yıldız ⭐'}</div>
           </div>
           ${butonHtml}
         `;
@@ -458,22 +455,25 @@
       const urun = aksesuarlar.find(x => x.id === id);
       if (!urun) return;
 
-      const bakiye = bakiyeGetir();
-      if (bakiye < urun.fiyat) {
-        document.getElementById('jojupof-speech').innerText = `"Yıldızımız yetmedi! Masal okuyup oyun oynayarak yıldız toplayalım! 🌟"`;
-        alert(`Bu eşya için ${urun.fiyat} ⭐ gerekiyor. Senin şu an ${bakiye} ⭐ yıldızın var!`);
+      const mevcutYildiz = getYildizSayisi();
+      if (mevcutYildiz < urun.fiyat) {
+        document.getElementById('jojupof-speech').innerText = `"Yıldızımız yetmiyor (${mevcutYildiz} ⭐). Oyun oynayıp yıldız kazanalım! 🎮"`;
+        alert(`Bu eşya ${urun.fiyat} ⭐! Senin şu an ${mevcutYildiz} ⭐ yıldızın var.`);
         return;
       }
 
-      // Yıldızı düş, envantere ekle ve hemen giydir
-      bakiyeGuncelle(bakiye - urun.fiyat);
+      // Yıldızı düş ve kaydet
+      yildizHarca(urun.fiyat);
+
       const env = getEnvanter();
-      env.push(urun.id);
-      setEnvanter(env);
+      if (!env.includes(urun.id)) {
+        env.push(urun.id);
+        setEnvanter(env);
+      }
 
       urunGiydir(urun.id, urun.kategori);
       animasyonYap('🎉');
-      document.getElementById('jojupof-speech').innerText = `"Yaşasın! Yeni ${urun.ad} bana çok yakıştı! 🥰"`;
+      document.getElementById('jojupof-speech').innerText = `"Yaşasın! ${urun.ad} bana çok yakıştı! (${getYildizSayisi()} ⭐ kaldı)"`;
     }
 
     function urunGiydir(id, kategori) {
@@ -495,23 +495,17 @@
 
     function jojupofSev() {
       animasyonYap('❤️');
-      const sozler = [
-        '"Gıdıklandım! Seni çok seviyorum! 🥰"',
-        '"Kıyafetlerim nasıl olmuş? 🐾"',
-        '"Birlikte yeni bir masal okuyalım mı? 📖"'
-      ];
-      document.getElementById('jojupof-speech').innerText = sozler[Math.floor(Math.random() * sozler.length)];
+      document.getElementById('jojupof-speech').innerText = '"Seni çok seviyorum! İyi ki benim arkadaşımsın! 🥰"';
     }
 
     function jojupofBesle() {
       animasyonYap('🍉');
-      document.getElementById('jojupof-speech').innerText = '"Ham hum şap şup! Karpuz çok lezzetliydi! 🍉😋"';
+      document.getElementById('jojupof-speech').innerText = '"Karpuz harikaydı, çok teşekkür ederim! 🍉😋"';
     }
 
     function animasyonYap(emoji) {
       const stage = document.getElementById('pet-stage-area');
       const avatar = document.getElementById('pet-avatar-wrapper');
-      
       avatar.classList.remove('bounce');
       void avatar.offsetWidth;
       avatar.classList.add('bounce');
@@ -522,12 +516,11 @@
       fly.style.left = (Math.random() * 50 + 25) + '%';
       fly.style.top = '35%';
       stage.appendChild(fly);
-
       setTimeout(() => fly.remove(), 900);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('user-stars-count').innerText = bakiyeGetir();
+      yildizEkraniGuncelle();
       jojupofCiz();
       magazaCiz();
     });
