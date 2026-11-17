@@ -3,20 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Masal &amp; Zeka Dünyası</title>
+  <title>Masal Dünyası | Masal &amp; Zeka</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0284c7">
   <link rel="stylesheet" href="style.css">
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #dcfce7 0%, #fef9c3 50%, #ffedd5 100%);
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0 0 95px 0;
+      color: #1e293b;
+    }
+    .container { max-width: 540px; margin: 0 auto; padding: 14px; }
+
+    /* Üst Bar */
+    .app-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 12px 18px;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+      border: 3px solid #ffffff;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ea580c;
+    }
+    .star-counter-badge {
+      background: linear-gradient(135deg, #fde047, #f59e0b);
+      color: #78350f;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      box-shadow: 0 3px 0 #d97706;
+    }
+
+    /* Karşılama & Kategori Barı */
+    .greeting-banner {
+      background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+      color: #ffffff;
+      padding: 16px 18px;
+      border-radius: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 18px rgba(234, 88, 12, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .greeting-banner h2 { margin: 0 0 4px 0; font-size: 19px; font-weight: 900; }
+    .greeting-banner p { margin: 0; font-size: 13px; opacity: 0.95; font-weight: 700; }
+
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .cat-btn {
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+      color: #9a3412;
+      padding: 8px 16px;
+      border-radius: 18px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .cat-btn.active {
+      background: #f97316;
+      color: #ffffff;
+      border-color: #f97316;
+      box-shadow: 0 3px 0 #c2410c;
+    }
+
+    /* Masal Kartları */
+    .masal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media(max-width: 400px) { .masal-grid { grid-template-columns: 1fr; } }
+    .custom-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      border: 3px solid #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .card-badges {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+    .read-badge {
+      background: #22c55e;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .fav-btn {
+      background: rgba(255,255,255,0.9);
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 17px;
+      cursor: pointer;
+      margin-left: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .card-img {
+      width: 100%;
+      height: 135px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .btn-read {
+      width: 100%;
+      padding: 10px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(90deg, #f97316, #ea580c);
+      color: #fff;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #c2410c;
+      font-family: inherit;
+    }
+
+    /* ========================================================
+       1. İSTEK: EXCEL GİBİ DONan (STICKY) OKUMA KONTROL PANELİ
+       ======================================================== */
+    .sticky-reading-controls {
+      position: sticky;
+      top: 8px;
+      z-index: 90;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 12px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      border: 3px solid #fed7aa;
+      margin-bottom: 16px;
+    }
+    .controls-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .btn-back-stories {
+      background: #facc15;
+      color: #713f12;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #ca8a04;
+      font-family: inherit;
+    }
+    .font-controls-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .font-btn {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      color: #1e293b;
+      padding: 8px 13px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #cbd5e1;
+      font-family: inherit;
+    }
+    .font-btn:active { transform: translateY(2px); box-shadow: none; }
+    
+    .btn-tts-full {
+      width: 100%;
+      padding: 11px;
+      border-radius: 18px;
+      border: none;
+      background: linear-gradient(90deg, #9333ea, #7e22ce);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #581c87;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* ========================================================
+       3. İSTEK: ÇOCUKLARA ÖZEL MASAL KİTABI OKUMA ALANI
+       ======================================================== */
+    .storybook-page {
+      background: #fffdf5;
+      border-radius: 30px;
+      padding: 18px 18px 26px 18px;
+      border: 4px solid #fde68a;
+      box-shadow: 0 12px 30px rgba(180, 83, 9, 0.1), inset 0 0 24px rgba(254, 240, 138, 0.35);
+      transition: all 0.3s ease;
+    }
+    .storybook-page.night-mode {
+      background: #1e1b4b;
+      border-color: #4338ca;
+      color: #f8fafc;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .story-hero-img {
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 22px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      margin-bottom: 16px;
+    }
+    .story-decor-stars {
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 6px;
+      margin-bottom: 4px;
+    }
+    .story-main-title {
+      text-align: center;
+      font-size: 25px;
+      font-weight: 900;
+      color: #ea580c;
+      margin: 0 0 16px 0;
+    }
+    .storybook-page.night-mode .story-main-title {
+      color: #fde047;
+    }
+    
+    /* Masal Metni */
+    #detay-metin {
+      font-size: 21px;
+      line-height: 1.85;
+      font-weight: 700;
+      color: #334155;
+      white-space: pre-line;
+      text-align: left;
+      padding: 6px 4px;
+      margin-bottom: 22px;
+    }
+    .storybook-page.night-mode #detay-metin {
+      color: #e2e8f0;
+    }
+
+    .btn-finish-story {
+      width: 100%;
+      padding: 15px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #047857;
+      font-family: inherit;
+    }
+
+    /* Alt Menü */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+      border-top: 2px solid #f1f5f9;
+      z-index: 100;
+    }
+    .nav-item {
+      text-decoration: none;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-item.active { color: #ea580c; }
+    .nav-icon { font-size: 22px; }
+  </style>
 </head>
 <body>
 
   <div class="container">
-    
-    <!-- Üst Mobil Bar (Status / Gamification) -->
+    <!-- Üst Bar -->
     <header class="app-top-bar">
       <a href="index.html" class="app-brand">
-        <span style="font-size:24px;">📖</span>
-        <span class="app-logo-text">Masal Dünyası</span>
+        <span style="font-size:26px;">📖</span>
+        <span>Masal Dünyası</span>
       </a>
       <div class="star-counter-badge">
         <span>⭐</span>
@@ -24,45 +354,60 @@
       </div>
     </header>
 
-    <!-- Karşılama Kartı -->
-    <section class="welcome-card" id="greeting-box">
-      <h1>Merhaba Küçük Kaşif! 👋</h1>
-      <p>Bugün kalbini ısıtacak harika bir masal seçelim mi?</p>
-    </section>
+    <!-- Karşılama Kutusu -->
+    <div id="greeting-box" class="greeting-banner">
+      <div>
+        <h2>Hoş Geldin Küçük Kaşif! 🌟</h2>
+        <p>Masal oku, yıldızları topla ve Jojupof'u büyüt!</p>
+      </div>
+      <div style="font-size:40px;">🐾</div>
+    </div>
 
-    <!-- Ana Masal Ekranı -->
+    <!-- ANA EKRAN: MASAL LİSTESİ -->
     <main id="ana-ekran">
-      <div class="category-row">
-        <button class="cat-btn cat-all" onclick="kategoriFiltrele('Tümü')">⭐ Tümü</button>
-        <button class="cat-btn cat-1" onclick="kategoriFiltrele('Hayvanlar')">🦁 Hayvanlar</button>
-        <button class="cat-btn cat-2" onclick="kategoriFiltrele('Sihirli')">🧙‍♂️ Sihirli</button>
-        <button class="cat-btn cat-3" onclick="kategoriFiltrele('Uyku')">🌙 Uyku</button>
+      <div class="category-pills">
+        <button class="cat-btn active" onclick="kategoriFiltrele('Tümü', this)">🌈 Tümü</button>
+        <button class="cat-btn" onclick="kategoriFiltrele('Hayvanlar', this)">🐾 Hayvanlar</button>
+        <button class="cat-btn" onclick="kategoriFiltrele('Sihirli', this)">✨ Sihirli</button>
+        <button class="cat-btn" onclick="kategoriFiltrele('Uyku', this)">🌙 Uyku Vakti</button>
       </div>
 
-      <div id="masal-grid" class="grid-container"></div>
+      <div class="masal-grid" id="masal-grid"></div>
     </main>
 
-    <!-- Masal Okuma Odası (Reader) -->
-    <article id="okuma-odasi" class="detail-box" style="display: none;">
-      <div class="reader-toolbar">
-        <button class="back-btn" onclick="kapatOkuma()">⬅ Masallara Dön</button>
-        <div class="font-controls">
-          <button class="font-btn" onclick="fontDegistir(-2)">A-</button>
-          <button class="font-btn" onclick="fontDegistir(2)">A+</button>
+    <!-- OKUMA ODASI (Başlangıçta gizli) -->
+    <section id="okuma-odasi" style="display:none;">
+      
+      <!-- SABİTLENEN (STICKY) ÜST KONTROL PANELİ -->
+      <div class="sticky-reading-controls">
+        <div class="controls-top-row">
+          <button class="btn-back-stories" onclick="kapatOkuma()">⬅️ Masallara Dön</button>
+          <div class="font-controls-group">
+            <button class="font-btn" onclick="geceModuDegistir()" id="night-mode-btn" title="Gece Modu">🌙</button>
+            <button class="font-btn" onclick="fontDegistir(-3)">A-</button>
+            <button class="font-btn" onclick="fontDegistir(3)">A+</button>
+          </div>
         </div>
+        <button class="btn-tts-full" id="tts-audio-btn">🔊 Masalı Sesli Dinle</button>
       </div>
 
-      <button id="tts-audio-btn" class="tts-btn">🔊 Masalı Sesli Dinle</button>
-      <img id="detay-resim" class="detail-img" src="" alt="Kapak">
-      <h1 id="detay-baslik" class="detail-title"></h1>
-      <div id="detay-metin" class="detail-text"></div>
+      <!-- MASAL KİTABI SAYFASI -->
+      <div class="storybook-page" id="storybook-card">
+        <img id="detay-resim" src="" class="story-hero-img" alt="Masal Resmi">
+        <div class="story-decor-stars">✨ ⭐ ✨</div>
+        <h1 class="story-main-title" id="detay-baslik"></h1>
+        
+        <div id="detay-metin"></div>
 
-      <button id="finish-btn" class="finish-story-btn" onclick="masaliBitir()">🎉 Masalı Bitirdim (+2 ⭐)</button>
-    </article>
+        <button class="btn-finish-story" onclick="masaliBitir()">
+          ✅ Masalı Bitirdim (+2 ⭐ Kazan!)
+        </button>
+      </div>
 
+    </section>
   </div>
 
-  <!-- Sabit Alt Mobil Menü (Bottom Navigation) -->
+  <!-- Alt Menü -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item active">
       <span class="nav-icon">📖</span>
@@ -84,17 +429,17 @@
 
   <script src="app.js"></script>
   <script>
-  let masallar = [];
+    let masallar = [];
+    let seciliMasalId = null;
+    let aktifFontSize = 21;
 
-    // Google Sheets Bağlantısı
     const SHEET_ID = '18Kyr4JCnu4goQzZiZnyXj90xhq_mdeoeWRwDwSLwn34';
-    const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Masallar`;
+    const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Masallar&_t=${Date.now()}`;
 
     function masallariGetir() {
       fetch(URL)
         .then(res => res.text())
         .then(data => {
-          // Google Sheets yanıtını temiz JSON'a çevir
           const json = JSON.parse(data.substring(47).slice(0, -2));
           masallar = json.table.rows.map(row => ({
             id: Number(row.c[0]?.v || 0),
@@ -105,13 +450,8 @@
           }));
           listele(masallar);
         })
-        .catch(err => {
-          console.error("Tablodan veri çekilemedi:", err);
-        });
+        .catch(err => console.error("Tablo okunamadı:", err));
     }
-
-    // Sayfa açıldığında tablodan çek
-    masallariGetir();
 
     function listele(liste) {
       const grid = document.getElementById('masal-grid');
@@ -126,25 +466,25 @@
         const div = document.createElement('div');
         div.className = 'custom-card';
         div.innerHTML = `
-          <div class="card-badges">
-            <span class="read-badge" style="display:${okunduMu ? 'inline-block' : 'none'};">✓ Okundu</span>
-            <button class="fav-btn" onclick="favoriTikla(${m.id}, this)">${favMi ? '❤️' : '🤍'}</button>
+          <div>
+            <div class="card-badges">
+              <span class="read-badge" style="display:${okunduMu ? 'inline-block' : 'none'};">✓ Okundu</span>
+              <button class="fav-btn" onclick="favoriDegistir(${m.id}, this)">${favMi ? '❤️' : '🤍'}</button>
+            </div>
+            <img src="${m.resim}" class="card-img" alt="${m.baslik}">
+            <div class="card-title">${m.baslik}</div>
           </div>
-          <img src="${m.resim}" class="card-img" alt="${m.baslik}">
-          <div class="card-title">${m.baslik}</div>
-          <button class="action-btn btn-read" onclick="masalAc(${m.id})">OKU 📖</button>
+          <button class="btn-read" onclick="masalAc(${m.id})">OKU 📖</button>
         `;
         grid.appendChild(div);
       });
     }
 
-    function kategoriFiltrele(kat) {
+    function kategoriFiltrele(kat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
       if (kat === 'Tümü') listele(masallar);
       else listele(masallar.filter(m => m.kategori === kat));
-    }
-
-    function favoriTikla(id, btn) {
-      favoriDegistir(id, btn);
     }
 
     function masalAc(id) {
@@ -154,9 +494,13 @@
 
       document.getElementById('detay-resim').src = m.resim;
       document.getElementById('detay-baslik').innerText = m.baslik;
-      document.getElementById('detay-metin').innerText = m.metin;
+      
+      const metinEl = document.getElementById('detay-metin');
+      metinEl.innerText = m.metin;
+      metinEl.style.setProperty('font-size', aktifFontSize + 'px', 'important');
 
       const ttsBtn = document.getElementById('tts-audio-btn');
+      ttsBtn.innerHTML = '🔊 Masalı Sesli Dinle';
       ttsBtn.onclick = () => sesliOkuDurdur(m.metin, ttsBtn);
 
       document.getElementById('ana-ekran').style.display = 'none';
@@ -166,34 +510,51 @@
     }
 
     function kapatOkuma() {
-      if (okumaDevamEdiyor) {
+      if (typeof okumaDevamEdiyor !== 'undefined' && okumaDevamEdiyor) {
         window.speechSynthesis.cancel();
         okumaDevamEdiyor = false;
       }
       document.getElementById('okuma-odasi').style.display = 'none';
-      document.getElementById('greeting-box').style.display = 'block';
+      document.getElementById('greeting-box').style.display = 'flex';
       document.getElementById('ana-ekran').style.display = 'block';
-      listele(masallar); // Okundu rozetlerini güncellemek için
+      listele(masallar);
       window.scrollTo(0, 0);
     }
 
-    function fontDegistir(fark) {
-      aktifFontSize = Math.min(28, Math.max(16, aktifFontSize + fark));
-      document.getElementById('detay-metin').style.fontSize = aktifFontSize + 'px';
+    /* 2. İSTEK: KESİN ÇALIŞAN PUNTO BÜYÜTME / KÜÇÜLTME */
+    function fontDegistir(degisim) {
+      aktifFontSize = Math.min(36, Math.max(16, aktifFontSize + degisim));
+      const metinEl = document.getElementById('detay-metin');
+      if (metinEl) {
+        metinEl.style.setProperty('font-size', aktifFontSize + 'px', 'important');
+      }
+    }
+
+    function geceModuDegistir() {
+      const card = document.getElementById('storybook-card');
+      const btn = document.getElementById('night-mode-btn');
+      card.classList.toggle('night-mode');
+      btn.innerText = card.classList.contains('night-mode') ? '☀️' : '🌙';
     }
 
     function masaliBitir() {
       if (!seciliMasalId) return;
       const ilkDefa = masalOkunduIsaretle(seciliMasalId);
+      // Toplam XP'yi de artır
+      const xp = parseInt(localStorage.getItem('jojupof_toplam_xp') || '0', 10);
       if (ilkDefa) {
-        alert('🎉 Tebrikler! Masalı bitirdin ve 2 Yıldız kazandın! ⭐⭐');
+        localStorage.setItem('jojupof_toplam_xp', xp + 2);
+        alert('🎉 Harikasın! Masalı bitirdin, +2 Yıldız ve Jojupof Büyüme Puanı kazandın! ⭐⭐');
       } else {
-        alert('Bu masalı daha önce tamamlamıştın, harika bir okuyucusun! 🌟');
+        alert('Bu masalı tekrar okudun, süper bir kitap kurdusun! 🌟');
       }
       kapatOkuma();
     }
 
-    listele(masallar);
+    document.addEventListener('DOMContentLoaded', () => {
+      yildizEkraniGuncelle();
+      masallariGetir();
+    });
   </script>
 </body>
 </html>
