@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jojupof Gardırobu | Masal &amp; Zeka</title>
+  <title>Jojupof Evrim &amp; Gardırop | Masal &amp; Zeka</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -23,8 +23,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.94);
       padding: 12px 18px;
       border-radius: 24px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
@@ -53,9 +52,9 @@
       box-shadow: 0 3px 0 #d97706;
     }
 
-    /* Jojupof Odası */
+    /* JOJUPOF EVRİM VE SAHNE KARTI */
     .pet-room-card {
-      background: linear-gradient(180deg, #e0f2fe 0%, #fef9c3 65%, #bbf7d0 100%);
+      background: linear-gradient(180deg, #e0f2fe 0%, #fef9c3 65%, #dcfce7 100%);
       border-radius: 30px;
       padding: 18px 14px;
       text-align: center;
@@ -64,36 +63,55 @@
       margin-bottom: 18px;
       position: relative;
     }
+    .level-header-pill {
+      display: inline-block;
+      background: linear-gradient(90deg, #f97316, #ea580c);
+      color: #fff;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 5px 16px;
+      border-radius: 16px;
+      box-shadow: 0 3px 0 #9a3412;
+      margin-bottom: 6px;
+    }
+    .pet-stage-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #7c2d12;
+      margin: 0 0 6px 0;
+    }
     .pet-speech {
       background: #ffffff;
-      color: #7c2d12;
+      color: #9a3412;
       font-size: 13px;
       font-weight: 800;
-      padding: 8px 16px;
-      border-radius: 18px;
+      padding: 7px 14px;
+      border-radius: 16px;
       display: inline-block;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      margin-bottom: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
+
+    /* Sahne */
     .pet-stage {
       position: relative;
-      width: 200px;
+      width: 210px;
       height: 200px;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 8px auto;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
     }
     .pet-svg-container {
-      width: 185px;
-      height: 185px;
+      width: 195px;
+      height: 195px;
       filter: drop-shadow(0 10px 14px rgba(0,0,0,0.15));
       animation: floatPet 3s ease-in-out infinite;
     }
     @keyframes floatPet {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      50% { transform: translateY(-7px); }
     }
     .pet-svg-container.bounce { animation: bouncePet 0.5s ease-in-out; }
     @keyframes bouncePet {
@@ -112,10 +130,70 @@
       100% { opacity: 0; transform: translateY(-75px) scale(1.4); }
     }
 
+    /* BÜYÜME (XP) BARI */
+    .xp-box {
+      background: rgba(255,255,255,0.85);
+      border-radius: 18px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border: 2px solid #ffffff;
+    }
+    .xp-bar-bg {
+      background: #e2e8f0;
+      height: 18px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .xp-bar-fill {
+      background: linear-gradient(90deg, #f59e0b, #10b981);
+      height: 100%;
+      width: 20%;
+      border-radius: 12px;
+      transition: width 0.4s ease;
+    }
+    .xp-info-text {
+      font-size: 12px;
+      font-weight: 900;
+      color: #475569;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Evrim Önizleme Şeridi */
+    .evo-roadmap {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .evo-step {
+      font-size: 11px;
+      font-weight: 900;
+      padding: 5px 9px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.6);
+      color: #64748b;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .evo-step.unlocked {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: #fde047;
+    }
+    .evo-step.current {
+      background: #fef08a;
+      color: #854d0e;
+      border-color: #f59e0b;
+      transform: scale(1.05);
+    }
+
     .pet-actions { display: flex; justify-content: center; gap: 10px; }
     .pet-btn {
       flex: 1;
-      max-width: 150px;
+      max-width: 155px;
       padding: 10px 12px;
       border-radius: 16px;
       border: none;
@@ -137,7 +215,7 @@
       margin-bottom: 12px;
     }
     .w-tab {
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.85);
       border: 2px solid #fff;
       padding: 8px 14px;
       border-radius: 16px;
@@ -196,7 +274,7 @@
     .bottom-nav {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-around;
@@ -225,7 +303,7 @@
     <header class="app-top-bar">
       <a href="index.html" class="app-brand">
         <span style="font-size:26px;">🐾</span>
-        <span>Jojupof Gardırobu</span>
+        <span>Jojupof Dünyası</span>
       </a>
       <div class="star-counter-badge">
         <span>⭐</span>
@@ -233,17 +311,33 @@
       </div>
     </header>
 
-    <!-- JOJUPOF ODASI -->
+    <!-- JOJUPOF EVRİM VE SAHNE KARTI -->
     <section class="pet-room-card">
-      <div class="pet-speech" id="jojupof-speech">"Merhaba! Bugün ne giyelim? 🥰"</div>
+      <div class="level-header-pill" id="pet-level-badge">Seviye 1</div>
+      <h2 class="pet-stage-title" id="pet-stage-title">Bebek Jojupof 🍼</h2>
+      <div class="pet-speech" id="jojupof-speech">"Beni besle ve masal oku, birlikte büyüyelim! 🥰"</div>
 
       <div class="pet-stage" id="pet-stage-area" onclick="jojupofSev()">
         <div class="pet-svg-container" id="pet-avatar-wrapper"></div>
       </div>
 
+      <!-- BÜYÜME (XP) BARI -->
+      <div class="xp-box">
+        <div class="xp-bar-bg">
+          <div class="xp-bar-fill" id="xp-bar-fill"></div>
+        </div>
+        <div class="xp-info-text">
+          <span id="xp-left-text">Büyüme Puanı (XP): 0</span>
+          <span id="xp-right-text">Sonraki Evrim: 6 XP</span>
+        </div>
+      </div>
+
+      <!-- EVRİM YOL HARİTASI (Açılan evrimlere tıklayıp görünümü seçebilir) -->
+      <div class="evo-roadmap" id="evo-roadmap"></div>
+
       <div class="pet-actions">
         <button class="pet-btn btn-love" onclick="jojupofSev()">❤️ Sev</button>
-        <button class="pet-btn btn-feed" onclick="jojupofBesle()">🍉 Karpuz Ver</button>
+        <button class="pet-btn btn-feed" onclick="jojupofBesle()">🍉 Karpuz Ver (+1 XP)</button>
       </div>
     </section>
 
@@ -254,7 +348,7 @@
       <button class="w-tab" onclick="kategoriSec('goz', this)">🕶️ Gözlükler</button>
       <button class="w-tab" onclick="kategoriSec('boyun', this)">🧣 Boyunluk</button>
       <button class="w-tab" onclick="kategoriSec('ayak', this)">👟 Ayakkabılar</button>
-      <button class="w-tab" onclick="kategoriSec('sirt', this)">🐲 Kanat &amp; Sırt</button>
+      <button class="w-tab" onclick="kategoriSec('sirt', this)">👼 Kanat &amp; Sırt</button>
     </div>
 
     <div class="shop-grid" id="shop-grid"></div>
@@ -276,15 +370,100 @@
     </a>
     <a href="rozetler.html" class="nav-item active">
       <span class="nav-icon">🏆</span>
-      <span>Jojupof</span>
+      <span>Başarılarım</span>
     </a>
   </nav>
 
   <script src="app.js"></script>
   <script>
     let aktifKategori = 'hepsi';
+    let seciliEvrimSeviyesi = null; // Kullanıcı açtığı eski/yeni evrimler arasında geçiş yapabilir
 
-    /* 14 EŞYALI ZENGİN GARDIROP LİSTESİ */
+    /* ========================================================
+       4. İSTEK: JOJUPOF'UN 6 EVRİM SEVİYESİ (MELEK DAHİL!)
+       ======================================================== */
+    const evrimler = [
+      {
+        seviye: 1,
+        ad: "Bebek Jojupof 🍼",
+        kisaAd: "1. Bebek 🍼",
+        minXp: 0,
+        arkaAura: `<circle cx="60" cy="68" r="44" fill="#E0F2FE" opacity="0.7"/>`,
+        onEkstra: `<circle cx="60" cy="67" r="6.5" fill="#F472B6" stroke="#fff" stroke-width="1.5"/><circle cx="60" cy="67" r="3" fill="#FBCFE8"/>` // Tatlı bebek emziği
+      },
+      {
+        seviye: 2,
+        ad: "Neşeli Jojupof 🍊",
+        kisaAd: "2. Neşeli 🍊",
+        minXp: 6,
+        arkaAura: `<circle cx="60" cy="68" r="46" fill="#FFEDD5" opacity="0.7"/>`,
+        onEkstra: ``
+      },
+      {
+        seviye: 3,
+        ad: "Kral Jojupof 👑",
+        kisaAd: "3. Kral 👑",
+        minXp: 15,
+        arkaAura: `<path d="M24 64 L14 104 L106 104 L96 64 Z" fill="#DC2626" stroke="#FACC15" stroke-width="2"/>`, // Kraliyet pelerini
+        onEkstra: ``
+      },
+      {
+        seviye: 4,
+        ad: "Ejderha Jojupof 🐲",
+        kisaAd: "4. Ejderha 🐲",
+        minXp: 26,
+        arkaAura: `<path d="M26 58 Q3 36 9 74 Q22 78 32 68 Z" fill="#10B981" stroke="#047857" stroke-width="2"/><path d="M94 58 Q117 36 111 74 Q98 78 88 68 Z" fill="#10B981" stroke="#047857" stroke-width="2"/>`,
+        onEkstra: `<path d="M42 34 Q38 20 45 19 Q48 25 46 34 Z" fill="#F59E0B"/><path d="M78 34 Q82 20 75 19 Q72 25 74 34 Z" fill="#F59E0B"/>`
+      },
+      {
+        seviye: 5,
+        ad: "Melek Jojupof 👼",
+        kisaAd: "5. Melek 👼",
+        minXp: 40,
+        // Bembeyaz pofuduk melek kanatları ve ışık halesi
+        arkaAura: `
+          <circle cx="60" cy="65" r="50" fill="#FEF9C3" opacity="0.6"/>
+          <path d="M28 62 Q4 35 6 62 Q10 74 18 76 Q12 84 22 86 Q30 84 34 74 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/>
+          <path d="M92 62 Q116 35 114 62 Q110 74 102 76 Q108 84 98 86 Q90 84 86 74 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/>
+        `,
+        // Parlayan Altın Melek Halesi (Halo)
+        onEkstra: `<ellipse cx="60" cy="14" rx="22" ry="5.5" stroke="#FACC15" stroke-width="4" fill="none"/><ellipse cx="60" cy="14" rx="22" ry="5.5" stroke="#FEF08A" stroke-width="1.5" fill="none"/>`
+      },
+      {
+        seviye: 6,
+        ad: "Galaksi Kaşifi Jojupof 🚀",
+        kisaAd: "6. Galaksi 🚀",
+        minXp: 60,
+        arkaAura: `<circle cx="60" cy="65" r="50" fill="#312E81" opacity="0.25"/><ellipse cx="60" cy="75" rx="54" ry="14" stroke="#38BDF8" stroke-width="3" fill="none"/>`,
+        onEkstra: `<circle cx="60" cy="52" r="32" stroke="#E0F2FE" stroke-width="3" fill="rgba(224,242,254,0.18)"/>`
+      }
+    ];
+
+    /* TOPLAM BÜYÜME PUANI (XP) - HARCANMAZ, SADECE ARTAR */
+    function getToplamXp() {
+      const cüzdan = getYildizSayisi();
+      let kayitliXp = parseInt(localStorage.getItem('jojupof_toplam_xp') || '0', 10);
+      // En az mevcut yıldız + harcanan kıyafetler kadar XP olmalı
+      const envanter = getEnvanter();
+      let harcanan = 0;
+      envanter.forEach(id => {
+        const u = aksesuarlar.find(x => x.id === id);
+        if (u) harcanan += u.fiyat;
+      });
+      const gercekMinimumXp = cüzdan + harcanan;
+      if (gercekMinimumXp > kayitliXp) {
+        kayitliXp = gercekMinimumXp;
+        localStorage.setItem('jojupof_toplam_xp', kayitliXp);
+      }
+      return kayitliXp;
+    }
+
+    function xpArtir(miktar) {
+      const suAn = getToplamXp();
+      localStorage.setItem('jojupof_toplam_xp', suAn + miktar);
+    }
+
+    /* ZENGİN GARDIROP LİSTESİ (MELEK KANADI DAHİL) */
     const aksesuarlar = [
       // Şapkalar
       {
@@ -309,7 +488,7 @@
       },
       {
         id: 'kral_taci', ad: 'Altın Kral Tacı', kategori: 'sapka', fiyat: 14, icon: '👑',
-        svg: `<path d="M40 31 L44 14 L53 23 L60 11 L67 23 L76 14 L80 31 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><circle cx="60" cy="18" r="2.5" fill="#EF4444"/><circle cx="48" cy="22" r="2" fill="#3B82F6"/><circle cx="72" cy="22" r="2" fill="#3B82F6"/>`
+        svg: `<path d="M40 31 L44 14 L53 23 L60 11 L67 23 L76 14 L80 31 Z" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><circle cx="60" cy="18" r="2.5" fill="#EF4444"/>`
       },
 
       // Gözlükler
@@ -350,10 +529,14 @@
         svg: `<rect x="33" y="90" width="18" height="18" rx="5" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/><rect x="69" y="90" width="18" height="18" rx="5" fill="#FACC15" stroke="#CA8A04" stroke-width="2"/>`
       },
 
-      // Sırt / Kanat
+      // Kanat & Sırt
       {
         id: 'pelerin', ad: 'Süper Kahraman Pelerini', kategori: 'sirt', fiyat: 12, icon: '🦸',
         svg: `<path d="M32 62 L14 102 L106 102 L88 62 Z" fill="#EF4444"/>`
+      },
+      {
+        id: 'melek_kanat', ad: 'Melek Kanatları & Hale', kategori: 'sirt', fiyat: 15, icon: '👼',
+        svg: `<path d="M28 62 Q4 35 6 62 Q10 74 18 76 Q12 84 22 86 Q30 84 34 74 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/><path d="M92 62 Q116 35 114 62 Q110 74 102 76 Q108 84 98 86 Q90 84 86 74 Z" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="2.5"/><ellipse cx="60" cy="14" rx="20" ry="5" stroke="#FACC15" stroke-width="3.5" fill="none"/>`
       },
       {
         id: 'ejder_kanat', ad: 'Zümrüt Ejder Kanatları', kategori: 'sirt', fiyat: 18, icon: '🐲',
@@ -375,7 +558,66 @@
       localStorage.setItem('jojupof_giyilenler', JSON.stringify(obj));
     }
 
+    function evrimHesapla() {
+      const xp = getToplamXp();
+      let ulasilan = evrimler[0];
+      let sonraki = evrimler[1];
+
+      for (let i = 0; i < evrimler.length; i++) {
+        if (xp >= evrimler[i].minXp) {
+          ulasilan = evrimler[i];
+          sonraki = evrimler[i + 1] || null;
+        }
+      }
+
+      if (!seciliEvrimSeviyesi || seciliEvrimSeviyesi > ulasilan.seviye) {
+        seciliEvrimSeviyesi = ulasilan.seviye;
+      }
+
+      const aktifEvrimObj = evrimler.find(e => e.seviye === seciliEvrimSeviyesi) || ulasilan;
+
+      document.getElementById('pet-level-badge').innerText = `Seviye ${ulasilan.seviye} (Toplam ${xp} XP)`;
+      document.getElementById('pet-stage-title').innerText = aktifEvrimObj.ad;
+
+      if (sonraki) {
+        const aralik = sonraki.minXp - ulasilan.minXp;
+        const ilerleme = xp - ulasilan.minXp;
+        const yuzde = Math.min(100, Math.max(8, Math.round((ilerleme / aralik) * 100)));
+        document.getElementById('xp-bar-fill').style.width = yuzde + '%';
+        document.getElementById('xp-left-text').innerText = `Büyüme: ${xp} / ${sonraki.minXp} XP`;
+        document.getElementById('xp-right-text').innerText = `${sonraki.kisaAd} için ${sonraki.minXp - xp} XP kaldı!`;
+      } else {
+        document.getElementById('xp-bar-fill').style.width = '100%';
+        document.getElementById('xp-left-text').innerText = `Maksimum Evrim! (${xp} XP)`;
+        document.getElementById('xp-right-text').innerText = `Tüm Evrimler Açıldı! 🎉`;
+      }
+
+      // Evrim yol haritasını çiz
+      const roadmap = document.getElementById('evo-roadmap');
+      roadmap.innerHTML = '';
+      evrimler.forEach(ev => {
+        const acikMi = xp >= ev.minXp;
+        const seciliMi = ev.seviye === seciliEvrimSeviyesi;
+        const btn = document.createElement('div');
+        btn.className = 'evo-step ' + (acikMi ? 'unlocked ' : '') + (seciliMi ? 'current' : '');
+        btn.innerText = acikMi ? ev.kisaAd : `🔒 Sv.${ev.seviye} (${ev.minXp} XP)`;
+        btn.onclick = () => {
+          if (acikMi) {
+            seciliEvrimSeviyesi = ev.seviye;
+            jojupofCiz();
+            evrimHesapla();
+          } else {
+            alert(`${ev.ad} formunu açmak için toplam ${ev.minXp} XP gerekiyor! Masal okuyarak veya oyun oynayarak XP kazanabilirsin.`);
+          }
+        };
+        roadmap.appendChild(btn);
+      });
+
+      return aktifEvrimObj;
+    }
+
     function jojupofCiz() {
+      const aktifEvrim = evrimHesapla();
       const giyilen = getGiyilenler();
       const bulSvg = (id) => {
         const u = aksesuarlar.find(x => x.id === id);
@@ -384,19 +626,37 @@
 
       const tamSvg = `
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Evrimin Kendi Arka Plan / Kanat / Pelerin Aurası -->
+          ${aktifEvrim.arkaAura}
+          <!-- Gardıroptan Giyilen Sırt Aksesuarı -->
           ${bulSvg(giyilen.sirt)}
+          
+          <!-- Kapibara Gövde -->
           <ellipse cx="60" cy="76" rx="38" ry="28" fill="#92400E"/>
           <ellipse cx="42" cy="102" rx="8" ry="5" fill="#78350F"/>
           <ellipse cx="78" cy="102" rx="8" ry="5" fill="#78350F"/>
+          
+          <!-- Kafa -->
           <rect x="35" y="32" width="50" height="46" rx="22" fill="#B45309"/>
           <ellipse cx="36" cy="38" rx="6" ry="8" fill="#78350F"/>
           <ellipse cx="84" cy="38" rx="6" ry="8" fill="#78350F"/>
+          
+          <!-- Gözler -->
           <circle cx="48" cy="49" r="3.5" fill="#1E293B"/>
           <circle cx="72" cy="49" r="3.5" fill="#1E293B"/>
+          
+          <!-- Pembe Yanaklar -->
           <circle cx="41" cy="57" r="5" fill="#F472B6" opacity="0.65"/>
           <circle cx="79" cy="57" r="5" fill="#F472B6" opacity="0.65"/>
+          
+          <!-- Burun ve Ağız -->
           <rect x="52" y="53" width="16" height="11" rx="5.5" fill="#78350F"/>
           <path d="M56 68 Q60 72 64 68" stroke="#78350F" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- Evrimin Kendi Ön Aksesuarı (Bebek emziği, Melek halesi, Ejder boynuzu vb.) -->
+          ${aktifEvrim.onEkstra}
+
+          <!-- Gardıroptan Giyilen Kıyafetler -->
           ${bulSvg(giyilen.boyun)}
           ${bulSvg(giyilen.goz)}
           ${bulSvg(giyilen.sapka)}
@@ -457,12 +717,13 @@
 
       const mevcutYildiz = getYildizSayisi();
       if (mevcutYildiz < urun.fiyat) {
-        document.getElementById('jojupof-speech').innerText = `"Yıldızımız yetmiyor (${mevcutYildiz} ⭐). Oyun oynayıp yıldız kazanalım! 🎮"`;
+        document.getElementById('jojupof-speech').innerText = `"Yıldızımız yetmiyor (${mevcutYildiz} ⭐). Masal okuyup oyun oynayalım! 🎮"`;
         alert(`Bu eşya ${urun.fiyat} ⭐! Senin şu an ${mevcutYildiz} ⭐ yıldızın var.`);
         return;
       }
 
-      // Yıldızı düş ve kaydet
+      // Önce toplam XP'yi koru, sonra cüzdandan yıldızı düş
+      getToplamXp();
       yildizHarca(urun.fiyat);
 
       const env = getEnvanter();
@@ -473,7 +734,7 @@
 
       urunGiydir(urun.id, urun.kategori);
       animasyonYap('🎉');
-      document.getElementById('jojupof-speech').innerText = `"Yaşasın! ${urun.ad} bana çok yakıştı! (${getYildizSayisi()} ⭐ kaldı)"`;
+      document.getElementById('jojupof-speech').innerText = `"Yaşasın! ${urun.ad} bana çok yakıştı! 🥰"`;
     }
 
     function urunGiydir(id, kategori) {
@@ -498,9 +759,13 @@
       document.getElementById('jojupof-speech').innerText = '"Seni çok seviyorum! İyi ki benim arkadaşımsın! 🥰"';
     }
 
+    // Karpuz vererek de günde birkaç kez ekstra büyüme puanı (XP) kazanabilsin!
     function jojupofBesle() {
       animasyonYap('🍉');
-      document.getElementById('jojupof-speech').innerText = '"Karpuz harikaydı, çok teşekkür ederim! 🍉😋"';
+      xpArtir(1);
+      seciliEvrimSeviyesi = null; // Yeni seviye açıldıysa otomatik geçsin
+      jojupofCiz();
+      document.getElementById('jojupof-speech').innerText = '"Ham hum! Karpuz çok lezzetliydi, +1 Büyüme Puanı (XP) kazandım! 🍉😋"';
     }
 
     function animasyonYap(emoji) {
